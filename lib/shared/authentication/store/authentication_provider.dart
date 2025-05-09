@@ -13,7 +13,6 @@ Future<User> register(Ref ref) async {
     email: 'marcel.wernisch@web.de',
     password: 'test1234',
   );
-  print(result);
   return Future.value(
     User(
       id: result.user?.uid ?? '',
