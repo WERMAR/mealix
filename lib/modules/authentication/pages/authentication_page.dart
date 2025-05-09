@@ -1,19 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:mealix/modules/authentication/components/wave_clipper_component.dart';
-import 'package:mealix/shared/components/two_tab_bar_component.dart';
+import 'dart:developer';
 
-class AuthenticationPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mealix/modules/authentication/components/login_component.dart';
+import 'package:mealix/modules/authentication/components/register_component.dart';
+import 'package:mealix/modules/authentication/components/wave_clipper_component.dart';
+import 'package:mealix/modules/authentication/model/register_model.dart';
+import 'package:mealix/shared/components/two_tab_bar_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../shared/authentication/store/authentication_provider.dart';
+import '../../home/pages/home_page.dart';
+
+class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _AuthenticationPage();
-  }
-}
-
-class _AuthenticationPage extends State {
-  @override
   Widget build(BuildContext context) {
+    // AuthenticationProvider authenticationProvider =
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -45,7 +49,7 @@ class _AuthenticationPage extends State {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Colors.transparent,
                   ),
                   width: size.width * 0.8,
                   height: size.height - size.height * 0.38 - 100,
@@ -53,106 +57,10 @@ class _AuthenticationPage extends State {
                   child: Column(
                     children: [
                       TwoTabBar(
-                        tab1Title: 'Login',
-                        tab2Title: 'Sign Up',
-                        tab1Content: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            TextField(
-                              decoration: InputDecoration(
-                                hintText: 'E-Mail',
-                                prefixIcon: const Icon(Icons.email_outlined),
-                                filled: true,
-                                fillColor: const Color(0xFF0D1026),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                hintText: 'Passwort',
-                                prefixIcon: const Icon(Icons.key_outlined),
-                                filled: true,
-                                fillColor: const Color(0xFF0D1026),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 40,
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                              ),
-                              child: const Text('Login'),
-                            ),
-                          ],
-                        ),
-                        tab2Content: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            TextField(
-                              decoration: InputDecoration(
-                                hintText: 'E-Mail',
-                                prefixIcon: const Icon(Icons.email_outlined),
-                                filled: true,
-                                fillColor: const Color(0xFF0D1026),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                hintText: 'Passwort',
-                                prefixIcon: const Icon(Icons.key_outlined),
-                                filled: true,
-                                fillColor: const Color(0xFF0D1026),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 40,
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                              ),
-                              child: const Text('Login'),
-                            ),
-                          ],
-                        ),
+                        tab1Title: AppLocalizations.of(context)!.loginTitle,
+                        tab2Title: AppLocalizations.of(context)!.signUpTitle,
+                        tab1Content: LoginComponent(onLogin: onLogin),
+                        tab2Content: RegisterComponent(onRegister: onRegister),
                       ),
                     ],
                   ),
@@ -164,102 +72,10 @@ class _AuthenticationPage extends State {
       ),
     );
   }
+
+  void onLogin() {}
+
+  void onRegister(RegisterModel registerObj) {
+    log("State: ${registerObj.toJson()}");
+  }
 }
-
-
-/*
-
-// Circle Image
-         
-          // Login Form
-          Positioned.fill(
-            top: size.height * 0.38,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                children: [
-                  // Tab bar
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFE3FF2B),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF0D1026),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Registrieren',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  // Email Field
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'E-Mail',
-                      prefixIcon: const Icon(Icons.email_outlined),
-                      filled: true,
-                      fillColor: const Color(0xFF0D1026),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Password Field
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Passwort',
-                      prefixIcon: const Icon(Icons.key_outlined),
-                      filled: true,
-                      fillColor: const Color(0xFF0D1026),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  // Login Button
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFE3FF2B),
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 12,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                    child: const Text('Login'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          */

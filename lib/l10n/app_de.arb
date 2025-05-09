@@ -1,0 +1,8 @@
+{
+  "loginTitle": "Login",
+  "signUpTitle": "Registrieren",
+  "password": "Passwort",
+  "email": "E-Mail",
+  "fullName": "Vor-/ Nachname",
+  "required": "Feld ist ein Pflichtfeld"
+}

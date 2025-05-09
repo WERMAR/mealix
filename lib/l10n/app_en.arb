@@ -1,0 +1,16 @@
+{
+  "loginTitle": "Login",
+  "@loginTitle": {
+    "description": "Title name for Login used on the authentication screen"
+  },
+
+  "signUpTitle": "Sign Up",
+  "@signUpTitle": {
+    "description": "Title name for Register used on the authentication screen"
+  },
+
+  "password": "Password",
+  "email": "E-Mail",
+  "fullName": "Full Name",
+  "required": "Field is required!"
+}
