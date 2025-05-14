@@ -1,22 +1,22 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mealix/modules/authentication/components/login_component.dart';
-import 'package:mealix/modules/authentication/components/register_component.dart';
-import 'package:mealix/modules/authentication/components/wave_clipper_component.dart';
-import 'package:mealix/modules/authentication/model/register_model.dart';
-import 'package:mealix/shared/components/two_tab_bar_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../shared/authentication/store/authentication_provider.dart';
-import '../../home/pages/home_page.dart';
+import '../../../shared/components/two_tab_bar_component.dart';
+import '../components/login_component.dart';
+import '../components/register_component.dart';
+import '../components/wave_clipper_component.dart';
+import '../enum/tab_mode_enum.dart';
 
-class AuthenticationPage extends StatelessWidget {
+class AuthenticationPage extends ConsumerWidget {
   const AuthenticationPage({super.key});
 
+  static const String routeLocation = '/auth';
+  static const String routeName = 'authentication';
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // AuthenticationProvider authenticationProvider =
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -35,7 +35,7 @@ class AuthenticationPage extends StatelessWidget {
             Positioned(
               top: size.height * 0.2 - 35,
               left: size.width * 0.5 - 90,
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 backgroundColor: Colors.transparent,
                 radius: 90,
                 backgroundImage: AssetImage('assets/images/login_food.png'),
@@ -45,7 +45,7 @@ class AuthenticationPage extends StatelessWidget {
               top: size.height * 0.38,
               left: size.width * 0.1,
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
@@ -59,8 +59,19 @@ class AuthenticationPage extends StatelessWidget {
                       TwoTabBar(
                         tab1Title: AppLocalizations.of(context)!.loginTitle,
                         tab2Title: AppLocalizations.of(context)!.signUpTitle,
-                        tab1Content: LoginComponent(onLogin: onLogin),
-                        tab2Content: RegisterComponent(onRegister: onRegister),
+                        tab1Content: const LoginComponent(),
+                        tab2Content: const RegisterComponent(),
+                        onTabChange: (mode) {
+                          final notifier = ref.read(
+                            authenticationFormStateProvider.notifier,
+                          );
+                          switch (mode) {
+                            case TabMode.tab1:
+                              notifier.setLoginMode();
+                            case TabMode.tab2:
+                              notifier.setSignUpMode();
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -71,11 +82,5 @@ class AuthenticationPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void onLogin() {}
-
-  void onRegister(RegisterModel registerObj) {
-    log("State: ${registerObj.toJson()}");
   }
 }

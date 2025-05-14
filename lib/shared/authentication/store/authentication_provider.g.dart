@@ -6,24 +6,29 @@ part of 'authentication_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$registerHash() => r'2b416a6632d7462ffc0925492b7196527ec7a6a8';
+String _$authenticationFormStateHash() =>
+    r'dea001ca85a8c87c35035d0bdcd7f67ea31a5c4f';
 
-/// See also [register].
-@ProviderFor(register)
-final registerProvider = AutoDisposeFutureProvider<User>.internal(
-  register,
-  name: r'registerProvider',
+/// See also [AuthenticationFormState].
+@ProviderFor(AuthenticationFormState)
+final authenticationFormStateProvider = AutoDisposeNotifierProvider<
+  AuthenticationFormState,
+  AuthenticationFormInput
+>.internal(
+  AuthenticationFormState.new,
+  name: r'authenticationFormStateProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$registerHash,
+      const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$authenticationFormStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef RegisterRef = AutoDisposeFutureProviderRef<User>;
+typedef _$AuthenticationFormState =
+    AutoDisposeNotifier<AuthenticationFormInput>;
 String _$authenticationStoreHash() =>
-    r'0597e76e942ee6d7b0d5ac21b45507aa19bd004e';
+    r'9e50f4858a178539f19a7c65bf86c3d49d2e25af';
 
 /// See also [AuthenticationStore].
 @ProviderFor(AuthenticationStore)

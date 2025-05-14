@@ -1,33 +1,25 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mealix/shared/authentication/service/firebase_authentication_service.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:mealix/shared/authentication/store/model/user_model.dart';
 
-part 'authentication_provider.g.dart';
+import '../../../modules/authentication/model/register_model.dart';
+import '../service/firebase_authentication_service.dart';
+import 'model/user_model.dart';
+
 part 'authentication_provider.freezed.dart';
-
-@riverpod
-Future<User> register(Ref ref) async {
-  var result = await FirebaseAuthenticationService().signUp(
-    email: 'marcel.wernisch@web.de',
-    password: 'test1234',
-  );
-  return Future.value(
-    User(
-      id: result.user?.uid ?? '',
-      email: result.user?.email ?? '',
-      name: result.user?.displayName ?? '',
-      photoUrl: result.user?.photoURL ?? '',
-    ),
-  );
-}
+part 'authentication_provider.g.dart';
 
 enum AuthenticationMode { signIn, signUp }
 
 class AuthenticationFormInput {
-  AuthenticationFormInput({this.email, this.password, this.name});
+  AuthenticationFormInput({
+    required this.activeMode,
+    this.email,
+    this.password,
+    this.name,
+  });
 
+  final AuthenticationMode activeMode;
   final String? email;
   final String? password;
   final String? name;
@@ -42,11 +34,13 @@ class AuthenticationFormInput {
   }
 
   AuthenticationFormInput copyWith({
+    AuthenticationMode? activeMode,
     String? email,
     String? password,
     String? name,
   }) {
     return AuthenticationFormInput(
+      activeMode: activeMode ?? this.activeMode,
       email: email ?? this.email,
       password: password ?? this.password,
       name: name ?? this.name,
@@ -54,21 +48,41 @@ class AuthenticationFormInput {
   }
 }
 
+@riverpod
+class AuthenticationFormState extends _$AuthenticationFormState {
+  @override
+  AuthenticationFormInput build() {
+    return AuthenticationFormInput(activeMode: AuthenticationMode.signIn);
+  }
+
+  void setEmail(String email) {
+    state = state.copyWith(email: email.isEmpty ? null : email);
+  }
+
+  void setPassword(String password) {
+    state = state.copyWith(password: password.isEmpty ? null : password);
+  }
+
+  void setName(String name) {
+    state = state.copyWith(name: name.isEmpty ? null : name);
+  }
+
+  void setLoginMode() {
+    state = state.copyWith(activeMode: AuthenticationMode.signIn);
+  }
+
+  void setSignUpMode() {
+    state = state.copyWith(activeMode: AuthenticationMode.signUp);
+  }
+}
+
 @freezed
 sealed class AuthenticationState with _$AuthenticationState {
-  factory AuthenticationState({
-    required bool isAuthenticated,
-    required AuthenticationMode activeMode,
-    User? user,
-    required AuthenticationFormInput formInput,
-  }) = _AuthenticationState;
+  factory AuthenticationState({required bool isAuthenticated, User? user}) =
+      _AuthenticationState;
 
   factory AuthenticationState.initial() {
-    return AuthenticationState(
-      isAuthenticated: false,
-      activeMode: AuthenticationMode.signIn,
-      formInput: AuthenticationFormInput(),
-    );
+    return AuthenticationState(isAuthenticated: false);
   }
 }
 
@@ -80,56 +94,6 @@ class AuthenticationStore extends _$AuthenticationStore {
     return AuthenticationState.initial();
   }
 
-  void setEMail(String email) {
-    print(email);
-    final newFormInput =
-        state.value?.formInput.copyWith(email: email) ??
-        AuthenticationFormInput(email: email);
-
-    state = AsyncData(
-      state.value?.copyWith(formInput: newFormInput) ??
-          AuthenticationState.initial().copyWith(formInput: newFormInput),
-    );
-  }
-
-  void setPassword(String password) {
-    final newFormInput =
-        state.value?.formInput.copyWith(password: password) ??
-        AuthenticationFormInput(password: password);
-
-    state = AsyncData(
-      state.value?.copyWith(formInput: newFormInput) ??
-          AuthenticationState.initial().copyWith(formInput: newFormInput),
-    );
-  }
-
-  void setName(String name) {
-    final newFormInput =
-        state.value?.formInput.copyWith(name: name) ??
-        AuthenticationFormInput(name: name);
-
-    state = AsyncData(
-      state.value?.copyWith(formInput: newFormInput) ??
-          AuthenticationState.initial().copyWith(formInput: newFormInput),
-    );
-  }
-
-  void setLoginMode() {
-    state = AsyncData(
-      state.value?.copyWith(activeMode: AuthenticationMode.signIn) ??
-          AuthenticationState.initial().copyWith(
-            formInput: AuthenticationFormInput(),
-          ),
-    );
-  }
-
-  void setSignUpMode() {
-    state = AsyncData(
-      state.value?.copyWith(activeMode: AuthenticationMode.signUp) ??
-          AuthenticationState.initial(),
-    );
-  }
-
   Future<void> logInWithEmailAndPassword(String email, String password) async {
     state = const AsyncLoading(); // Show loading state
     try {
@@ -137,27 +101,38 @@ class AuthenticationStore extends _$AuthenticationStore {
           .logInWithEmailAndPassword(email: email, password: password);
 
       final authenticatedUser = User.fromFirebaseUser(result);
-
+      print(authenticatedUser);
       state = AsyncData(
         state.value?.copyWith(isAuthenticated: true, user: authenticatedUser) ??
             AuthenticationState.initial().copyWith(
               isAuthenticated: true,
-              activeMode: AuthenticationMode.signIn,
               user: authenticatedUser,
-              formInput: AuthenticationFormInput(
-                email: email,
-                password: password,
-              ),
             ),
       );
     } catch (e) {
-      print(e);
       state = AsyncError(e, StackTrace.current);
     }
   }
 
-  /*Future<void> signOut() async {
-    await FirebaseAuthenticationService().signOut();
-    state = state.copyWith(isAuthenticated: false);
-  }*/
+  Future<void> register(RegisterModel registerModel) async {
+    state = const AsyncLoading(); // Show loading state
+
+    final result = await FirebaseAuthenticationService().signUp(
+      email: registerModel.email,
+      password: registerModel.password,
+    );
+
+    await result.user?.updateDisplayName(registerModel.name);
+    // FIXME: The reload don't affect the user object in this method
+    await result.user?.reload();
+
+    final authenticatedUser = User.fromFirebaseUser(result);
+    state = AsyncData(
+      state.value?.copyWith(isAuthenticated: true, user: authenticatedUser) ??
+          AuthenticationState.initial().copyWith(
+            isAuthenticated: true,
+            user: authenticatedUser,
+          ),
+    );
+  }
 }

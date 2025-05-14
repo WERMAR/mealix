@@ -7,28 +7,41 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mealix/shared/authentication/store/authentication_provider.dart';
 
 class LoginComponent extends ConsumerWidget {
-  LoginComponent({super.key, required this.onLogin});
-
-  final VoidCallback onLogin;
-
-  late Timer? _debounce;
+  const LoginComponent({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(authenticationStoreProvider.notifier);
-    final state = ref.watch(authenticationStoreProvider);
-
-    _debounce = Timer(const Duration(milliseconds: 700), () {
-      //notifier.setEMail(value);
-    });
+    final authenticationNotifier = ref.read(
+      authenticationStoreProvider.notifier,
+    );
+    final authenticationFormState = ref.watch(authenticationFormStateProvider);
 
     // Use TextEditingControllers to manage the text field values.
     final emailController = TextEditingController(
-      text: state.value?.formInput.email ?? '',
+      text: authenticationFormState.email ?? '',
     );
     final passwordController = TextEditingController(
-      text: state.value?.formInput.password ?? '',
+      text: authenticationFormState.password ?? '',
     );
+
+    final _emailFocusNode = FocusNode();
+    final _passwordFocusNode = FocusNode();
+
+    _emailFocusNode.addListener(() {
+      if (!_emailFocusNode.hasFocus) {
+        ref
+            .read(authenticationFormStateProvider.notifier)
+            .setEmail(emailController.text);
+      }
+    });
+
+    _passwordFocusNode.addListener(() {
+      if (!_passwordFocusNode.hasFocus) {
+        ref
+            .read(authenticationFormStateProvider.notifier)
+            .setPassword(passwordController.text);
+      }
+    });
 
     // Dispose the controllers to prevent memory leaks
     return AutofillGroup(
@@ -44,12 +57,7 @@ class LoginComponent extends ConsumerWidget {
               controller: emailController,
               keyboardType:
                   TextInputType.emailAddress, // Use the controller here.
-              onChanged: (value) {
-                if (_debounce?.isActive ?? false) _debounce?.cancel();
-                _debounce = Timer(const Duration(milliseconds: 700), () {
-                  notifier.setEMail(value);
-                });
-              },
+              focusNode: _emailFocusNode,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
               decoration: InputDecoration(
@@ -78,23 +86,16 @@ class LoginComponent extends ConsumerWidget {
             shadowColor: Colors.black,
             child: TextFormField(
               controller: passwordController,
-              onChanged: (value) {
-                if (_debounce?.isActive ?? false) _debounce?.cancel();
-                _debounce = Timer(const Duration(milliseconds: 700), () {
-                  notifier.setPassword(value);
-                });
-              },
+              focusNode: _passwordFocusNode,
               onFieldSubmitted: (value) {
                 TextInput.finishAutofillContext(); // <-- this
-                final isValid =
-                    state.value?.formInput.isValid(
-                      state.value?.activeMode ?? AuthenticationMode.signIn,
-                    ) ??
-                    false;
+                final isValid = authenticationFormState.isValid(
+                  authenticationFormState.activeMode,
+                );
                 if (isValid) {
-                  notifier.logInWithEmailAndPassword(
-                    state.value!.formInput.email!,
-                    state.value!.formInput.password!,
+                  authenticationNotifier.logInWithEmailAndPassword(
+                    authenticationFormState.email!,
+                    authenticationFormState.password!,
                   );
                 }
               },
@@ -121,16 +122,15 @@ class LoginComponent extends ConsumerWidget {
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed:
-                state.value?.formInput.isValid(
-                          state.value?.activeMode ?? AuthenticationMode.signIn,
-                        ) ??
-                        false
+                authenticationFormState.isValid(
+                      authenticationFormState.activeMode,
+                    )
                     ? () {
                       // FIXME: This finishAutofillContext is not working on iOS caused by missing domain configuration see: https://github.com/flutter/flutter/issues/69111#issuecomment-722711868
                       TextInput.finishAutofillContext(); // <-- this
-                      notifier.logInWithEmailAndPassword(
-                        state.value!.formInput.email!,
-                        state.value!.formInput.password!,
+                      authenticationNotifier.logInWithEmailAndPassword(
+                        authenticationFormState.email!,
+                        authenticationFormState.password!,
                       );
                     }
                     : null,
