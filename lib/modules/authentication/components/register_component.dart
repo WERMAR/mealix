@@ -1,154 +1,173 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mealix/modules/authentication/model/register_model.dart';
 
-class RegisterComponent extends StatelessWidget {
-  RegisterComponent({super.key, required this.onRegister});
+import '../../../shared/authentication/store/authentication_provider.dart';
 
-  final void Function(RegisterModel) onRegister;
-
-  final _registerForm = GlobalKey<FormState>();
-
-  final _fullNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class RegisterComponent extends ConsumerWidget {
+  const RegisterComponent({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _registerForm,
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          // Register: Fullname field
-          Material(
-            elevation: 6,
-            borderRadius: BorderRadius.circular(8),
-            shadowColor: Colors.black,
-            child: TextFormField(
-              controller: _fullNameController,
-              validator:
-                  (value) =>
-                      value == null || value.isEmpty
-                          ? AppLocalizations.of(context)!.required
-                          : null,
-              decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.fullName,
-                hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                prefixIcon: Icon(
-                  Icons.person_2_outlined,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          // Register: E-Mail field
-          Material(
-            elevation: 6,
-            borderRadius: BorderRadius.circular(8),
-            shadowColor: Colors.black,
-            child: TextFormField(
-              controller: _emailController,
-              validator:
-                  (value) =>
-                      value == null || value.isEmpty
-                          ? AppLocalizations.of(context)!.required
-                          : null,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-                hintText: AppLocalizations.of(context)!.email,
-                hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          // Register: Password field
-          Material(
-            elevation: 6,
-            borderRadius: BorderRadius.circular(8),
-            shadowColor: Colors.black,
-            child: TextFormField(
-              controller: _passwordController,
-              validator:
-                  (value) =>
-                      value == null || value.isEmpty
-                          ? AppLocalizations.of(context)!.required
-                          : null,
-              obscureText: true,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-                hintText: AppLocalizations.of(context)!.password,
-                prefixIcon: Icon(
-                  Icons.key_outlined,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed:
-                true
-                    ? () => onRegister(
-                      RegisterModel(
-                        name: _fullNameController.text,
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      ),
-                    )
-                    : null,
-            style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 20,
-              ),
-              shadowColor: Colors.black,
-              elevation: 9,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              foregroundColor: Theme.of(context).colorScheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-            ),
-            child: Text(AppLocalizations.of(context)!.signUpTitle),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authenticationForm = ref.watch(authenticationFormStateProvider);
+    final authenticationStore = ref.watch(authenticationStoreProvider);
 
-  isFormValid() {
-    return _registerForm.currentState?.validate() ?? false;
+    final _nameController = TextEditingController(
+      text: authenticationForm.name ?? '',
+    );
+
+    final _emailController = TextEditingController(
+      text: authenticationForm.email ?? '',
+    );
+
+    final _passwordController = TextEditingController(
+      text: authenticationForm.password ?? '',
+    );
+
+    final _nameFocusNode = FocusNode();
+    final _passwordFocusNode = FocusNode();
+    final _emailFocusNode = FocusNode();
+
+    _nameFocusNode.addListener(() {
+      if (!_nameFocusNode.hasFocus) {
+        ref
+            .read(authenticationFormStateProvider.notifier)
+            .setName(_nameController.text);
+      }
+    });
+
+    _passwordFocusNode.addListener(() {
+      if (!_passwordFocusNode.hasFocus) {
+        ref
+            .read(authenticationFormStateProvider.notifier)
+            .setPassword(_passwordController.text);
+      }
+    });
+
+    _emailFocusNode.addListener(() {
+      if (!_emailFocusNode.hasFocus) {
+        ref
+            .read(authenticationFormStateProvider.notifier)
+            .setEmail(_emailController.text);
+      }
+    });
+
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        // Register: Fullname field
+        Material(
+          elevation: 6,
+          borderRadius: BorderRadius.circular(8),
+          shadowColor: Colors.black,
+          child: TextFormField(
+            focusNode: _nameFocusNode,
+            controller: _nameController,
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.fullName,
+              hintStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              prefixIcon: Icon(
+                Icons.person_2_outlined,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.surface,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Register: E-Mail field
+        Material(
+          elevation: 6,
+          borderRadius: BorderRadius.circular(8),
+          shadowColor: Colors.black,
+          child: TextFormField(
+            controller: _emailController,
+            focusNode: _emailFocusNode,
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.email,
+              hintStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              prefixIcon: Icon(
+                Icons.email_outlined,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.surface,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Register: Password field
+        Material(
+          elevation: 6,
+          borderRadius: BorderRadius.circular(8),
+          shadowColor: Colors.black,
+          child: TextFormField(
+            controller: _passwordController,
+            focusNode: _passwordFocusNode,
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.password,
+              prefixIcon: Icon(
+                Icons.key_outlined,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              hintStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).colorScheme.surface,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
+        ElevatedButton(
+          onPressed:
+              authenticationForm.isValid(AuthenticationMode.signUp)
+                  ? () => ref
+                      .read(authenticationStoreProvider.notifier)
+                      .register(
+                        RegisterModel(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          name: _nameController.text,
+                        ),
+                      )
+                  : null,
+          style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 20,
+            ),
+            shadowColor: Colors.black,
+            elevation: 9,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            foregroundColor: Theme.of(context).colorScheme.primary,
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          child: Text(AppLocalizations.of(context)!.signUpTitle),
+        ),
+      ],
+    );
   }
 }
