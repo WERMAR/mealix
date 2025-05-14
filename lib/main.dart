@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mealix/helper/theme_manager.dart';
+import 'helper/theme_manager.dart';
 
 import 'shared/routing/routing_provider.dart';
 
@@ -11,7 +11,7 @@ Future<void> main() async {
 
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      appId: "1:973303759749:ios:7198385d2243362673baec",
+      appId: '1:973303759749:ios:7198385d2243362673baec',
       projectId: 'mealix-6e86d',
       messagingSenderId: '973303759749',
       apiKey: 'AIzaSyDQcgnW-R5GJJhy43E1-PiSHjA--BUELxg',

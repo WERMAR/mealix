@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mealix/modules/authentication/components/widgets/profile_badge.dart';
-import 'package:mealix/modules/authentication/components/widgets/date_range_selector.dart';
-import 'package:mealix/modules/authentication/components/widgets/day_meal_card.dart';
-import 'package:mealix/modules/authentication/components/widgets/bottom_nav_bar.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import '../../authentication/components/widgets/bottom_nav_bar.dart';
+import '../../authentication/components/widgets/date_range_selector.dart';
+import '../../authentication/components/widgets/day_meal_card.dart';
+import '../../authentication/components/widgets/profile_badge.dart';
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
-class _HomePageState extends State<HomePage> {
-  // Placeholder state for date range and meal data
+  static const String routeLocation = '/home';
+  static const String routeName = 'home';
   DateTimeRange selectedWeek = DateTimeRange(
     start: DateTime(2025, 4, 14),
     end: DateTime(2025, 4, 21),
@@ -32,7 +29,7 @@ class _HomePageState extends State<HomePage> {
           DateRangeSelector(
             startDate: selectedWeek.start,
             endDate: selectedWeek.end,
-            onPrevious: () {
+            /*onPrevious: () {
               setState(() {
                 selectedWeek = DateTimeRange(
                   start: selectedWeek.start.subtract(const Duration(days: 7)),
@@ -47,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                   end: selectedWeek.end.add(const Duration(days: 7)),
                 );
               });
-            },
+            },*/
           ),
 
           Expanded(

@@ -10,12 +10,15 @@ class TwoTabBar extends StatefulWidget {
     required this.tab1Content,
     required this.tab2Title,
     required this.tab2Content,
+    required this.onTabChange,
   });
   final String tab1Title;
   final String tab2Title;
 
   final Widget tab1Content;
   final Widget tab2Content;
+
+  final void Function(TabMode) onTabChange;
 
   @override
   State<TwoTabBar> createState() => _TwoTabBarState();
@@ -53,6 +56,7 @@ class _TwoTabBarState extends State<TwoTabBar> {
                 onPressed: () {
                   setState(() {
                     _mode = TabMode.tab1;
+                    widget.onTabChange(_mode);
                   });
                 },
                 child: Container(
@@ -92,6 +96,7 @@ class _TwoTabBarState extends State<TwoTabBar> {
                 onPressed: () {
                   setState(() {
                     _mode = TabMode.tab2;
+                    widget.onTabChange(_mode);
                   });
                 },
                 child: Container(
