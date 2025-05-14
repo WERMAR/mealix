@@ -64,6 +64,7 @@ class RegisterComponent extends ConsumerWidget {
           child: TextFormField(
             focusNode: _nameFocusNode,
             controller: _nameController,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.fullName,
               hintStyle: TextStyle(
@@ -91,6 +92,9 @@ class RegisterComponent extends ConsumerWidget {
           child: TextFormField(
             controller: _emailController,
             focusNode: _emailFocusNode,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            autofillHints: const [AutofillHints.email],
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.email,
               hintStyle: TextStyle(
@@ -118,6 +122,9 @@ class RegisterComponent extends ConsumerWidget {
           child: TextFormField(
             controller: _passwordController,
             focusNode: _passwordFocusNode,
+            autofillHints: const [AutofillHints.password],
+            keyboardType: TextInputType.visiblePassword,
+            textInputAction: TextInputAction.done,
             obscureText: true,
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.password,
