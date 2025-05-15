@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mealix/modules/authentication/enum/tab_mode_enum.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../modules/authentication/enum/tab_mode_enum.dart';
+import '../authentication/store/authentication_provider.dart';
 
 class TwoTabBar extends StatefulWidget {
   const TwoTabBar({
@@ -119,7 +122,33 @@ class _TwoTabBarState extends State<TwoTabBar> {
           ],
         ),
         switch (_mode) {
-          TabMode.tab1 => widget.tab1Content,
+          TabMode.tab1 => Column(
+            children: [
+              widget.tab1Content,
+              const SizedBox(height: 16),
+              Consumer(
+                builder: (context, ref, _) {
+                  return TextButton(
+                    onPressed: () {
+                      final notifier = ref.read(
+                        authenticationStoreProvider.notifier,
+                      );
+                      notifier.logInWithEmailAndPassword(
+                        'gceorge@gmail.com',
+                        '123456',
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Theme.of(context).colorScheme.secondary,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      textStyle: const TextStyle(fontSize: 16),
+                    ),
+                    child: const Text("Log in as George (Test)"),
+                  );
+                },
+              ),
+            ],
+          ),
           TabMode.tab2 => widget.tab2Content,
         },
       ],

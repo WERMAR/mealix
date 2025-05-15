@@ -48,7 +48,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: HomePage.routeLocation, // Use route names
         name: HomePage.routeName, // Use route names
-        builder: (context, state) => const HomePage(), // Use meaningful names
+        builder: (context, state) => HomePage(), // Use meaningful names
       ),
     ],
     redirect: (context, state) {

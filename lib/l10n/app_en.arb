@@ -12,5 +12,7 @@
   "password": "Password",
   "email": "E-Mail",
   "fullName": "Full Name",
-  "required": "Field is required!"
+  "required": "Field is required!",
+  "twoDayMeal": "2-Day-Meal",
+  "dish": "Dish"
 }

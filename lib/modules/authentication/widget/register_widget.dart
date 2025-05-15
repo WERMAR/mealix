@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../shared/authentication/store/authentication_provider.dart';
 import '../model/register_model.dart';
 
-class RegisterComponent extends ConsumerWidget {
-  const RegisterComponent({super.key});
+class RegisterWidget extends ConsumerWidget {
+  const RegisterWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
