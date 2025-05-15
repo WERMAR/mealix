@@ -6,12 +6,7 @@ class RecipeModel {
     required this.twoDayMeal,
   });
 
-  final String id;
-  final String name;
-  final int duration;
-  final bool twoDayMeal;
-
-  RecipeModel fromJson(Map<String, dynamic> json) {
+  factory RecipeModel.fromJson(Map<String, dynamic> json) {
     return RecipeModel(
       id: json['id'] as String,
       name: json['name'] as String,
@@ -19,4 +14,9 @@ class RecipeModel {
       twoDayMeal: json['twoDayMeal'] as bool,
     );
   }
+
+  final String id;
+  final String name;
+  final int duration;
+  final bool twoDayMeal;
 }

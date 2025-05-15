@@ -9,8 +9,9 @@ import '../widgets/profile_badge.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  static const String routeLocation = '/home';
-  static const String routeName = 'home';
+  static String get routeLocation => '/home';
+  static String get routeName => 'home';
+
   DateTimeRange selectedWeek = DateTimeRange(
     start: DateTime(2025, 4, 14),
     end: DateTime(2025, 4, 21),
