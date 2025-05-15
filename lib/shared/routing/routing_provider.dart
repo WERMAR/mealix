@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../modules/authentication/pages/authentication_page.dart';
 import '../../modules/home/pages/home_page.dart';
+import '../../modules/recipes/pages/recipes_page.dart';
+import '../../modules/shopping_list/pages/shopping_list_page.dart';
 import '../authentication/store/authentication_provider.dart';
 
 part 'routing_provider.g.dart';
@@ -49,6 +51,19 @@ GoRouter router(Ref ref) {
         path: HomePage.routeLocation, // Use route names
         name: HomePage.routeName, // Use route names
         builder: (context, state) => HomePage(), // Use meaningful names
+      ),
+      GoRoute(
+        path: RecipesPage.routeLocation,
+        name: RecipesPage.routeName, // Use route names
+        builder:
+            (context, state) => const RecipesPage(), // Use meaningful names
+      ),
+      GoRoute(
+        path: ShoppingListPage.routeLocation,
+        name: ShoppingListPage.routeName, // Use route names
+        builder:
+            (context, state) =>
+                const ShoppingListPage(), // Use meaningful names
       ),
     ],
     redirect: (context, state) {

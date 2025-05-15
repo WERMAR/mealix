@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../shared/widgets/date_range_selector.dart';
 import '../../../shared/widgets/menu_widget.dart';
+import '../../recipes/pages/recipes_page.dart';
+import '../../shopping_list/pages/shopping_list_page.dart';
 import '../widgets/day_meal_card.dart';
 import '../widgets/profile_badge.dart';
 
@@ -25,7 +28,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.secondary,
         shape: const CircleBorder(),
         elevation: 10,
-        onPressed: () => print("Calendar pressed"),
+        onPressed: () => context.go(HomePage.routeLocation),
         child: Icon(
           Icons.calendar_month,
           color: Theme.of(context).colorScheme.primary,
@@ -104,9 +107,8 @@ class HomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(
-        onHomePressed: () => print("Home pressed"),
-        onRecipePressed: () => print("Recipe Pressed"),
-        onShoppingPressed: () => print("Shopping pressed"),
+        onLeftTabPressed: () => context.go(RecipesPage.routeLocation),
+        onRightTabPressed: () => context.go(ShoppingListPage.routeLocation),
       ),
     );
   }
