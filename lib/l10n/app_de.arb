@@ -4,5 +4,7 @@
   "password": "Passwort",
   "email": "E-Mail",
   "fullName": "Vor-/ Nachname",
-  "required": "Feld ist ein Pflichtfeld"
+  "required": "Feld ist ein Pflichtfeld",
+  "twoDayMeal": "2-Tage-Gericht",
+  "dish": "Gericht"
 }

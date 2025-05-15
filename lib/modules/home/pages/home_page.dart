@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../authentication/components/widgets/bottom_nav_bar.dart';
-import '../../authentication/components/widgets/date_range_selector.dart';
-import '../../authentication/components/widgets/day_meal_card.dart';
-import '../../authentication/components/widgets/profile_badge.dart';
+import '../../../shared/widgets/bottom_nav_bar.dart';
+import '../../../shared/widgets/date_range_selector.dart';
+import '../../../shared/widgets/menu_widget.dart';
+import '../widgets/day_meal_card.dart';
+import '../widgets/profile_badge.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -18,12 +19,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF161C29),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        shape: const CircleBorder(),
+        elevation: 10,
+        onPressed: () => print("Calendar pressed"),
+        child: Icon(
+          Icons.calendar_month,
+          color: Theme.of(context).colorScheme.primary,
+          size: 45,
+        ),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF242F49),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Mein Zuhause (My House?)'),
         actions: const [ProfileBadge(initials: 'MW')],
       ),
+      endDrawer: MenuWidget(),
       body: Column(
         children: [
           DateRangeSelector(
@@ -50,47 +64,49 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              children: const [
+              children: [
                 DayMealCard(
-                  dayName: 'Montag',
-                  date: '14.04.2025',
+                  date: DateTime.parse('2025-04-14 00:00:00'),
                   mealName: 'Nudeln mit Pesto',
                   isTwoDayMeal: true,
                 ),
                 DayMealCard(
-                  dayName: 'Dienstag',
-                  date: '15.04.2025',
+                  date: DateTime.parse('2025-04-15 00:00:00'),
                   mealName: 'Nudeln mit Pesto',
                   isTwoDayMeal: true,
                 ),
                 DayMealCard(
-                  dayName: 'Mittwoch',
-                  date: '16.04.2025',
+                  date: DateTime.parse('2025-04-16 00:00:00'),
                   mealName: 'Schnitzel mit Pommes',
                 ),
                 DayMealCard(
-                  dayName: 'Donnerstag',
-                  date: '17.04.2025',
+                  date: DateTime.parse('2025-04-17 00:00:00'),
                   mealName: 'Pizza',
                 ),
                 DayMealCard(
-                  dayName: 'Freitag',
-                  date: '18.04.2025',
+                  date: DateTime.parse('2025-04-18 00:00:00'),
                   mealName: 'Lasagne',
                   isTwoDayMeal: true,
                 ),
                 DayMealCard(
-                  dayName: 'Samstag',
-                  date: '19.04.2025',
+                  date: DateTime.parse('2025-04-19 00:00:00'),
                   mealName: 'Lasagne',
                   isTwoDayMeal: true,
+                ),
+                DayMealCard(
+                  date: DateTime.parse('2025-04-20 00:00:00'),
+                  mealName: 'Schnitzel mit Pommes',
                 ),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
+      bottomNavigationBar: CustomBottomNavBar(
+        onHomePressed: () => print("Home pressed"),
+        onRecipePressed: () => print("Recipe Pressed"),
+        onShoppingPressed: () => print("Shopping pressed"),
+      ),
     );
   }
 }

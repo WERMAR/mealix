@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mealix/modules/authentication/enum/tab_mode_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mealix/shared/authentication/store/authentication_provider.dart';
+
+import '../../modules/authentication/enum/tab_mode_enum.dart';
+import '../authentication/store/authentication_provider.dart';
 
 class TwoTabBar extends StatefulWidget {
   const TwoTabBar({

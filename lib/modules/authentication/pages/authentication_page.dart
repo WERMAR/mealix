@@ -3,11 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../shared/authentication/store/authentication_provider.dart';
-import '../../../shared/components/two_tab_bar_component.dart';
-import '../components/login_component.dart';
-import '../components/register_component.dart';
-import '../components/wave_clipper_component.dart';
+import '../../../shared/widgets/two_tab_bar_component.dart';
 import '../enum/tab_mode_enum.dart';
+import '../widget/login_widget.dart';
+import '../widget/register_widget.dart';
+import '../widget/wave_clipper_widget.dart';
 
 class AuthenticationPage extends ConsumerWidget {
   const AuthenticationPage({super.key});
@@ -59,8 +59,8 @@ class AuthenticationPage extends ConsumerWidget {
                       TwoTabBar(
                         tab1Title: AppLocalizations.of(context)!.loginTitle,
                         tab2Title: AppLocalizations.of(context)!.signUpTitle,
-                        tab1Content: const LoginComponent(),
-                        tab2Content: const RegisterComponent(),
+                        tab1Content: const LoginWidget(),
+                        tab2Content: const RegisterWidget(),
                         onTabChange: (mode) {
                           final notifier = ref.read(
                             authenticationFormStateProvider.notifier,

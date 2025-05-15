@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class DateRangeSelector extends StatelessWidget {
-  final DateTime startDate;
-  final DateTime endDate;
-  final VoidCallback? onPrevious;
-  final VoidCallback? onNext;
-
   const DateRangeSelector({
     super.key,
     required this.startDate,
@@ -13,6 +8,11 @@ class DateRangeSelector extends StatelessWidget {
     this.onPrevious,
     this.onNext,
   });
+
+  final DateTime startDate;
+  final DateTime endDate;
+  final VoidCallback? onPrevious;
+  final VoidCallback? onNext;
 
   @override
   Widget build(BuildContext context) {

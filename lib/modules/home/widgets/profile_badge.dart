@@ -9,26 +9,28 @@ class ProfileBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showDialog(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: const Text("👤 Profile"),
-                content: const Text("Palceholder to add later"),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text("OK"),
-                  ),
-                ],
-              ),
-        );
+        Scaffold.of(context).openEndDrawer();
       },
       child: Container(
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.all(10),
-        decoration: const BoxDecoration(
-          color: Color(0xFF4CAF50),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).colorScheme.surface,
+              Theme.of(context).colorScheme.secondary,
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 10,
+              spreadRadius: 5,
+              offset: Offset(0, 5),
+            ),
+          ],
           shape: BoxShape.circle,
         ),
         child: Text(

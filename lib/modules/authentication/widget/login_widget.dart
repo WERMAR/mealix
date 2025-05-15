@@ -1,13 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mealix/shared/authentication/store/authentication_provider.dart';
 
-class LoginComponent extends ConsumerWidget {
-  const LoginComponent({super.key});
+import '../../../shared/authentication/store/authentication_provider.dart';
+
+class LoginWidget extends ConsumerWidget {
+  const LoginWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -1,23 +1,27 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class DayMealCard extends StatelessWidget {
+  DayMealCard({
+    super.key,
+    required DateTime date,
+    required this.mealName,
+    this.isTwoDayMeal = false,
+  }) : dayName = DateFormat.EEEE(Platform.localeName).format(date),
+       date = DateFormat.yMd(Platform.localeName).format(date);
+
   final String dayName;
   final String date;
   final String mealName;
   final bool isTwoDayMeal;
 
-  const DayMealCard({
-    super.key,
-    required this.dayName,
-    required this.date,
-    required this.mealName,
-    this.isTwoDayMeal = false,
-  });
-
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF242F49),
+      color: Theme.of(context).colorScheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
@@ -29,7 +33,7 @@ class DayMealCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Gericht: $mealName',
+              '${AppLocalizations.of(context)!.dish}: $mealName',
               style: const TextStyle(color: Colors.white70),
             ),
             if (isTwoDayMeal)
@@ -40,9 +44,9 @@ class DayMealCard extends StatelessWidget {
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
-                  '2-Tage-Gericht',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                child: Text(
+                  AppLocalizations.of(context)!.twoDayMeal,
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ),
           ],
