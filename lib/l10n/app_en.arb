@@ -14,5 +14,12 @@
   "fullName": "Full Name",
   "required": "Field is required!",
   "twoDayMeal": "2-Day-Meal",
-  "dish": "Dish"
+  "dish": "Dish",
+  "recipeSuggestion": "Recipe suggestions",
+  "recipesTitle": "Recipes",
+  "lastRecipes": "Recently cooked recipes",
+  "searchPlaceholder": "Search",
+  "addRecipe": "Add Recipe",
+  "cancel": "Cancel",
+  "save": "Save"
 }

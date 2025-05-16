@@ -6,5 +6,12 @@
   "fullName": "Vor-/ Nachname",
   "required": "Feld ist ein Pflichtfeld",
   "twoDayMeal": "2-Tage-Gericht",
-  "dish": "Gericht"
+  "dish": "Gericht",
+  "recipeSuggestion": "Rezept Vorschläge",
+  "recipesTitle": "Rezepte",
+  "lastRecipes": "Deine letzten Gerichte",
+  "searchPlaceholder": "Suche",
+  "addRecipe": "Rezept erstellen",
+  "cancel": "Abbrechen",
+  "save": "Speichern"
 }

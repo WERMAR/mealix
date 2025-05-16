@@ -25,9 +25,9 @@ class ProfileBadge extends StatelessWidget {
           ),
           boxShadow: const [
             BoxShadow(
-              color: Colors.black38,
-              blurRadius: 10,
-              spreadRadius: 5,
+              color: Colors.black26,
+              blurRadius: 8,
+              spreadRadius: 1,
               offset: Offset(0, 5),
             ),
           ],
