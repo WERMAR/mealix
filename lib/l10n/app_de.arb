@@ -13,5 +13,10 @@
   "searchPlaceholder": "Suche",
   "addRecipe": "Rezept erstellen",
   "cancel": "Abbrechen",
-  "save": "Speichern"
+  "save": "Speichern",
+  "close": "Schließen",
+
+
+  "homeTitle": "Mein Zuhause",
+  "recipesTitle": "Rezepte"
 }

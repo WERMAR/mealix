@@ -20,7 +20,7 @@ class DateRangeSelector extends StatelessWidget {
         "${date.day}.${date.month}.${date.year}";
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -37,25 +37,7 @@ class DateRangeSelector extends StatelessWidget {
             onPressed: onNext,
           ),
           const SizedBox(width: 12),
-          GestureDetector(
-            onTap: () {
-              showDialog(
-                context: context,
-                builder:
-                    (context) => AlertDialog(
-                      title: const Text("Not sure how to do this"),
-                      content: const Text("Need to implement calendar."),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text("OK"),
-                        ),
-                      ],
-                    ),
-              );
-            },
-            child: const Icon(Icons.calendar_month, color: Color(0xFFDAFF08)),
-          ),
+          const Icon(Icons.calendar_month, color: Color(0xFFDAFF08)),
         ],
       ),
     );

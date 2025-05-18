@@ -18,6 +18,11 @@ class MenuWidget extends StatelessWidget {
             title: const Text('About'),
             onTap: () => print("About pressed"),
           ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Household Manager'),
+            onTap: () => print('Take me to household'),
+          ),
         ],
       ),
     );

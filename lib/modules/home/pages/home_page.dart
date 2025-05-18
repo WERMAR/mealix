@@ -1,109 +1,105 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+
+// Shared widgets
 import '../../../shared/widgets/bottom_nav_bar.dart';
-import '../../../shared/widgets/date_range_selector.dart';
 import '../../../shared/widgets/menu_widget.dart';
+
+// Navigation targets
 import '../../recipes/pages/recipes_page.dart';
 import '../../shopping_list/pages/shopping_list_page.dart';
-import '../widgets/day_meal_card.dart';
+// Home-specific widgets
 import '../widgets/profile_badge.dart';
+import '../widgets/seven_day_meal_list.dart';
+import '../widgets/week_view.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   static String get routeLocation => '/home';
   static String get routeName => 'home';
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   DateTimeRange selectedWeek = DateTimeRange(
-    start: DateTime(2025, 4, 14),
-    end: DateTime(2025, 4, 21),
+    start: getStartOfWeek(DateTime.now()),
+    end: getStartOfWeek(DateTime.now()).add(const Duration(days: 6)),
   );
+
+  void updateWeek(DateTimeRange newRange) {
+    setState(() {
+      selectedWeek = newRange;
+    });
+  }
+
+  Future<void> pickDate(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: selectedWeek.start,
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2030),
+    );
+
+    if (picked != null) {
+      final newStart = getStartOfWeek(picked);
+      setState(() {
+        selectedWeek = DateTimeRange(
+          start: newStart,
+          end: newStart.add(const Duration(days: 6)),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        onPressed: () => pickDate(context),
+        backgroundColor: theme.colorScheme.secondary,
         shape: const CircleBorder(),
-        elevation: 10,
-        onPressed: () => context.go(HomePage.routeLocation),
-        child: Icon(
-          Icons.calendar_month,
-          color: Theme.of(context).colorScheme.primary,
-          size: 45,
-        ),
+        child: Icon(Icons.calendar_month, color: theme.colorScheme.primary),
       ),
-      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text('Mein Zuhause (My House?)'),
+        backgroundColor: theme.colorScheme.primary,
+        title: Text(
+          AppLocalizations.of(context)!.homeTitle,
+          style: Theme.of(context).textTheme.headlineSmall, // or titleLarge
+        ),
         actions: const [ProfileBadge(initials: 'MW')],
       ),
+
       endDrawer: MenuWidget(),
       body: Column(
         children: [
-          DateRangeSelector(
-            startDate: selectedWeek.start,
-            endDate: selectedWeek.end,
-            /*onPrevious: () {
-              setState(() {
-                selectedWeek = DateTimeRange(
-                  start: selectedWeek.start.subtract(const Duration(days: 7)),
-                  end: selectedWeek.end.subtract(const Duration(days: 7)),
-                );
-              });
-            },
-            onNext: () {
-              setState(() {
-                selectedWeek = DateTimeRange(
-                  start: selectedWeek.start.add(const Duration(days: 7)),
-                  end: selectedWeek.end.add(const Duration(days: 7)),
-                );
-              });
-            },*/
-          ),
-
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              children: [
-                DayMealCard(
-                  date: DateTime.parse('2025-04-14 00:00:00'),
-                  mealName: 'Nudeln mit Pesto',
-                  isTwoDayMeal: true,
-                ),
-                DayMealCard(
-                  date: DateTime.parse('2025-04-15 00:00:00'),
-                  mealName: 'Nudeln mit Pesto',
-                  isTwoDayMeal: true,
-                ),
-                DayMealCard(
-                  date: DateTime.parse('2025-04-16 00:00:00'),
-                  mealName: 'Schnitzel mit Pommes',
-                ),
-                DayMealCard(
-                  date: DateTime.parse('2025-04-17 00:00:00'),
-                  mealName: 'Pizza',
-                ),
-                DayMealCard(
-                  date: DateTime.parse('2025-04-18 00:00:00'),
-                  mealName: 'Lasagne',
-                  isTwoDayMeal: true,
-                ),
-                DayMealCard(
-                  date: DateTime.parse('2025-04-19 00:00:00'),
-                  mealName: 'Lasagne',
-                  isTwoDayMeal: true,
-                ),
-                DayMealCard(
-                  date: DateTime.parse('2025-04-20 00:00:00'),
-                  mealName: 'Schnitzel mit Pommes',
-                ),
-              ],
+          WeekViewCalendar(
+            selectedWeek: selectedWeek,
+            onPreviousWeek:
+                () => updateWeek(
+              DateTimeRange(
+                start: selectedWeek.start.subtract(const Duration(days: 7)),
+                end: selectedWeek.end.subtract(const Duration(days: 7)),
+              ),
+            ),
+            onNextWeek:
+                () => updateWeek(
+              DateTimeRange(
+                start: selectedWeek.start.add(const Duration(days: 7)),
+                end: selectedWeek.end.add(const Duration(days: 7)),
+              ),
             ),
           ),
+          const SizedBox(height: 12),
+          Expanded(child: SevenDayMealList(weekRange: selectedWeek)),
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(
@@ -112,4 +108,8 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+DateTime getStartOfWeek(DateTime date) {
+  return date.subtract(Duration(days: date.weekday - 1));
 }

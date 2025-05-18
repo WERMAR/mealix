@@ -21,5 +21,11 @@
   "searchPlaceholder": "Search",
   "addRecipe": "Add Recipe",
   "cancel": "Cancel",
-  "save": "Save"
+  "save": "Save",
+  "close": "Close",
+
+
+
+  "homeTitle": "My Home",
+  "recipesTitle": "Recipes"
 }
