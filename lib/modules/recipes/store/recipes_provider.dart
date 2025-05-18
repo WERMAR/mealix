@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../helper/input_validation.dart';
 import '../../../shared/model/ingredient_model.dart';
 import 'model/spoonacular_recipe_models.dart';
 
@@ -149,8 +150,77 @@ class CreateRecipeStore extends _$CreateRecipeStore {
   void setImageUrl(String imageUrl) {
     state = state.copyWith(imageUrl: imageUrl);
   }
+}
 
-  void setLoading(bool isLoading) {
-    state = state.copyWith(isLoading: isLoading);
+@riverpod
+List<FieldValidationResult> isCreateRecipeFormValid(Ref ref) {
+  final createRecipeState = ref.watch(createRecipeStoreProvider);
+
+  final validationResults = <FieldValidationResult>[];
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'title',
+      InputValidation.validateRequired(createRecipeState.title),
+    ),
+  );
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'onlineLink',
+      InputValidation.validateInternetLink(createRecipeState.onlineLink),
+    ),
+  );
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'imageUrl',
+      InputValidation.validateInternetLink(createRecipeState.imageUrl),
+    ),
+  );
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'description',
+      InputValidation.validateRequired(createRecipeState.description),
+    ),
+  );
+
+  print(validationResults);
+
+  return validationResults;
+}
+
+@freezed
+sealed class FieldValidationResult with _$FieldValidationResult {
+  const factory FieldValidationResult({
+    required String fieldName,
+    required bool isValid,
+    required String errorMessage,
+  }) = _FieldValidationResult;
+
+  factory FieldValidationResult.valid(String fieldName) {
+    return FieldValidationResult(
+      fieldName: fieldName,
+      isValid: true,
+      errorMessage: '',
+    );
+  }
+
+  factory FieldValidationResult.invalid(String fieldName, String errorMessage) {
+    return FieldValidationResult(
+      fieldName: fieldName,
+      isValid: false,
+      errorMessage: errorMessage,
+    );
+  }
+
+  factory FieldValidationResult.fromString(
+    String fieldName,
+    String? validationResult,
+  ) {
+    return validationResult == null
+        ? FieldValidationResult.valid(fieldName)
+        : FieldValidationResult.invalid(fieldName, validationResult);
   }
 }

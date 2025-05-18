@@ -169,4 +169,137 @@ as List<Ingredient>,
 
 }
 
+/// @nodoc
+mixin _$FieldValidationResult {
+
+ String get fieldName; bool get isValid; String get errorMessage;
+/// Create a copy of FieldValidationResult
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$FieldValidationResultCopyWith<FieldValidationResult> get copyWith => _$FieldValidationResultCopyWithImpl<FieldValidationResult>(this as FieldValidationResult, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is FieldValidationResult&&(identical(other.fieldName, fieldName) || other.fieldName == fieldName)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,fieldName,isValid,errorMessage);
+
+@override
+String toString() {
+  return 'FieldValidationResult(fieldName: $fieldName, isValid: $isValid, errorMessage: $errorMessage)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $FieldValidationResultCopyWith<$Res>  {
+  factory $FieldValidationResultCopyWith(FieldValidationResult value, $Res Function(FieldValidationResult) _then) = _$FieldValidationResultCopyWithImpl;
+@useResult
+$Res call({
+ String fieldName, bool isValid, String errorMessage
+});
+
+
+
+
+}
+/// @nodoc
+class _$FieldValidationResultCopyWithImpl<$Res>
+    implements $FieldValidationResultCopyWith<$Res> {
+  _$FieldValidationResultCopyWithImpl(this._self, this._then);
+
+  final FieldValidationResult _self;
+  final $Res Function(FieldValidationResult) _then;
+
+/// Create a copy of FieldValidationResult
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? fieldName = null,Object? isValid = null,Object? errorMessage = null,}) {
+  return _then(_self.copyWith(
+fieldName: null == fieldName ? _self.fieldName : fieldName // ignore: cast_nullable_to_non_nullable
+as String,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
+as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// @nodoc
+
+
+class _FieldValidationResult implements FieldValidationResult {
+  const _FieldValidationResult({required this.fieldName, required this.isValid, required this.errorMessage});
+  
+
+@override final  String fieldName;
+@override final  bool isValid;
+@override final  String errorMessage;
+
+/// Create a copy of FieldValidationResult
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FieldValidationResultCopyWith<_FieldValidationResult> get copyWith => __$FieldValidationResultCopyWithImpl<_FieldValidationResult>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FieldValidationResult&&(identical(other.fieldName, fieldName) || other.fieldName == fieldName)&&(identical(other.isValid, isValid) || other.isValid == isValid)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,fieldName,isValid,errorMessage);
+
+@override
+String toString() {
+  return 'FieldValidationResult(fieldName: $fieldName, isValid: $isValid, errorMessage: $errorMessage)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FieldValidationResultCopyWith<$Res> implements $FieldValidationResultCopyWith<$Res> {
+  factory _$FieldValidationResultCopyWith(_FieldValidationResult value, $Res Function(_FieldValidationResult) _then) = __$FieldValidationResultCopyWithImpl;
+@override @useResult
+$Res call({
+ String fieldName, bool isValid, String errorMessage
+});
+
+
+
+
+}
+/// @nodoc
+class __$FieldValidationResultCopyWithImpl<$Res>
+    implements _$FieldValidationResultCopyWith<$Res> {
+  __$FieldValidationResultCopyWithImpl(this._self, this._then);
+
+  final _FieldValidationResult _self;
+  final $Res Function(_FieldValidationResult) _then;
+
+/// Create a copy of FieldValidationResult
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? fieldName = null,Object? isValid = null,Object? errorMessage = null,}) {
+  return _then(_FieldValidationResult(
+fieldName: null == fieldName ? _self.fieldName : fieldName // ignore: cast_nullable_to_non_nullable
+as String,isValid: null == isValid ? _self.isValid : isValid // ignore: cast_nullable_to_non_nullable
+as bool,errorMessage: null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
 // dart format on

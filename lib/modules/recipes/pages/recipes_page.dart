@@ -188,6 +188,7 @@ class RecipesPage extends StatelessWidget {
               bottom: 5,
               right: 5,
               child: FloatingActionButton(
+                heroTag: 'createRecipe',
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 shape: const CircleBorder(),
                 elevation: 10,
@@ -221,25 +222,17 @@ class RecipesPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              const SizedBox(height: 5),
               Text(
                 AppLocalizations.of(context)!.addRecipe,
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
-              const SizedBox(height: 10),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+                thickness: 1,
+              ),
               const CreateRecipe(),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(AppLocalizations.of(context)!.cancel),
-                  ),
-                  Expanded(child: Container()),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(AppLocalizations.of(context)!.save),
-                  ),
-                ],
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         );

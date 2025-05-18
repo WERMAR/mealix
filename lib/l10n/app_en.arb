@@ -21,5 +21,15 @@
   "searchPlaceholder": "Search",
   "addRecipe": "Add Recipe",
   "cancel": "Cancel",
-  "save": "Save"
+  "save": "Save",
+  "recipeName": "Recipe Name",
+  "recipeNameValidationError": "Please enter recipe name",
+  "onlineLink": "Online Link",
+  "onlineLinkValidationError": "Please enter a valid link starting with 'https://'",
+  "description": "Description",
+  "descriptionValidationError": "Please enter a brief description",
+  "imageURL": "Image URL",
+  "imageURLValidationError": "Please enter a link for the title image",
+  "cookingSteps": "Cooking steps",
+  "ingredientForPortion": "Ingredients per Portion"
 }

@@ -27,7 +27,28 @@ final spoonacularRecipesProvider =
 // ignore: unused_element
 typedef SpoonacularRecipesRef =
     AutoDisposeFutureProviderRef<SpoonRecipeListDto>;
-String _$createRecipeStoreHash() => r'ec2aae3f56fd1de6e6dc9982b17b9991a4e5be2c';
+String _$isCreateRecipeFormValidHash() =>
+    r'5f69879a5218c9a3b0fd3a3e3815a609521c01a5';
+
+/// See also [isCreateRecipeFormValid].
+@ProviderFor(isCreateRecipeFormValid)
+final isCreateRecipeFormValidProvider =
+    AutoDisposeProvider<List<FieldValidationResult>>.internal(
+      isCreateRecipeFormValid,
+      name: r'isCreateRecipeFormValidProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$isCreateRecipeFormValidHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef IsCreateRecipeFormValidRef =
+    AutoDisposeProviderRef<List<FieldValidationResult>>;
+String _$createRecipeStoreHash() => r'7a7f8a765c38c543621ea449695084618a75c5c2';
 
 /// See also [CreateRecipeStore].
 @ProviderFor(CreateRecipeStore)
