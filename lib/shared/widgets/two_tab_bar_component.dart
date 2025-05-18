@@ -37,6 +37,7 @@ class _TwoTabBarState extends State<TwoTabBar> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     return Column(
       children: [
         Row(
@@ -122,33 +123,8 @@ class _TwoTabBarState extends State<TwoTabBar> {
           ],
         ),
         switch (_mode) {
-          TabMode.tab1 => Column(
-            children: [
-              widget.tab1Content,
-              const SizedBox(height: 16),
-              Consumer(
-                builder: (context, ref, _) {
-                  return TextButton(
-                    onPressed: () {
-                      final notifier = ref.read(
-                        authenticationStoreProvider.notifier,
-                      );
-                      notifier.logInWithEmailAndPassword(
-                        'gceorge@gmail.com',
-                        '123456',
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.secondary,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      textStyle: const TextStyle(fontSize: 16),
-                    ),
-                    child: const Text("Log in as George (Test)"),
-                  );
-                },
-              ),
-            ],
-          ),
+          TabMode.tab1 => widget.tab1Content,
+
           TabMode.tab2 => widget.tab2Content,
         },
       ],

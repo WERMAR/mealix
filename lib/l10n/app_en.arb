@@ -23,9 +23,15 @@
   "cancel": "Cancel",
   "save": "Save",
   "close": "Close",
-
-
-
+  "householdTitle": "Your Household",
+  "tabCreateHousehold": "Neues Zuhause",
+  "tabJoinHousehold": "Zuhause beitreten",
   "homeTitle": "My Home",
-  "recipesTitle": "Recipes"
+  "recipesTitle": "Recipes",
+  "joinHouseholdLabel": "Enter invite code...",
+  "joinHouseholdButton": "Join",
+  "joinHouseholdEmptyError": "Please enter an invite code.",
+  "createHouseholdLabel": "Name your household...",
+  "createHouseholdButton": "Create",
+  "createHouseholdEmptyError": "Please enter a name."
 }

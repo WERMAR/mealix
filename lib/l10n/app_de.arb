@@ -15,8 +15,17 @@
   "cancel": "Abbrechen",
   "save": "Speichern",
   "close": "Schließen",
-
-
+  "householdTitle": "Dein Zuhause",
   "homeTitle": "Mein Zuhause",
-  "recipesTitle": "Rezepte"
-}
+  "recipesTitle": "Rezepte",
+  "tabCreateHousehold": "Neues Zuhause",
+  "tabJoinHousehold": "Zuhause beitreten",
+  "joinHouseholdLabel": "Einladungscode eingeben...",
+  "joinHouseholdButton": "Beitreten",
+  "joinHouseholdEmptyError": "Bitte gib einen Einladungscode ein.",
+  "createHouseholdLabel": "Benenne dein Zuhause...",
+  "createHouseholdButton": "Erstellen",
+  "createHouseholdEmptyError": "Bitte gib einen Namen ein."
+  }
+
+

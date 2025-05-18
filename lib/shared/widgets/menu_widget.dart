@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../modules/home/pages/household_manager_page.dart';
+
 
 class MenuWidget extends StatelessWidget {
   @override
@@ -21,8 +24,12 @@ class MenuWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.home),
             title: const Text('Household Manager'),
-            onTap: () => print('Take me to household'),
+            onTap: () {
+              Navigator.of(context).pop(); // closes the drawer
+              context.push(HouseholdManagerPage.routeLocation);
+            },
           ),
+
         ],
       ),
     );

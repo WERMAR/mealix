@@ -196,5 +196,19 @@ class ThemeManager {
         ),
       ),
     ),
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: Color(0xFF161C29), // optional: dialog background
+      headerForegroundColor: Colors.white, // optional: title color
+      dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+      // This is what you're looking for:
+      cancelButtonStyle: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)), // or theme color
+      ),
+      confirmButtonStyle: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
+      ),
+    ),
+
   );
+
 }

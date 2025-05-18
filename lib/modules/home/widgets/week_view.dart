@@ -22,7 +22,7 @@ class WeekViewCalendar extends StatelessWidget {
     final formatter = DateFormat('dd.MM.yyyy');
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      padding: const EdgeInsets.only(top: 12.0, bottom: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -32,9 +32,10 @@ class WeekViewCalendar extends StatelessWidget {
           ),
           Text(
             '${formatter.format(selectedWeek.start)} - ${formatter.format(selectedWeek.end)}',
-            style: theme.textTheme.bodyLarge?.copyWith(
+            style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
+
           ),
           IconButton(
             icon: Icon(Icons.arrow_right, color: theme.iconTheme.color),
