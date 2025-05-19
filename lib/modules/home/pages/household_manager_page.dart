@@ -20,7 +20,8 @@ class HouseholdManagerPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title:  Text(AppLocalizations.of(context)!.householdTitle),
+        title:  Text(AppLocalizations.of(context)!.householdTitle,
+            style: Theme.of(context).textTheme.headlineLarge),
 
     backgroundColor: theme.colorScheme.primary,
       ),
@@ -41,7 +42,9 @@ class HouseholdManagerPage extends StatelessWidget {
 
             const SizedBox(height: 24),
             Expanded(
-              child: TwoTabBar(
+              // FIXME: cannot change names of tabs, think its because sharing state when used at login page
+
+            child: TwoTabBar(
                 tab1Title: AppLocalizations.of(context)!.tabCreateHousehold,
                 tab2Title: AppLocalizations.of(context)!.tabJoinHousehold,
                 tab1Content: const CreateHouseholdForm(),

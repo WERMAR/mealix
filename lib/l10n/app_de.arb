@@ -25,7 +25,13 @@
   "joinHouseholdEmptyError": "Bitte gib einen Einladungscode ein.",
   "createHouseholdLabel": "Benenne dein Zuhause...",
   "createHouseholdButton": "Erstellen",
-  "createHouseholdEmptyError": "Bitte gib einen Namen ein."
-  }
+  "createHouseholdEmptyError": "Bitte gib einen Namen ein.",
+  "menuHouseholdManager": "Haushaltsverwaltung",
+  "menuSettings": "Einstellungen",
+  "menuAbout": "Über",
+  "recipeDetailsTitle": "Rezeptdetails",
+  "recipeIdPrefix": "Rezept-ID:",
+
+}
 
 

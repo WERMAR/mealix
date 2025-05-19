@@ -74,9 +74,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: theme.colorScheme.primary,
         title: Text(
           AppLocalizations.of(context)!.homeTitle,
-          style: Theme.of(context).textTheme.headlineSmall, // or titleLarge
+          style: Theme.of(context).textTheme.headlineLarge,
         ),
-        actions: const [ProfileBadge(initials: 'MW')],
+        actions: const [ProfileBadge(initials: 'MW')], //placeholder, pull from profile
       ),
 
       endDrawer: MenuWidget(),

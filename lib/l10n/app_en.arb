@@ -33,5 +33,12 @@
   "joinHouseholdEmptyError": "Please enter an invite code.",
   "createHouseholdLabel": "Name your household...",
   "createHouseholdButton": "Create",
-  "createHouseholdEmptyError": "Please enter a name."
+  "createHouseholdEmptyError": "Please enter a name.",
+  "menuHouseholdManager": "Household Manager",
+  "menuSettings": "Settings",
+  "menuAbout": "About",
+  "recipeDetailsTitle": "Recipe Details",
+  "recipeIdPrefix": "Recipe ID:",
+
+
 }

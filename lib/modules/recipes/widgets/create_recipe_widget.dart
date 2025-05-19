@@ -33,8 +33,8 @@ class CreateRecipe extends ConsumerWidget {
                 },
                 onChanged:
                     (value) => ref
-                        .read(createRecipeStoreProvider.notifier)
-                        .setTitle(value),
+                    .read(createRecipeStoreProvider.notifier)
+                    .setTitle(value),
               ),
               const SizedBox(height: 20),
 
@@ -50,8 +50,8 @@ class CreateRecipe extends ConsumerWidget {
                 },
                 onChanged:
                     (value) => ref
-                        .read(createRecipeStoreProvider.notifier)
-                        .setOnlineLink(value),
+                    .read(createRecipeStoreProvider.notifier)
+                    .setOnlineLink(value),
               ),
               const SizedBox(height: 20),
 
@@ -140,7 +140,7 @@ class CreateRecipe extends ConsumerWidget {
                         Expanded(
                           child: TextFormField(
                             initialValue:
-                                createRecipeForm.ingredients[index].name,
+                            createRecipeForm.ingredients[index].name,
                             decoration: InputDecoration(
                               labelText: 'Zutat ${index + 1}',
                             ),
