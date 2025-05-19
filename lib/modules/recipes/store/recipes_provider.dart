@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../helper/input_validation.dart';
+import '../../../shared/model/cooking_step_model.dart';
 import '../../../shared/model/ingredient_model.dart';
 import 'model/spoonacular_recipe_models.dart';
 
@@ -113,7 +115,7 @@ sealed class CreateRecipeState with _$CreateRecipeState {
     required String description,
     required String imageUrl,
     required bool isLoading,
-    required List<String> cookingSteps,
+    required List<CookingStep> cookingSteps,
     required List<Ingredient> ingredients,
   }) = _CreateRecipeState;
 
@@ -149,6 +151,70 @@ class CreateRecipeStore extends _$CreateRecipeStore {
 
   void setImageUrl(String imageUrl) {
     state = state.copyWith(imageUrl: imageUrl);
+  }
+
+  void addCookingStep() {
+    state = state.copyWith(
+      cookingSteps: [...state.cookingSteps, CookingStep.initial()],
+    );
+  }
+
+  void removeCookingStep(int index) {
+    state = state.copyWith(
+      cookingSteps: [
+        ...state.cookingSteps.sublist(0, index),
+        ...state.cookingSteps.sublist(index + 1),
+      ],
+    );
+  }
+
+  void addIngredientsPerPortion() {
+    state = state.copyWith(
+      ingredients: [...state.ingredients, Ingredient.initial()],
+    );
+  }
+
+  void removeIngredientsPerPortion(int index) {
+    state = state.copyWith(
+      ingredients: [
+        ...state.ingredients.sublist(0, index),
+        ...state.ingredients.sublist(index + 1),
+      ],
+    );
+  }
+
+  void updateDescriptionOfStep(int index, String newDescription) {
+    final updated = state.cookingSteps[index].copyWith(
+      description: newDescription,
+    );
+    final updatedList = List.of(state.cookingSteps)..[index] = updated;
+
+    state = state.copyWith(cookingSteps: updatedList);
+  }
+
+  void updateDurationOfStep(int index, String newDuration) {
+    final updated = state.cookingSteps[index].copyWith(
+      duration: int.tryParse(newDuration) ?? 0,
+    );
+    final updatedList = List.of(state.cookingSteps)..[index] = updated;
+
+    state = state.copyWith(cookingSteps: updatedList);
+  }
+
+  void updateGroceryListGroup(int index, GroceryListGroup firstWhere) {
+    final updated = state.ingredients[index].copyWith(
+      groceryListGroup: firstWhere,
+    );
+    final updatedList = List.of(state.ingredients)..[index] = updated;
+
+    state = state.copyWith(ingredients: updatedList);
+  }
+
+  void updateIngredientName(int index, String name) {
+    final updated = state.ingredients[index].copyWith(name: name);
+    final updatedList = List.of(state.ingredients)..[index] = updated;
+
+    state = state.copyWith(ingredients: updatedList);
   }
 }
 

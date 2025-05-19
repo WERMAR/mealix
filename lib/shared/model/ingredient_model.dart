@@ -1,24 +1,30 @@
-class Ingredient {
-  const Ingredient({
-    required this.id,
-    required this.name,
-    required this.groceryListGroup,
-  });
-  factory Ingredient.fromJson(Map<String, dynamic> json) {
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:uuid/v4.dart';
+
+part 'ingredient_model.freezed.dart';
+part 'ingredient_model.g.dart';
+
+@freezed
+sealed class Ingredient with _$Ingredient {
+  const factory Ingredient({
+    required String id,
+    required String name,
+    required GroceryListGroup groceryListGroup,
+  }) = _Ingredient;
+
+  factory Ingredient.initial() {
     return Ingredient(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      groceryListGroup: GroceryListGroup.values.firstWhere(
-        (e) => e.name == json['groceryListGroup'],
-      ),
+      id: const UuidV4().generate(),
+      name: '',
+      groceryListGroup: GroceryListGroup.none,
     );
   }
-  final String id;
-  final String name;
-  final GroceryListGroup groceryListGroup;
+  factory Ingredient.fromJson(Map<String, dynamic> json) =>
+      _$IngredientFromJson(json);
 }
 
 enum GroceryListGroup {
+  none,
   fruitsAndVegetables,
   dairyProducts,
   animalAndVegetableProducts,

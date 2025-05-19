@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateRecipeState {
 
- String get title; String get onlineLink; String get description; String get imageUrl; bool get isLoading; List<String> get cookingSteps; List<Ingredient> get ingredients;
+ String get title; String get onlineLink; String get description; String get imageUrl; bool get isLoading; List<CookingStep> get cookingSteps; List<Ingredient> get ingredients;
 /// Create a copy of CreateRecipeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $CreateRecipeStateCopyWith<$Res>  {
   factory $CreateRecipeStateCopyWith(CreateRecipeState value, $Res Function(CreateRecipeState) _then) = _$CreateRecipeStateCopyWithImpl;
 @useResult
 $Res call({
- String title, String onlineLink, String description, String imageUrl, bool isLoading, List<String> cookingSteps, List<Ingredient> ingredients
+ String title, String onlineLink, String description, String imageUrl, bool isLoading, List<CookingStep> cookingSteps, List<Ingredient> ingredients
 });
 
 
@@ -71,7 +71,7 @@ as String,description: null == description ? _self.description : description // 
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,cookingSteps: null == cookingSteps ? _self.cookingSteps : cookingSteps // ignore: cast_nullable_to_non_nullable
-as List<String>,ingredients: null == ingredients ? _self.ingredients : ingredients // ignore: cast_nullable_to_non_nullable
+as List<CookingStep>,ingredients: null == ingredients ? _self.ingredients : ingredients // ignore: cast_nullable_to_non_nullable
 as List<Ingredient>,
   ));
 }
@@ -83,7 +83,7 @@ as List<Ingredient>,
 
 
 class _CreateRecipeState implements CreateRecipeState {
-  const _CreateRecipeState({required this.title, required this.onlineLink, required this.description, required this.imageUrl, required this.isLoading, required final  List<String> cookingSteps, required final  List<Ingredient> ingredients}): _cookingSteps = cookingSteps,_ingredients = ingredients;
+  const _CreateRecipeState({required this.title, required this.onlineLink, required this.description, required this.imageUrl, required this.isLoading, required final  List<CookingStep> cookingSteps, required final  List<Ingredient> ingredients}): _cookingSteps = cookingSteps,_ingredients = ingredients;
   
 
 @override final  String title;
@@ -91,8 +91,8 @@ class _CreateRecipeState implements CreateRecipeState {
 @override final  String description;
 @override final  String imageUrl;
 @override final  bool isLoading;
- final  List<String> _cookingSteps;
-@override List<String> get cookingSteps {
+ final  List<CookingStep> _cookingSteps;
+@override List<CookingStep> get cookingSteps {
   if (_cookingSteps is EqualUnmodifiableListView) return _cookingSteps;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_cookingSteps);
@@ -136,7 +136,7 @@ abstract mixin class _$CreateRecipeStateCopyWith<$Res> implements $CreateRecipeS
   factory _$CreateRecipeStateCopyWith(_CreateRecipeState value, $Res Function(_CreateRecipeState) _then) = __$CreateRecipeStateCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String onlineLink, String description, String imageUrl, bool isLoading, List<String> cookingSteps, List<Ingredient> ingredients
+ String title, String onlineLink, String description, String imageUrl, bool isLoading, List<CookingStep> cookingSteps, List<Ingredient> ingredients
 });
 
 
@@ -161,7 +161,7 @@ as String,description: null == description ? _self.description : description // 
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,cookingSteps: null == cookingSteps ? _self._cookingSteps : cookingSteps // ignore: cast_nullable_to_non_nullable
-as List<String>,ingredients: null == ingredients ? _self._ingredients : ingredients // ignore: cast_nullable_to_non_nullable
+as List<CookingStep>,ingredients: null == ingredients ? _self._ingredients : ingredients // ignore: cast_nullable_to_non_nullable
 as List<Ingredient>,
   ));
 }
