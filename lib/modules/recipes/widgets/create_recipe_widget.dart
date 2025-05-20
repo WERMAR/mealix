@@ -146,6 +146,27 @@ class CreateRecipe extends StatelessWidget {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(child: Container()),
+                            Text(
+                              AppLocalizations.of(context)!.twoDayMeal,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Checkbox(
+                              activeColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              value: createRecipeForm.isTwoDayMeal,
+                              onChanged:
+                                  (value) => ref
+                                      .read(createRecipeStoreProvider.notifier)
+                                      .setIsTwoDayMeal(
+                                        isTwoDayMeal: value ?? false,
+                                      ),
+                            ),
+                          ],
+                        ),
                         // Upload Image Button
                         const SizedBox(height: 30),
                         Divider(color: Theme.of(context).colorScheme.primary),
@@ -336,16 +357,15 @@ class CreateRecipe extends StatelessWidget {
                                           labelText: 'Zutat ${index + 1}',
                                         ),
                                         onChanged:
-                                            (newValue) =>
-                                                () => ref
-                                                    .read(
-                                                      createRecipeStoreProvider
-                                                          .notifier,
-                                                    )
-                                                    .updateIngredientName(
-                                                      index,
-                                                      newValue,
-                                                    ),
+                                            (newValue) => ref
+                                                .read(
+                                                  createRecipeStoreProvider
+                                                      .notifier,
+                                                )
+                                                .updateIngredientName(
+                                                  index,
+                                                  newValue,
+                                                ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
                                             return 'Please enter ingredient ${index + 1}';
@@ -425,8 +445,10 @@ class CreateRecipe extends StatelessWidget {
                                     .where((x) => !x.isValid)
                                     .isEmpty
                                 ? () => {
-                                  //TODO
-                                  print(ref.watch(createRecipeStoreProvider)),
+                                  ref
+                                      .read(createRecipeStoreProvider.notifier)
+                                      .createRecipe(),
+                                  Navigator.pop(context),
                                 }
                                 : null, // Pass the context
                         style: ElevatedButton.styleFrom(

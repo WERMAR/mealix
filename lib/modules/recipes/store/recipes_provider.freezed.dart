@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateRecipeState {
 
- String get title; String get onlineLink; String get description; String get imageUrl; bool get isLoading; List<CookingStep> get cookingSteps; List<Ingredient> get ingredients;
+ String get title; String get onlineLink; String get description; String get imageUrl; bool get isTwoDayMeal; List<CookingStep> get cookingSteps; List<Ingredient> get ingredients;
 /// Create a copy of CreateRecipeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CreateRecipeStateCopyWith<CreateRecipeState> get copyWith => _$CreateRecipeStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateRecipeState&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other.cookingSteps, cookingSteps)&&const DeepCollectionEquality().equals(other.ingredients, ingredients));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateRecipeState&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isTwoDayMeal, isTwoDayMeal) || other.isTwoDayMeal == isTwoDayMeal)&&const DeepCollectionEquality().equals(other.cookingSteps, cookingSteps)&&const DeepCollectionEquality().equals(other.ingredients, ingredients));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,onlineLink,description,imageUrl,isLoading,const DeepCollectionEquality().hash(cookingSteps),const DeepCollectionEquality().hash(ingredients));
+int get hashCode => Object.hash(runtimeType,title,onlineLink,description,imageUrl,isTwoDayMeal,const DeepCollectionEquality().hash(cookingSteps),const DeepCollectionEquality().hash(ingredients));
 
 @override
 String toString() {
-  return 'CreateRecipeState(title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isLoading: $isLoading, cookingSteps: $cookingSteps, ingredients: $ingredients)';
+  return 'CreateRecipeState(title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isTwoDayMeal: $isTwoDayMeal, cookingSteps: $cookingSteps, ingredients: $ingredients)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CreateRecipeStateCopyWith<$Res>  {
   factory $CreateRecipeStateCopyWith(CreateRecipeState value, $Res Function(CreateRecipeState) _then) = _$CreateRecipeStateCopyWithImpl;
 @useResult
 $Res call({
- String title, String onlineLink, String description, String imageUrl, bool isLoading, List<CookingStep> cookingSteps, List<Ingredient> ingredients
+ String title, String onlineLink, String description, String imageUrl, bool isTwoDayMeal, List<CookingStep> cookingSteps, List<Ingredient> ingredients
 });
 
 
@@ -63,13 +63,13 @@ class _$CreateRecipeStateCopyWithImpl<$Res>
 
 /// Create a copy of CreateRecipeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isLoading = null,Object? cookingSteps = null,Object? ingredients = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isTwoDayMeal = null,Object? cookingSteps = null,Object? ingredients = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,onlineLink: null == onlineLink ? _self.onlineLink : onlineLink // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as String,isTwoDayMeal: null == isTwoDayMeal ? _self.isTwoDayMeal : isTwoDayMeal // ignore: cast_nullable_to_non_nullable
 as bool,cookingSteps: null == cookingSteps ? _self.cookingSteps : cookingSteps // ignore: cast_nullable_to_non_nullable
 as List<CookingStep>,ingredients: null == ingredients ? _self.ingredients : ingredients // ignore: cast_nullable_to_non_nullable
 as List<Ingredient>,
@@ -83,14 +83,14 @@ as List<Ingredient>,
 
 
 class _CreateRecipeState implements CreateRecipeState {
-  const _CreateRecipeState({required this.title, required this.onlineLink, required this.description, required this.imageUrl, required this.isLoading, required final  List<CookingStep> cookingSteps, required final  List<Ingredient> ingredients}): _cookingSteps = cookingSteps,_ingredients = ingredients;
+  const _CreateRecipeState({required this.title, required this.onlineLink, required this.description, required this.imageUrl, required this.isTwoDayMeal, required final  List<CookingStep> cookingSteps, required final  List<Ingredient> ingredients}): _cookingSteps = cookingSteps,_ingredients = ingredients;
   
 
 @override final  String title;
 @override final  String onlineLink;
 @override final  String description;
 @override final  String imageUrl;
-@override final  bool isLoading;
+@override final  bool isTwoDayMeal;
  final  List<CookingStep> _cookingSteps;
 @override List<CookingStep> get cookingSteps {
   if (_cookingSteps is EqualUnmodifiableListView) return _cookingSteps;
@@ -116,16 +116,16 @@ _$CreateRecipeStateCopyWith<_CreateRecipeState> get copyWith => __$CreateRecipeS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateRecipeState&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&const DeepCollectionEquality().equals(other._cookingSteps, _cookingSteps)&&const DeepCollectionEquality().equals(other._ingredients, _ingredients));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateRecipeState&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isTwoDayMeal, isTwoDayMeal) || other.isTwoDayMeal == isTwoDayMeal)&&const DeepCollectionEquality().equals(other._cookingSteps, _cookingSteps)&&const DeepCollectionEquality().equals(other._ingredients, _ingredients));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,title,onlineLink,description,imageUrl,isLoading,const DeepCollectionEquality().hash(_cookingSteps),const DeepCollectionEquality().hash(_ingredients));
+int get hashCode => Object.hash(runtimeType,title,onlineLink,description,imageUrl,isTwoDayMeal,const DeepCollectionEquality().hash(_cookingSteps),const DeepCollectionEquality().hash(_ingredients));
 
 @override
 String toString() {
-  return 'CreateRecipeState(title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isLoading: $isLoading, cookingSteps: $cookingSteps, ingredients: $ingredients)';
+  return 'CreateRecipeState(title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isTwoDayMeal: $isTwoDayMeal, cookingSteps: $cookingSteps, ingredients: $ingredients)';
 }
 
 
@@ -136,7 +136,7 @@ abstract mixin class _$CreateRecipeStateCopyWith<$Res> implements $CreateRecipeS
   factory _$CreateRecipeStateCopyWith(_CreateRecipeState value, $Res Function(_CreateRecipeState) _then) = __$CreateRecipeStateCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String onlineLink, String description, String imageUrl, bool isLoading, List<CookingStep> cookingSteps, List<Ingredient> ingredients
+ String title, String onlineLink, String description, String imageUrl, bool isTwoDayMeal, List<CookingStep> cookingSteps, List<Ingredient> ingredients
 });
 
 
@@ -153,13 +153,13 @@ class __$CreateRecipeStateCopyWithImpl<$Res>
 
 /// Create a copy of CreateRecipeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isLoading = null,Object? cookingSteps = null,Object? ingredients = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isTwoDayMeal = null,Object? cookingSteps = null,Object? ingredients = null,}) {
   return _then(_CreateRecipeState(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,onlineLink: null == onlineLink ? _self.onlineLink : onlineLink // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+as String,isTwoDayMeal: null == isTwoDayMeal ? _self.isTwoDayMeal : isTwoDayMeal // ignore: cast_nullable_to_non_nullable
 as bool,cookingSteps: null == cookingSteps ? _self._cookingSteps : cookingSteps // ignore: cast_nullable_to_non_nullable
 as List<CookingStep>,ingredients: null == ingredients ? _self._ingredients : ingredients // ignore: cast_nullable_to_non_nullable
 as List<Ingredient>,

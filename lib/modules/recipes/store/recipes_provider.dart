@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,6 +11,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../helper/input_validation.dart';
 import '../../../shared/model/cooking_step_model.dart';
 import '../../../shared/model/ingredient_model.dart';
+import '../../../shared/model/recipe_model.dart';
 import 'model/spoonacular_recipe_models.dart';
 
 part 'recipes_provider.g.dart';
@@ -114,7 +116,7 @@ sealed class CreateRecipeState with _$CreateRecipeState {
     required String onlineLink,
     required String description,
     required String imageUrl,
-    required bool isLoading,
+    required bool isTwoDayMeal,
     required List<CookingStep> cookingSteps,
     required List<Ingredient> ingredients,
   }) = _CreateRecipeState;
@@ -124,7 +126,7 @@ sealed class CreateRecipeState with _$CreateRecipeState {
     onlineLink: '',
     description: '',
     imageUrl: '',
-    isLoading: false,
+    isTwoDayMeal: false,
     cookingSteps: [],
     ingredients: [],
   );
@@ -151,6 +153,10 @@ class CreateRecipeStore extends _$CreateRecipeStore {
 
   void setImageUrl(String imageUrl) {
     state = state.copyWith(imageUrl: imageUrl);
+  }
+
+  void setIsTwoDayMeal({required bool isTwoDayMeal}) {
+    state = state.copyWith(isTwoDayMeal: isTwoDayMeal);
   }
 
   void addCookingStep() {
@@ -214,7 +220,21 @@ class CreateRecipeStore extends _$CreateRecipeStore {
     final updated = state.ingredients[index].copyWith(name: name);
     final updatedList = List.of(state.ingredients)..[index] = updated;
 
+    print(updatedList);
     state = state.copyWith(ingredients: updatedList);
+  }
+
+  createRecipe() async {
+    final db = FirebaseFirestore.instance;
+    await db
+        .collection('recipes')
+        .doc(state.title)
+        .withConverter(
+          fromFirestore: RecipeModel.fromFirestore,
+          toFirestore: (recipe, options) => recipe.toFirestore(),
+        )
+        .set(RecipeModel.fromState(state))
+        .onError((e, _) => print('Error writing document: $e'));
   }
 }
 
@@ -251,9 +271,6 @@ List<FieldValidationResult> isCreateRecipeFormValid(Ref ref) {
       InputValidation.validateRequired(createRecipeState.description),
     ),
   );
-
-  print(validationResults);
-
   return validationResults;
 }
 

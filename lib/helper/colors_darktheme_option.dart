@@ -15,5 +15,3 @@ class ThemeColors {
         : Colors.white;
   }
 }
-
-class BuilderContext {}
