@@ -34,9 +34,7 @@ class _JoinHouseholdFormState extends State<JoinHouseholdForm> {
       children: [
         TextField(
           controller: _controller,
-          decoration: InputDecoration(
-            labelText: local.joinHouseholdLabel,
-          ),
+          decoration: InputDecoration(labelText: local.joinHouseholdLabel),
         ),
         const SizedBox(height: 16),
         ElevatedButton(

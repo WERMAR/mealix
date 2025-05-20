@@ -93,12 +93,12 @@ class ThemeManager {
       ),
     ),
     datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFF161C29), // optional: dialog background
-      headerForegroundColor: Colors.white, // optional: title color
+      backgroundColor: Color(0xFF161C29),
+      headerForegroundColor: Colors.white,
       dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
-      // This is what you're looking for:
+
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)), // or theme color
+        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
       ),
       confirmButtonStyle: ButtonStyle(
         foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
@@ -109,12 +109,12 @@ class ThemeManager {
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: Colors.white,
-    primaryColor: const Color(0xFFF5F5F5),
+    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    primaryColor: const Color(0xFFE0E0E0),
     colorScheme: const ColorScheme.light(
-      primary: Color(0xFFF5F5F5),
+      primary: Color(0xFFE0E0E0),
       secondary: Color(0xFF4C0082),
-      surface: Color.fromARGB(255, 223, 220, 220),
+      surface: Color(0xFFF5F5F5),
     ),
     iconTheme: const IconThemeData(color: Color(0xFF4C0082)),
     textTheme: GoogleFonts.interTextTheme(
@@ -195,17 +195,20 @@ class ThemeManager {
           color: Colors.black54,
         ),
       ),
+
     ),
-    datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFF161C29), // optional: dialog background
+
+
+  datePickerTheme: DatePickerThemeData(
+      backgroundColor: Color(0xFFE9EBEF), // optional: dialog background
       headerForegroundColor: Colors.white, // optional: title color
       dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
       // This is what you're looking for:
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)), // or theme color
+        foregroundColor: MaterialStateProperty.all(Color(0xFF050505)), // or theme color
       ),
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
+        foregroundColor: MaterialStateProperty.all(Color(0xFF1D1D1B)),
       ),
     ),
 

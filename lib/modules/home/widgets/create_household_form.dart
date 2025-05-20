@@ -22,7 +22,7 @@ class _CreateHouseholdFormState extends State<CreateHouseholdForm> {
       return;
     }
 
-    // TODO: Call Firestore to create a new household
+    // TODO: Call Firestore to create a new household I think perhaps I'll need to create a Household Repository when the time comes and implement riverpod
     print('Creating household with name: $name');
   }
 
