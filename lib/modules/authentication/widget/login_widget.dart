@@ -55,7 +55,7 @@ class LoginWidget extends ConsumerWidget {
             child: TextFormField(
               controller: emailController,
               keyboardType:
-                  TextInputType.emailAddress, // Use the controller here.
+                  TextInputType.emailAddress,
               focusNode: _emailFocusNode,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
