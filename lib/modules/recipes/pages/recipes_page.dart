@@ -205,7 +205,7 @@ class RecipesPage extends StatelessWidget {
                 child: Icon(
                   Icons.add,
                   color: Theme.of(context).colorScheme.primary,
-                  size: 24,
+                  size: 45,
                 ),
               ),
             ),
