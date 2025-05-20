@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "973303759749",
+    "project_id": "mealix-6e86d",
+    "storage_bucket": "mealix-6e86d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973303759749:android:d0f72c8dd434bafc73baec",
+        "android_client_info": {
+          "package_name": "com.wermar.mealix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973303759749-ad7a9r9qhlfd3ocm7aveu0fo15t9d66a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdmTxJ3_wPt1wCEky2WMMq7LdKeXn0aTs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973303759749-ad7a9r9qhlfd3ocm7aveu0fo15t9d66a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "973303759749-2ajebj18g5ghrcvlsbh6i31ooie4eq0g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mealix"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

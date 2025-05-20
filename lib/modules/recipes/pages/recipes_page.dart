@@ -61,7 +61,7 @@ class RecipesPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Consumer(
                   builder: (context, ref, child) {
-                    final data = ref.watch(spoonacularRecipesProvider);
+                    final data = ref.watch(firebaseRecipesProvider);
                     return data.when(
                       data: (data) {
                         return Expanded(
@@ -74,7 +74,7 @@ class RecipesPage extends StatelessWidget {
                                   mainAxisExtent: 200,
                                   crossAxisCount: 2,
                                 ),
-                            itemCount: data.results.length,
+                            itemCount: data.length,
                             itemBuilder: (context, index) {
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
@@ -83,15 +83,24 @@ class RecipesPage extends StatelessWidget {
                                   alignment: Alignment.center,
                                   children: [
                                     Image.network(
-                                      data.results[index].imageUrl,
+                                      data[index].imageUrl,
                                       fit: BoxFit.cover,
+                                      errorBuilder: (
+                                        context,
+                                        error,
+                                        stackTrace,
+                                      ) {
+                                        return Image.asset(
+                                          'assets/images/placeholder.png',
+                                        );
+                                      },
                                     ),
                                     ColoredBox(
                                       color: Colors.black38,
                                       child: Center(
                                         child: Text(
                                           textAlign: TextAlign.center,
-                                          data.results[index].title,
+                                          data[index].title,
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -188,6 +197,7 @@ class RecipesPage extends StatelessWidget {
               bottom: 5,
               right: 5,
               child: FloatingActionButton(
+                heroTag: 'createRecipe',
                 backgroundColor: Theme.of(context).colorScheme.secondary,
                 shape: const CircleBorder(),
                 elevation: 10,
@@ -221,25 +231,17 @@ class RecipesPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              const SizedBox(height: 5),
               Text(
                 AppLocalizations.of(context)!.addRecipe,
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
-              const SizedBox(height: 10),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+                thickness: 1,
+              ),
               const CreateRecipe(),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(AppLocalizations.of(context)!.cancel),
-                  ),
-                  Expanded(child: Container()),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(AppLocalizations.of(context)!.save),
-                  ),
-                ],
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         );

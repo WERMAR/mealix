@@ -30,8 +30,15 @@
   "menuSettings": "Einstellungen",
   "menuAbout": "Über",
   "recipeDetailsTitle": "Rezeptdetails",
-  "recipeIdPrefix": "Rezept-ID:"
-
+  "recipeIdPrefix": "Rezept-ID:",
+  "recipeName": "Rezeptname",
+  "recipeNameValidationError": "Geben Sie einen Namen für das Rezept ein",
+  "onlineLink": "Online-Link",
+  "onlineLinkValidationError": "Geben Sie einen korrekten Link ein beginnend mit 'https://'",
+  "description": "Beschreibung",
+  "descriptionValidationError": "Geben fügen Sie eine kurze Beschreibung des Rezepts hinzu",
+  "imageURL": "Anzeigebild URL",
+  "imageURLValidationError": "Geben Sie einen Link für das Anzeigebild an",
+  "cookingSteps": "Zubereitungsschritte",
+  "ingredientForPortion": "Zutaten für eine Portion"
 }
-
-

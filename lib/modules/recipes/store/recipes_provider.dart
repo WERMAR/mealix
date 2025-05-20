@@ -1,19 +1,40 @@
 import 'dart:convert';
-import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../helper/input_validation.dart';
+import '../../../shared/model/cooking_step_model.dart';
 import '../../../shared/model/ingredient_model.dart';
+import '../../../shared/model/recipe_model.dart';
 import 'model/spoonacular_recipe_models.dart';
 
-part 'recipes_provider.g.dart';
 part 'recipes_provider.freezed.dart';
+part 'recipes_provider.g.dart';
 
 const String spoonBaseURL =
     '/recipes/complexSearch?query=vegetarian&apiKey=66c68ca189af494ea20ed04ee3e38f76';
+
+@riverpod
+Future<List<RecipeModel>> firebaseRecipes(Ref ref) async {
+  final now = Timestamp.now();
+  final thirtyDaysAgo = Timestamp.fromDate(
+    DateTime.now().subtract(const Duration(days: 30)),
+  );
+
+  final snapshot =
+      await FirebaseFirestore.instance
+          .collection('recipes')
+          .orderBy('createdAt', descending: true)
+          .limit(10)
+          .get();
+
+  final recipes =
+      snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc, null)).toList();
+  return recipes;
+}
 
 @riverpod
 Future<SpoonRecipeListDto> spoonacularRecipes(Ref ref) async {
@@ -111,8 +132,8 @@ sealed class CreateRecipeState with _$CreateRecipeState {
     required String onlineLink,
     required String description,
     required String imageUrl,
-    required bool isLoading,
-    required List<String> cookingSteps,
+    required bool isTwoDayMeal,
+    required List<CookingStep> cookingSteps,
     required List<Ingredient> ingredients,
   }) = _CreateRecipeState;
 
@@ -121,7 +142,7 @@ sealed class CreateRecipeState with _$CreateRecipeState {
     onlineLink: '',
     description: '',
     imageUrl: '',
-    isLoading: false,
+    isTwoDayMeal: false,
     cookingSteps: [],
     ingredients: [],
   );
@@ -150,7 +171,154 @@ class CreateRecipeStore extends _$CreateRecipeStore {
     state = state.copyWith(imageUrl: imageUrl);
   }
 
-  void setLoading(bool isLoading) {
-    state = state.copyWith(isLoading: isLoading);
+  void setIsTwoDayMeal({required bool isTwoDayMeal}) {
+    state = state.copyWith(isTwoDayMeal: isTwoDayMeal);
+  }
+
+  void addCookingStep() {
+    state = state.copyWith(
+      cookingSteps: [...state.cookingSteps, CookingStep.initial()],
+    );
+  }
+
+  void removeCookingStep(int index) {
+    state = state.copyWith(
+      cookingSteps: [
+        ...state.cookingSteps.sublist(0, index),
+        ...state.cookingSteps.sublist(index + 1),
+      ],
+    );
+  }
+
+  void addIngredientsPerPortion() {
+    state = state.copyWith(
+      ingredients: [...state.ingredients, Ingredient.initial()],
+    );
+  }
+
+  void removeIngredientsPerPortion(int index) {
+    state = state.copyWith(
+      ingredients: [
+        ...state.ingredients.sublist(0, index),
+        ...state.ingredients.sublist(index + 1),
+      ],
+    );
+  }
+
+  void updateDescriptionOfStep(int index, String newDescription) {
+    final updated = state.cookingSteps[index].copyWith(
+      description: newDescription,
+    );
+    final updatedList = List.of(state.cookingSteps)..[index] = updated;
+
+    state = state.copyWith(cookingSteps: updatedList);
+  }
+
+  void updateDurationOfStep(int index, String newDuration) {
+    final updated = state.cookingSteps[index].copyWith(
+      duration: int.tryParse(newDuration) ?? 0,
+    );
+    final updatedList = List.of(state.cookingSteps)..[index] = updated;
+
+    state = state.copyWith(cookingSteps: updatedList);
+  }
+
+  void updateGroceryListGroup(int index, GroceryListGroup firstWhere) {
+    final updated = state.ingredients[index].copyWith(
+      groceryListGroup: firstWhere,
+    );
+    final updatedList = List.of(state.ingredients)..[index] = updated;
+
+    state = state.copyWith(ingredients: updatedList);
+  }
+
+  void updateIngredientName(int index, String name) {
+    final updated = state.ingredients[index].copyWith(name: name);
+    final updatedList = List.of(state.ingredients)..[index] = updated;
+
+    state = state.copyWith(ingredients: updatedList);
+  }
+
+  createRecipe() async {
+    final db = FirebaseFirestore.instance;
+    await db
+        .collection('recipes')
+        .doc(state.title)
+        .withConverter(
+          fromFirestore: RecipeModel.fromFirestore,
+          toFirestore: (recipe, options) => recipe.toFirestore(),
+        )
+        .set(RecipeModel.fromState(state))
+        .onError((e, _) => print('Error writing document: $e'));
+  }
+}
+
+@riverpod
+List<FieldValidationResult> isCreateRecipeFormValid(Ref ref) {
+  final createRecipeState = ref.watch(createRecipeStoreProvider);
+
+  final validationResults = <FieldValidationResult>[];
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'title',
+      InputValidation.validateRequired(createRecipeState.title),
+    ),
+  );
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'onlineLink',
+      InputValidation.validateInternetLink(createRecipeState.onlineLink),
+    ),
+  );
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'imageUrl',
+      InputValidation.validateInternetLink(createRecipeState.imageUrl),
+    ),
+  );
+
+  validationResults.add(
+    FieldValidationResult.fromString(
+      'description',
+      InputValidation.validateRequired(createRecipeState.description),
+    ),
+  );
+  return validationResults;
+}
+
+@freezed
+sealed class FieldValidationResult with _$FieldValidationResult {
+  const factory FieldValidationResult({
+    required String fieldName,
+    required bool isValid,
+    required String errorMessage,
+  }) = _FieldValidationResult;
+
+  factory FieldValidationResult.valid(String fieldName) {
+    return FieldValidationResult(
+      fieldName: fieldName,
+      isValid: true,
+      errorMessage: '',
+    );
+  }
+
+  factory FieldValidationResult.invalid(String fieldName, String errorMessage) {
+    return FieldValidationResult(
+      fieldName: fieldName,
+      isValid: false,
+      errorMessage: errorMessage,
+    );
+  }
+
+  factory FieldValidationResult.fromString(
+    String fieldName,
+    String? validationResult,
+  ) {
+    return validationResult == null
+        ? FieldValidationResult.valid(fieldName)
+        : FieldValidationResult.invalid(fieldName, validationResult);
   }
 }
