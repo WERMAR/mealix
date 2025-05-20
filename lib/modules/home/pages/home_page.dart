@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../shared/widgets/menu_widget.dart';
 import '../../recipes/pages/recipes_page.dart';
@@ -53,7 +54,11 @@ class HomePage extends ConsumerWidget {
         onPressed: () => pickDate(context, ref),
         backgroundColor: theme.colorScheme.secondary,
         shape: const CircleBorder(),
-        child: Icon(Icons.calendar_month, color: theme.colorScheme.primary),
+        child: Icon(
+          Icons.calendar_month,
+          color: theme.colorScheme.primary,
+          size: 45,
+        ),
       ),
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
