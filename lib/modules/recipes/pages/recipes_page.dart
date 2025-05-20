@@ -61,7 +61,7 @@ class RecipesPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 Consumer(
                   builder: (context, ref, child) {
-                    final data = ref.watch(spoonacularRecipesProvider);
+                    final data = ref.watch(firebaseRecipesProvider);
                     return data.when(
                       data: (data) {
                         return Expanded(
@@ -74,7 +74,7 @@ class RecipesPage extends StatelessWidget {
                                   mainAxisExtent: 200,
                                   crossAxisCount: 2,
                                 ),
-                            itemCount: data.results.length,
+                            itemCount: data.length,
                             itemBuilder: (context, index) {
                               return ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
@@ -83,15 +83,24 @@ class RecipesPage extends StatelessWidget {
                                   alignment: Alignment.center,
                                   children: [
                                     Image.network(
-                                      data.results[index].imageUrl,
+                                      data[index].imageUrl,
                                       fit: BoxFit.cover,
+                                      errorBuilder: (
+                                        context,
+                                        error,
+                                        stackTrace,
+                                      ) {
+                                        return Image.asset(
+                                          'assets/images/placeholder.png',
+                                        );
+                                      },
                                     ),
                                     ColoredBox(
                                       color: Colors.black38,
                                       child: Center(
                                         child: Text(
                                           textAlign: TextAlign.center,
-                                          data.results[index].title,
+                                          data[index].title,
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,

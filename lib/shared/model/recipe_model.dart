@@ -23,19 +23,6 @@ sealed class RecipeModel with _$RecipeModel {
   }) = _RecipeModel;
 
   factory RecipeModel.fromState(CreateRecipeState state) {
-    print(
-      RecipeModel(
-        title: state.title,
-        onlineLink: state.onlineLink,
-        description: state.description,
-        imageUrl: state.imageUrl,
-        isTwoDayMeal: state.isTwoDayMeal,
-        cookingSteps: state.cookingSteps,
-        ingredients: state.ingredients,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ),
-    );
     return RecipeModel(
       title: state.title,
       onlineLink: state.onlineLink,
@@ -57,6 +44,7 @@ sealed class RecipeModel with _$RecipeModel {
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
+    print(data);
     return RecipeModel(
       title: data?['title'] as String,
       onlineLink: data?['onlineLink'] as String,
@@ -64,12 +52,12 @@ sealed class RecipeModel with _$RecipeModel {
       imageUrl: data?['imageUrl'] as String,
       isTwoDayMeal: data?['isTwoDayMeal'] as bool,
       cookingSteps:
-          (data?['cookingSteps'] as List<Map<String, dynamic>>)
-              .map(CookingStep.fromJson)
+          (data?['cookingSteps'] as List<dynamic>)
+              .map((e) => CookingStep.fromJson(e as Map<String, dynamic>))
               .toList(),
       ingredients:
-          (data?['ingredients'] as List<Map<String, dynamic>>)
-              .map(Ingredient.fromJson)
+          (data?['ingredients'] as List<dynamic>)
+              .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
               .toList(),
       createdAt: DateTime.parse(data?['createdAt'] as String),
       updatedAt: DateTime.parse(data?['updatedAt'] as String),
@@ -87,8 +75,8 @@ extension RecipeModelX on RecipeModel {
       'isTwoDayMeal': isTwoDayMeal,
       'cookingSteps': cookingSteps.map((e) => e.toJson()).toList(),
       'ingredients': ingredients.map((e) => e.toJson()).toList(),
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 }

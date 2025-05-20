@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../helper/input_validation.dart';
@@ -14,11 +11,30 @@ import '../../../shared/model/ingredient_model.dart';
 import '../../../shared/model/recipe_model.dart';
 import 'model/spoonacular_recipe_models.dart';
 
-part 'recipes_provider.g.dart';
 part 'recipes_provider.freezed.dart';
+part 'recipes_provider.g.dart';
 
 const String spoonBaseURL =
     '/recipes/complexSearch?query=vegetarian&apiKey=66c68ca189af494ea20ed04ee3e38f76';
+
+@riverpod
+Future<List<RecipeModel>> firebaseRecipes(Ref ref) async {
+  final now = Timestamp.now();
+  final thirtyDaysAgo = Timestamp.fromDate(
+    DateTime.now().subtract(const Duration(days: 30)),
+  );
+
+  final snapshot =
+      await FirebaseFirestore.instance
+          .collection('recipes')
+          .orderBy('createdAt', descending: true)
+          .limit(10)
+          .get();
+
+  final recipes =
+      snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc, null)).toList();
+  return recipes;
+}
 
 @riverpod
 Future<SpoonRecipeListDto> spoonacularRecipes(Ref ref) async {
@@ -220,7 +236,6 @@ class CreateRecipeStore extends _$CreateRecipeStore {
     final updated = state.ingredients[index].copyWith(name: name);
     final updatedList = List.of(state.ingredients)..[index] = updated;
 
-    print(updatedList);
     state = state.copyWith(ingredients: updatedList);
   }
 

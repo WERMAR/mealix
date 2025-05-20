@@ -6,6 +6,25 @@ part of 'recipes_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$firebaseRecipesHash() => r'80a5ba5cbb532e2b806c59b9820a0cc57efb149b';
+
+/// See also [firebaseRecipes].
+@ProviderFor(firebaseRecipes)
+final firebaseRecipesProvider =
+    AutoDisposeFutureProvider<List<RecipeModel>>.internal(
+      firebaseRecipes,
+      name: r'firebaseRecipesProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$firebaseRecipesHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef FirebaseRecipesRef = AutoDisposeFutureProviderRef<List<RecipeModel>>;
 String _$spoonacularRecipesHash() =>
     r'fa329d9fc389018717a219d6e3ae0c81e2033a5f';
 
@@ -28,7 +47,7 @@ final spoonacularRecipesProvider =
 typedef SpoonacularRecipesRef =
     AutoDisposeFutureProviderRef<SpoonRecipeListDto>;
 String _$isCreateRecipeFormValidHash() =>
-    r'5f69879a5218c9a3b0fd3a3e3815a609521c01a5';
+    r'9ce416fd29c780c974983e534d0d644c0561a0ad';
 
 /// See also [isCreateRecipeFormValid].
 @ProviderFor(isCreateRecipeFormValid)
