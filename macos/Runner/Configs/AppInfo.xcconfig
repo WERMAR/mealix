@@ -8,7 +8,7 @@
 PRODUCT_NAME = mealix
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.mealix
+PRODUCT_BUNDLE_IDENTIFIER = com.wermar.mealix
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.
