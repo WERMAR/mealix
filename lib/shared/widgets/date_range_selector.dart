@@ -7,12 +7,14 @@ class DateRangeSelector extends StatelessWidget {
     required this.endDate,
     this.onPrevious,
     this.onNext,
+    required this.onCalendarTap, // ✅ NEW
   });
 
   final DateTime startDate;
   final DateTime endDate;
   final VoidCallback? onPrevious;
   final VoidCallback? onNext;
+  final VoidCallback onCalendarTap; // ✅ NEW
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,10 @@ class DateRangeSelector extends StatelessWidget {
             onPressed: onNext,
           ),
           const SizedBox(width: 12),
-          const Icon(Icons.calendar_month, color: Color(0xFFDAFF08)),
+          IconButton( // ✅ Make the icon a button
+            icon: const Icon(Icons.calendar_month, color: Color(0xFFDAFF08)),
+            onPressed: onCalendarTap,
+          ),
         ],
       ),
     );

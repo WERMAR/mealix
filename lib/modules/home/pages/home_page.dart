@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '/modules/home/store/household_provider.dart';
 import '../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../shared/widgets/menu_widget.dart';
 import '../../recipes/pages/recipes_page.dart';
@@ -20,12 +21,10 @@ class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   static String get routeLocation => '/home';
-
   static String get routeName => 'home';
 
   Future<void> pickDate(BuildContext context, WidgetRef ref) async {
     final selectedWeek = ref.read(selectedWeekProvider);
-
     final picked = await showDatePicker(
       context: context,
       initialDate: selectedWeek.start,
@@ -62,9 +61,15 @@ class HomePage extends ConsumerWidget {
       ),
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
-        title: Text(
-          AppLocalizations.of(context)!.homeTitle,
-          style: Theme.of(context).textTheme.headlineLarge,
+        title: ref.watch(householdNameProvider).maybeWhen(
+          data: (name) => Text(
+            name ?? AppLocalizations.of(context)!.homeTitle,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          orElse: () => Text(
+            AppLocalizations.of(context)!.homeTitle,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
         ),
         actions: const [ProfileBadge(initials: 'MW')],
       ),
@@ -85,6 +90,7 @@ class HomePage extends ConsumerWidget {
                 end: selectedWeek.end.add(const Duration(days: 7)),
               );
             },
+            onCalendarTap: () => pickDate(context, ref),
           ),
           const SizedBox(height: 12),
           Expanded(child: SevenDayMealList(weekRange: selectedWeek)),

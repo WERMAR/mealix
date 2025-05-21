@@ -48,5 +48,19 @@
   "imageURL": "Image URL",
   "imageURLValidationError": "Please enter a link for the title image",
   "cookingSteps": "Cooking steps",
-  "ingredientForPortion": "Ingredients per Portion"
+  "ingredientForPortion": "Ingredients per Portion",
+  "homeTitle": "Home",
+  "recipesTitle": "Recipes",
+  "shoppingListTitle": "Shopping List",
+  "loadingText": "Loading...",
+  "errorText": "An error occurred",
+  "recipeNotFound": "Recipe not found.",
+  "preparationTime": "Preparation Time",
+  "preparationDescription": "Preparation Description",
+  "ingredientsList": "Ingredients List",
+  "close": "Close",
+  "cancelButton": "Close",
+  "cancelButtonText": "Cancel",
+  "householdTitle": "Your household"
+
 }

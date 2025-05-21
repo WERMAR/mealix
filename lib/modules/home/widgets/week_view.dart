@@ -5,20 +5,20 @@ class WeekViewCalendar extends StatelessWidget {
   final DateTimeRange selectedWeek;
   final VoidCallback onPreviousWeek;
   final VoidCallback onNextWeek;
+  final VoidCallback onCalendarTap;
 
   const WeekViewCalendar({
     super.key,
     required this.selectedWeek,
     required this.onPreviousWeek,
     required this.onNextWeek,
+    required this.onCalendarTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textColor = theme.textTheme.bodyLarge?.color;
     final secondaryColor = theme.colorScheme.secondary;
-
     final formatter = DateFormat('dd.MM.yyyy');
 
     return Padding(
@@ -30,19 +30,24 @@ class WeekViewCalendar extends StatelessWidget {
             icon: Icon(Icons.arrow_left, color: theme.iconTheme.color),
             onPressed: onPreviousWeek,
           ),
-          Text(
-            '${formatter.format(selectedWeek.start)} - ${formatter.format(selectedWeek.end)}',
-            style: theme.textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: onCalendarTap,
+            child: Text(
+              '${formatter.format(selectedWeek.start)} - ${formatter.format(selectedWeek.end)}',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-
           ),
           IconButton(
             icon: Icon(Icons.arrow_right, color: theme.iconTheme.color),
             onPressed: onNextWeek,
           ),
           const SizedBox(width: 8),
-          Icon(Icons.calendar_month, color: secondaryColor, size: 22),
+          IconButton(
+            icon: Icon(Icons.calendar_month, color: secondaryColor, size: 22),
+            onPressed: onCalendarTap,
+          ),
         ],
       ),
     );

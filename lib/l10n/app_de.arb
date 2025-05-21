@@ -40,5 +40,17 @@
   "imageURL": "Anzeigebild URL",
   "imageURLValidationError": "Geben Sie einen Link für das Anzeigebild an",
   "cookingSteps": "Zubereitungsschritte",
-  "ingredientForPortion": "Zutaten für eine Portion"
+  "ingredientForPortion": "Zutaten für eine Portion", "homeTitle": "Startseite",
+  "recipesTitle": "Rezepte",
+  "shoppingListTitle": "Einkaufsliste",
+  "loadingText": "Lädt...",
+  "errorText": "Ein Fehler ist aufgetreten",
+  "recipeNotFound": "Rezept nicht gefunden.",
+  "preparationTime": "Zubereitungszeit",
+  "preparationDescription": "Zubereitungsbeschreibung",
+  "ingredientsList": "Zutatenliste",
+  "close": "Schließen",
+  "cancelButton": "Abbrechen",
+  "cancelButtonText": "Abbrechen",
+  "householdTitle": "Dein Zuhause"
 }

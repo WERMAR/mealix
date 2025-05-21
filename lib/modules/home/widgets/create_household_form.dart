@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../helper/colors_darktheme_option.dart';
+import '../store/household_provider.dart';
 
-class CreateHouseholdForm extends StatefulWidget {
+class CreateHouseholdForm extends ConsumerStatefulWidget {
   const CreateHouseholdForm({super.key});
 
   @override
-  State<CreateHouseholdForm> createState() => _CreateHouseholdFormState();
+  ConsumerState<CreateHouseholdForm> createState() => _CreateHouseholdFormState();
 }
 
-class _CreateHouseholdFormState extends State<CreateHouseholdForm> {
+class _CreateHouseholdFormState extends ConsumerState<CreateHouseholdForm> {
   final _controller = TextEditingController();
 
-  void _handleCreate() {
-    final name = _controller.text.trim();
-    if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context)!.createHouseholdEmptyError),
-        ),
-      );
-      return;
-    }
+  @override
+  void initState() {
+    super.initState();
 
-    // TODO: Call Firestore to create a new household I think perhaps I'll need to create a Household Repository when the time comes and implement riverpod
-    print('Creating household with name: $name');
+    // Initial sync to provider
+    _controller.addListener(() {
+      final trimmedName = _controller.text.trim();
+      ref.read(householdNameProvider.notifier).setName(trimmedName);
+    });
+  }
+
+
+  String? get householdName => _controller.text.trim();
+
+  void showEmptyError() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.createHouseholdEmptyError),
+      ),
+    );
   }
 
   @override
@@ -31,17 +41,14 @@ class _CreateHouseholdFormState extends State<CreateHouseholdForm> {
     final local = AppLocalizations.of(context)!;
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TextField(
+        TextFormField(
           controller: _controller,
           decoration: InputDecoration(
-            labelText: local.createHouseholdLabel,
+            hintText: local.createHouseholdLabel,
+            prefixIcon: const Icon(Icons.home_outlined),
           ),
-        ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: _handleCreate,
-          child: Text(local.createHouseholdButton),
         ),
       ],
     );

@@ -15,6 +15,7 @@ class ThemeManager {
     textTheme: GoogleFonts.interTextTheme(
 
       const TextTheme(
+
         displayLarge: TextStyle(
           fontSize: 57,
           fontWeight: FontWeight.w400,
@@ -104,6 +105,17 @@ class ThemeManager {
         foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Color(0xFF1E2233),
+      hintStyle: TextStyle(color: Colors.white70),
+      labelStyle: TextStyle(color: Colors.white),
+      prefixIconColor: Colors.white70,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    ),
 
   );
 
@@ -184,31 +196,43 @@ class ThemeManager {
           fontWeight: FontWeight.w500,
           color: Colors.black,
         ),
-        labelMedium: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: Colors.black87,
-        ),
         labelSmall: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w500,
           color: Colors.black54,
         ),
+        labelMedium: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: Colors.black87,
+        ),
+
+
       ),
 
     ),
 
 
   datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFFE9EBEF), // optional: dialog background
-      headerForegroundColor: Colors.white, // optional: title color
+      backgroundColor: Color(0xFFE9EBEF),
+      headerForegroundColor: Colors.white,
       dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
-      // This is what you're looking for:
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFF050505)), // or theme color
+        foregroundColor: MaterialStateProperty.all(Color(0xFF050505)),
       ),
       confirmButtonStyle: ButtonStyle(
         foregroundColor: MaterialStateProperty.all(Color(0xFF1D1D1B)),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Color(0xFFF0F0F0),
+      hintStyle: TextStyle(color: Colors.black54),
+      labelStyle: TextStyle(color: Colors.black87),
+      prefixIconColor: Colors.black54,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
       ),
     ),
 
