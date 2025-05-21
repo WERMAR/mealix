@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'household_repository.dart';
 
-Future<void> loadCurrentUserHousehold(WidgetRef ref) async {
-  final user = FirebaseAuth.instance.currentUser;
+
+Future<void> loadCurrentUserHousehold(Ref ref) async {
+  final user = fb_auth.FirebaseAuth.instance.currentUser;
   if (user != null) {
     final name = await fetchHouseholdNameForUser(user.uid);
     if (name != null) {
@@ -20,8 +21,7 @@ AsyncNotifierProvider<HouseholdNameNotifier, String?>(() {
 class HouseholdNameNotifier extends AsyncNotifier<String?> {
   @override
   Future<String?> build() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return null;
+    final user = fb_auth.FirebaseAuth.instance.currentUser;    if (user == null) return null;
     return await fetchHouseholdNameForUser(user.uid);
   }
 

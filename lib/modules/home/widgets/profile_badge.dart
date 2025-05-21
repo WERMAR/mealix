@@ -7,6 +7,9 @@ class ProfileBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return GestureDetector(
       onTap: () {
         Scaffold.of(context).openEndDrawer();
@@ -17,26 +20,26 @@ class ProfileBadge extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Theme.of(context).colorScheme.surface,
-              Theme.of(context).colorScheme.secondary,
+              colorScheme.surface,
+              colorScheme.secondary,
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Colors.black26,
+              color: colorScheme.shadow.withOpacity(0.25),
               blurRadius: 8,
               spreadRadius: 1,
-              offset: Offset(0, 5),
+              offset: const Offset(0, 5),
             ),
           ],
           shape: BoxShape.circle,
         ),
         child: Text(
           initials,
-          style: const TextStyle(
-            color: Colors.white,
+          style: theme.textTheme.labelLarge?.copyWith(
+            color: colorScheme.onSecondary,
             fontWeight: FontWeight.bold,
           ),
         ),

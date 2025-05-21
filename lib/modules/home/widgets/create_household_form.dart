@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../helper/colors_darktheme_option.dart';
 import '../store/household_provider.dart';
 
@@ -25,7 +26,6 @@ class _CreateHouseholdFormState extends ConsumerState<CreateHouseholdForm> {
     });
   }
 
-
   String? get householdName => _controller.text.trim();
 
   void showEmptyError() {
@@ -38,6 +38,7 @@ class _CreateHouseholdFormState extends ConsumerState<CreateHouseholdForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
 
     return Column(
@@ -45,9 +46,17 @@ class _CreateHouseholdFormState extends ConsumerState<CreateHouseholdForm> {
       children: [
         TextFormField(
           controller: _controller,
+          style: theme.textTheme.bodyLarge,
           decoration: InputDecoration(
             hintText: local.createHouseholdLabel,
-            prefixIcon: const Icon(Icons.home_outlined),
+            hintStyle: theme.inputDecorationTheme.hintStyle,
+            prefixIcon: Icon(
+              Icons.home_outlined,
+              color: theme.iconTheme.color,
+            ),
+            filled: true,
+            fillColor: theme.inputDecorationTheme.fillColor,
+            border: theme.inputDecorationTheme.border,
           ),
         ),
       ],

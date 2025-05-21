@@ -9,6 +9,7 @@ import '/modules/home/widgets/create_household_form.dart';
 import '/modules/home/widgets/join_household_form.dart';
 import '/modules/authentication/enum/tab_mode_enum.dart';
 import '/modules/authentication/widget/wave_clipper_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final tabModeProvider = StateProvider<TabMode>((ref) => TabMode.tab1);
 
@@ -198,7 +199,25 @@ class HouseholdManagerPage extends ConsumerWidget {
                               } else {
                                 final joinName = JoinHouseholdFormState.getEnteredName()?.trim();
                                 if (joinName != null && joinName.isNotEmpty) {
-                                  await joinHousehold(context, joinName);
+                                  final user = FirebaseAuth.instance.currentUser;
+                                  if (user == null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('User not logged in.')),
+                                    );
+                                    return;
+                                  }
+
+                                  try {
+                                    await joinHouseholdIfNotAlreadyMember(
+                                      userId: user.uid,
+                                      householdId: joinName,
+                                    );
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(e.toString())),
+                                    );
+                                    return;
+                                  }
                                   ref.read(householdNameProvider.notifier).setName(joinName);
                                   context.go('/home');
                                 } else {

@@ -45,9 +45,11 @@ class WeekViewCalendar extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           IconButton(
-            icon: Icon(Icons.calendar_month, color: secondaryColor, size: 22),
+            icon: Icon(Icons.calendar_month, size: 22),
+            color: Theme.of(context).colorScheme.secondary,
             onPressed: onCalendarTap,
           ),
+
         ],
       ),
     );

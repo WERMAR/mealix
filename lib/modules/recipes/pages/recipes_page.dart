@@ -68,12 +68,12 @@ class RecipesPage extends StatelessWidget {
                           child: GridView.builder(
                             scrollDirection: Axis.horizontal,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  mainAxisExtent: 200,
-                                  crossAxisCount: 2,
-                                ),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              mainAxisExtent: 200,
+                              crossAxisCount: 2,
+                            ),
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return ClipRRect(
@@ -86,10 +86,10 @@ class RecipesPage extends StatelessWidget {
                                       data[index].imageUrl,
                                       fit: BoxFit.cover,
                                       errorBuilder: (
-                                        context,
-                                        error,
-                                        stackTrace,
-                                      ) {
+                                          context,
+                                          error,
+                                          stackTrace,
+                                          ) {
                                         return Image.asset(
                                           'assets/images/placeholder.png',
                                         );
@@ -141,12 +141,12 @@ class RecipesPage extends StatelessWidget {
                           child: GridView.builder(
                             scrollDirection: Axis.horizontal,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  mainAxisExtent: 200,
-                                  crossAxisCount: 2,
-                                ),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              mainAxisExtent: 200,
+                              crossAxisCount: 2,
+                            ),
                             itemCount: data.results.length,
                             itemBuilder: (context, index) {
                               return ClipRRect(

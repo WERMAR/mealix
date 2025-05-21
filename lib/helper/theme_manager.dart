@@ -121,12 +121,12 @@ class ThemeManager {
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    scaffoldBackgroundColor: const Color(0xFFE38989),
     primaryColor: const Color(0xFFE0E0E0),
     colorScheme: const ColorScheme.light(
       primary: Color(0xFFE0E0E0),
       secondary: Color(0xFF4C0082),
-      surface: Color(0xFFF5F5F5),
+      surface: Color(0xFF000000),
     ),
     iconTheme: const IconThemeData(color: Color(0xFF4C0082)),
     textTheme: GoogleFonts.interTextTheme(
@@ -226,7 +226,7 @@ class ThemeManager {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Color(0xFFF0F0F0),
+      fillColor: Color(0xFFF4F4F4),
       hintStyle: TextStyle(color: Colors.black54),
       labelStyle: TextStyle(color: Colors.black87),
       prefixIconColor: Colors.black54,
@@ -235,6 +235,7 @@ class ThemeManager {
         borderSide: BorderSide.none,
       ),
     ),
+
 
   );
 

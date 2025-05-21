@@ -1,11 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 
 import '../../../modules/authentication/model/register_model.dart';
 import '../service/firebase_authentication_service.dart';
 import 'model/user_model.dart';
-
+import 'package:mealix/modules/home/store/household_provider.dart';
 part 'authentication_provider.freezed.dart';
 part 'authentication_provider.g.dart';
 
@@ -79,7 +80,7 @@ class AuthenticationFormState extends _$AuthenticationFormState {
 @freezed
 sealed class AuthenticationState with _$AuthenticationState {
   factory AuthenticationState({required bool isAuthenticated, User? user}) =
-      _AuthenticationState;
+  _AuthenticationState;
 
   factory AuthenticationState.initial() {
     return AuthenticationState(isAuthenticated: false);
@@ -89,19 +90,31 @@ sealed class AuthenticationState with _$AuthenticationState {
 @riverpod
 class AuthenticationStore extends _$AuthenticationStore {
   @override
-  Future<AuthenticationState> build() async {
-    // Initialize the authentication state
-    return AuthenticationState.initial();
+  FutureOr<AuthenticationState> build() async {
+    final user = fb_auth.FirebaseAuth.instance.currentUser;
+    return AuthenticationState(isAuthenticated: user != null);
+  }
+
+  Future<void> logout() async {
+    await fb_auth.FirebaseAuth.instance.signOut();
+
+    // Clear household name
+    ref.read(householdNameProvider.notifier).clear();
+
+    // Clear auth state
+    state = AsyncValue.data(AuthenticationState(isAuthenticated: false));
   }
 
   Future<void> logInWithEmailAndPassword(String email, String password) async {
     state = const AsyncLoading(); // Show loading state
+
     try {
       final result = await FirebaseAuthenticationService()
           .logInWithEmailAndPassword(email: email, password: password);
 
       final authenticatedUser = User.fromFirebaseUser(result);
-      print(authenticatedUser);
+
+      // Update authentication state
       state = AsyncData(
         state.value?.copyWith(isAuthenticated: true, user: authenticatedUser) ??
             AuthenticationState.initial().copyWith(
@@ -109,6 +122,10 @@ class AuthenticationStore extends _$AuthenticationStore {
               user: authenticatedUser,
             ),
       );
+
+      // Added for logout/login feature
+      await loadCurrentUserHousehold(ref);
+
     } catch (e) {
       state = AsyncError(e, StackTrace.current);
     }
@@ -123,7 +140,6 @@ class AuthenticationStore extends _$AuthenticationStore {
     );
 
     await result.user?.updateDisplayName(registerModel.name);
-    // FIXME: The reload don't affect the user object in this method
     await result.user?.reload();
 
     final authenticatedUser = User.fromFirebaseUser(result);

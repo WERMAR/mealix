@@ -23,7 +23,7 @@ class DayMealCard extends StatelessWidget {
     final formattedDate = DateFormat('dd.MM.yyyy', local.localeName).format(date);
 
     return Card(
-      color: theme.colorScheme.primary.withOpacity(0.95),
+      color: theme.colorScheme.surface,
       elevation: 3,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
@@ -33,7 +33,10 @@ class DayMealCard extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         title: Text(
           '$weekday: $formattedDate',
-          style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: theme.colorScheme.onSurface,
+          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,8 +44,9 @@ class DayMealCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               '${local.dish}: $mealName',
-              style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white70),
-
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
             ),
             if (isTwoDayMeal)
               Padding(
@@ -50,12 +54,14 @@ class DayMealCard extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.green.shade700,
+                    color: theme.colorScheme.secondary.withOpacity(0.9),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     local.twoDayMeal,
-                    style: theme.textTheme.labelSmall?.copyWith(color: Colors.white),
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: theme.colorScheme.onSecondary,
+                    ),
                   ),
                 ),
               ),
@@ -66,12 +72,26 @@ class DayMealCard extends StatelessWidget {
           showDialog(
             context: context,
             builder: (_) => AlertDialog(
-              title: Text('${local.dish} ($weekday)'),
-              content: Text('Details for: $mealName'),
+              backgroundColor: theme.colorScheme.surface,
+              title: Text(
+                '${local.dish} ($weekday)',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+              content: Text(
+                'Details for: $mealName',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text(local.close),
+                  child: Text(
+                    local.close,
+                    style: TextStyle(color: theme.colorScheme.secondary),
+                  ),
                 ),
               ],
             ),

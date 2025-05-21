@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 Future<void> createHousehold(String householdName) async {
   final user = FirebaseAuth.instance.currentUser;
@@ -20,32 +18,26 @@ Future<void> createHousehold(String householdName) async {
   });
 }
 
-Future<void> joinHousehold(BuildContext context, String householdName) async {
-  final user = FirebaseAuth.instance.currentUser;
-  if (user == null) throw Exception("User not logged in");
+Future<void> joinHouseholdIfNotAlreadyMember({
+  required String userId,
+  required String householdId,
+}) async {
+  final firestore = FirebaseFirestore.instance;
 
-  final uid = user.uid;
-
-  final query = await FirebaseFirestore.instance
+  // Check if user is already a member of ANY household
+  final existing = await firestore
       .collection('households')
-      .where('householdname', isEqualTo: householdName)
-      .limit(1)
+      .where('members', arrayContains: userId)
       .get();
 
-  if (query.docs.isEmpty) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Household not found")),
-    );
-    return;
+  if (existing.docs.isNotEmpty) {
+    throw Exception('You’re already part of a household.');
   }
 
-  final doc = query.docs.first.reference;
-
-  await doc.update({
-    'members': FieldValue.arrayUnion([uid]),
+  // Add to new household
+  await firestore.collection('households').doc(householdId).update({
+    'members': FieldValue.arrayUnion([userId]),
   });
-
-  context.go('/home');
 }
 
 Future<String?> fetchHouseholdNameForUser(String uid) async {
@@ -56,6 +48,5 @@ Future<String?> fetchHouseholdNameForUser(String uid) async {
       .get();
 
   if (result.docs.isEmpty) return null;
-
   return result.docs.first['householdname'] as String;
 }

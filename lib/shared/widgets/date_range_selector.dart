@@ -7,14 +7,14 @@ class DateRangeSelector extends StatelessWidget {
     required this.endDate,
     this.onPrevious,
     this.onNext,
-    required this.onCalendarTap, // ✅ NEW
+    required this.onCalendarTap,
   });
 
   final DateTime startDate;
   final DateTime endDate;
   final VoidCallback? onPrevious;
   final VoidCallback? onNext;
-  final VoidCallback onCalendarTap; // ✅ NEW
+  final VoidCallback onCalendarTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +27,37 @@ class DateRangeSelector extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            icon: const Icon(Icons.arrow_left, color: Colors.white),
+            icon: Icon(
+              Icons.arrow_left,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             onPressed: onPrevious,
           ),
           Text(
             '${formatDate(startDate)} - ${formatDate(endDate)}',
-            style: const TextStyle(color: Colors.white, fontSize: 18),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontSize: 18,
+            ),
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_right, color: Colors.white),
+            icon: Icon(
+              Icons.arrow_right,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
             onPressed: onNext,
           ),
           const SizedBox(width: 12),
-          IconButton( // ✅ Make the icon a button
-            icon: const Icon(Icons.calendar_month, color: Color(0xFFDAFF08)),
+          IconButton(
+            icon: Icon(
+              Icons.calendar_month,
+              color: Theme.of(context).iconTheme.color,
+            ),
             onPressed: onCalendarTap,
           ),
         ],
       ),
     );
+
   }
 }

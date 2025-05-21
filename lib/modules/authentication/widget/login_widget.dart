@@ -131,8 +131,6 @@ class LoginWidget extends ConsumerWidget {
             authenticationFormState.password!,
           );
 
-          await loadCurrentUserHousehold(ref);
-
           if (context.mounted) {
             context.go('/home');
           }
