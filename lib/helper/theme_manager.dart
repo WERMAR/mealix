@@ -10,6 +10,7 @@ class ThemeManager {
       primary: Color(0xFF242F49),
       secondary: Color(0xFFDAFF08),
       surface: Color(0xFF161C29),
+      error: Color(0xFFE11A1F),
     ),
     iconTheme: const IconThemeData(color: Color(0xFFDAFF08)),
     textTheme: GoogleFonts.interTextTheme(
@@ -113,12 +114,13 @@ class ThemeManager {
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(0xFFE38989),
+    scaffoldBackgroundColor: const Color(0xFFC1AEAE),
     primaryColor: const Color(0xFFE0E0E0),
     colorScheme: const ColorScheme.light(
-      primary: Color(0xFFE0E0E0),
+      primary: Color(0xFFFFFBF0),
       secondary: Color(0xFF4C0082),
       surface: Color(0xFFF5F5F5),
+      error: Color(0xFFE11A1F),
     ),
     iconTheme: const IconThemeData(color: Color(0xFF4C0082)),
     textTheme: GoogleFonts.interTextTheme(
@@ -202,20 +204,27 @@ class ThemeManager {
     ),
 
     datePickerTheme: DatePickerThemeData(
-      backgroundColor: const Color.fromARGB(255, 150, 150, 150),
+      backgroundColor: Color(0xFFE9EBEF),
       headerForegroundColor: Colors.white,
-      dayForegroundColor: WidgetStateColor.resolveWith(
+      dayForegroundColor: MaterialStateColor.resolveWith(
         (states) => Colors.white,
       ),
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: WidgetStateColor.resolveWith(
-          (state) => const Color(0xFF050505),
-        ),
+        foregroundColor: WidgetStateProperty.all(const Color(0xFF050505)),
       ),
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: WidgetStateColor.resolveWith(
-          (state) => const Color(0xFF1D1D1B),
-        ),
+        foregroundColor: MaterialStateProperty.all(Color(0xFF1D1D1B)),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Color(0xFFF4F4F4),
+      hintStyle: TextStyle(color: Colors.black54),
+      labelStyle: TextStyle(color: Colors.black87),
+      prefixIconColor: Colors.black54,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
       ),
     ),
   );

@@ -22,20 +22,22 @@ Future<void> joinHouseholdIfNotAlreadyMember({
   required String userId,
   required String householdId,
 }) async {
-  final firestore = FirebaseFirestore.instance;
-
-  // Check if user is already a member of ANY household
-  final existing = await firestore
+  final snapshot = await FirebaseFirestore.instance
       .collection('households')
-      .where('members', arrayContains: userId)
+      .where('householdname', isEqualTo: householdId)
+      .limit(1)
       .get();
 
-  if (existing.docs.isNotEmpty) {
-    throw Exception('You’re already part of a household.');
+  if (snapshot.docs.isEmpty) {
+    throw Exception('No household found with that name.');
   }
 
-  // Add to new household
-  await firestore.collection('households').doc(householdId).update({
+  final doc = snapshot.docs.first;
+
+  await FirebaseFirestore.instance
+      .collection('households')
+      .doc(doc.id)
+      .update({
     'members': FieldValue.arrayUnion([userId]),
   });
 }
