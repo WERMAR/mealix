@@ -8,8 +8,6 @@ import '../../modules/recipes/pages/recipes_page.dart';
 import '../../modules/recipes/pages/recipes_details_page.dart';
 import '../../modules/shopping_list/pages/shopping_list_page.dart';
 import '../authentication/store/authentication_provider.dart';
-import '../../modules/recipes/pages/recipes_details_page.dart';
-import 'package:flutter/material.dart';
 import '../../modules/home/pages/household_manager_page.dart';
 
 
@@ -72,9 +70,6 @@ GoRouter router(Ref ref) {
             (context, state) =>
                 const ShoppingListPage(), // Use meaningful names
       ),
-
-
-
 
       GoRoute(
         path: HouseholdManagerPage.routeLocation,

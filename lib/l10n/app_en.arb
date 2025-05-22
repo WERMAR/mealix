@@ -61,7 +61,7 @@
   "close": "Close",
   "cancelButton": "Close",
   "cancelButtonText": "Cancel",
-  "householdTitle": "Your household"
+  "householdTitle": "Your household",
   "noMealPlanExisting": "There exists no meal plan at the moment",
   "createMealPlan": "Create meal plan",
   "recipe": "Recipe"
