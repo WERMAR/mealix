@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../helper/date_helper.dart';
 
 class DayMealCard extends StatelessWidget {
   final DateTime date;
@@ -19,18 +20,23 @@ class DayMealCard extends StatelessWidget {
     final theme = Theme.of(context);
     final local = AppLocalizations.of(context)!;
 
-    final weekday = DateFormat('EEEE', local.localeName).format(date);
-    final formattedDate = DateFormat('dd.MM.yyyy', local.localeName).format(date);
+    final weekday = DateHelper.getFormattedDate(context, 'EEEE', date);
+    final formattedDate = DateHelper.getFormattedDate(
+      context,
+      'dd.MM.yyyy',
+      date,
+    );
 
     return Card(
       color: theme.colorScheme.surface,
       elevation: 3,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         title: Text(
           '$weekday: $formattedDate',
           style: theme.textTheme.titleLarge?.copyWith(
@@ -52,7 +58,10 @@ class DayMealCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.secondary.withOpacity(0.9),
                     borderRadius: BorderRadius.circular(12),
@@ -71,30 +80,31 @@ class DayMealCard extends StatelessWidget {
         onTap: () {
           showDialog(
             context: context,
-            builder: (_) => AlertDialog(
-              backgroundColor: theme.colorScheme.surface,
-              title: Text(
-                '${local.dish} ($weekday)',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              content: Text(
-                'Details for: $mealName',
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurface,
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    local.close,
-                    style: TextStyle(color: theme.colorScheme.secondary),
+            builder:
+                (_) => AlertDialog(
+                  backgroundColor: theme.colorScheme.surface,
+                  title: Text(
+                    '${local.dish} ($weekday)',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
+                  content: Text(
+                    'Details for: $mealName',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(
+                        local.close,
+                        style: TextStyle(color: theme.colorScheme.secondary),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
           );
         },
       ),

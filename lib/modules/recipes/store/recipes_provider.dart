@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -142,7 +143,69 @@ Future<SpoonRecipeListDto> spoonacularRecipes(Ref ref) async {
   }*/
 }
 
-// TODO: Implement same getter for fetch last used recipes from firebase
+@freezed
+sealed class RecipeSearchState with _$RecipeSearchState {
+  const factory RecipeSearchState({
+    required String query,
+    required List<RecipeModel> recipes,
+  }) = _RecipeSearchState;
+
+  factory RecipeSearchState.initial() =>
+      const RecipeSearchState(query: '', recipes: []);
+}
+
+@riverpod
+class SearchQuery extends _$SearchQuery {
+  Timer? _debounce;
+
+  @override
+  Future<RecipeSearchState> build() async {
+    return Future.value(RecipeSearchState.initial());
+  }
+
+  Future<void> setSearchQuery(String query) async {
+    state = AsyncData(
+      state.valueOrNull?.copyWith(query: query) ?? RecipeSearchState.initial(),
+    );
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1000), () async {
+      if (query.isEmpty) {
+        state = AsyncData(RecipeSearchState.initial());
+      } else {
+        await _performSearch(state.valueOrNull?.query ?? '');
+      }
+    });
+  }
+
+  Future<void> _performSearch(String query) async {
+    state = const AsyncLoading();
+    final response =
+        await FirebaseFirestore.instance
+            .collection('recipes')
+            .orderBy('title')
+            .startAt([query])
+            .endAt(['$query\uf8ff'])
+            .get();
+
+    if (response.docs.isEmpty) {
+      return Future.value([]);
+    }
+
+    final currState = state.valueOrNull;
+    if (currState == null) {
+      return Future.value();
+    }
+    state = AsyncData(
+      currState.copyWith(
+        query: query,
+        recipes:
+            response.docs
+                .map((doc) => RecipeModel.fromFirestore(doc, null))
+                .toList(),
+      ),
+    );
+  }
+}
 
 @freezed
 sealed class CreateRecipeState with _$CreateRecipeState {

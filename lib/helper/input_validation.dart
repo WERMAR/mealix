@@ -36,7 +36,7 @@ class InputValidation {
       return 'Please enter a link';
     }
     // Improved regex for URL validation
-    final urlRegex = RegExp(r'^https:\/\/www\..*');
+    final urlRegex = RegExp(r'^https:\/\/[\w\-]+(\.[\w\-]+)+([\/\w\.-]*)*\/?$');
     if (!urlRegex.hasMatch(value)) {
       return 'Please enter a valid internet link';
     }

@@ -67,6 +67,23 @@ final isCreateRecipeFormValidProvider =
 // ignore: unused_element
 typedef IsCreateRecipeFormValidRef =
     AutoDisposeProviderRef<List<FieldValidationResult>>;
+String _$searchQueryHash() => r'b4da5d0b4bb6155a81160a7e6677aaf67478fcd5';
+
+/// See also [SearchQuery].
+@ProviderFor(SearchQuery)
+final searchQueryProvider =
+    AutoDisposeAsyncNotifierProvider<SearchQuery, RecipeSearchState>.internal(
+      SearchQuery.new,
+      name: r'searchQueryProvider',
+      debugGetCreateSourceHash:
+          const bool.fromEnvironment('dart.vm.product')
+              ? null
+              : _$searchQueryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$SearchQuery = AutoDisposeAsyncNotifier<RecipeSearchState>;
 String _$createRecipeStoreHash() => r'a2473f06ba30615a82f319b6a18671b75982cd4a';
 
 /// See also [CreateRecipeStore].

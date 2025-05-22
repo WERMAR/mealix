@@ -53,4 +53,7 @@
   "cancelButton": "Abbrechen",
   "cancelButtonText": "Abbrechen",
   "householdTitle": "Dein Zuhause"
+  "noMealPlanExisting": "Aktuell wurde noch kein Wochenplan erstellt",
+  "createMealPlan": "Erstelle einen Wochenplan",
+  "recipe": "Rezept"
 }

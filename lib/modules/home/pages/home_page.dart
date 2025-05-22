@@ -2,20 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../helper/date_helper.dart';
 import '/modules/home/store/household_provider.dart';
 import '../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../shared/widgets/menu_widget.dart';
+import '../../../shared/widgets/themed_circular_spinner.dart';
 import '../../recipes/pages/recipes_page.dart';
 import '../../shopping_list/pages/shopping_list_page.dart';
+import '../store/meal_list_provider.dart';
+import '../widgets/create_meal_plan_widget.dart';
+import '../widgets/no_meal_plan_exists_widget.dart';
 import '../widgets/profile_badge.dart';
 import '../widgets/seven_day_meal_list.dart';
 import '../widgets/week_view.dart';
 
-final selectedWeekProvider = StateProvider<DateTimeRange>((ref) {
-  final start = getStartOfWeek(DateTime.now());
-  return DateTimeRange(start: start, end: start.add(const Duration(days: 6)));
-});
+part 'home_page.g.dart';
+
+@riverpod
+class SelectedWeek extends _$SelectedWeek {
+  @override
+  DateTimeRange build() {
+    final start = getStartOfWeek(DateTime.now());
+    return DateTimeRange(start: start, end: start.add(const Duration(days: 6)));
+  }
+
+  // ignore: avoid_setters_without_getters
+  set selectedWeek(DateTimeRange range) => state = range;
+}
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -29,15 +44,13 @@ class HomePage extends ConsumerWidget {
       context: context,
       initialDate: selectedWeek.start,
       firstDate: DateTime(2024),
-      lastDate: DateTime(2030),
+      lastDate: DateTime(2099),
     );
 
     if (picked != null) {
-      final newStart = getStartOfWeek(picked);
-      ref.read(selectedWeekProvider.notifier).state = DateTimeRange(
-        start: newStart,
-        end: newStart.add(const Duration(days: 6)),
-      );
+      ref
+          .read(selectedWeekProvider.notifier)
+          .selectedWeek = DateHelper.getRangeForDate(picked);
     }
   }
 
@@ -61,39 +74,142 @@ class HomePage extends ConsumerWidget {
       ),
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
-        title: ref.watch(householdNameProvider).maybeWhen(
-          data: (name) => Text(
-            name ?? AppLocalizations.of(context)!.homeTitle,
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          orElse: () => Text(
-            AppLocalizations.of(context)!.homeTitle,
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-        ),
+        title: ref
+            .watch(householdNameProvider)
+            .maybeWhen(
+              data:
+                  (name) => Text(
+                    name ?? AppLocalizations.of(context)!.homeTitle,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+              orElse:
+                  () => Text(
+                    AppLocalizations.of(context)!.homeTitle,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+            ),
         actions: const [ProfileBadge(initials: 'MW')],
       ),
       endDrawer: MenuWidget(),
-      body: Column(
+      body: Stack(
         children: [
-          WeekViewCalendar(
-            selectedWeek: selectedWeek,
-            onPreviousWeek: () {
-              ref.read(selectedWeekProvider.notifier).state = DateTimeRange(
-                start: selectedWeek.start.subtract(const Duration(days: 7)),
-                end: selectedWeek.end.subtract(const Duration(days: 7)),
-              );
-            },
-            onNextWeek: () {
-              ref.read(selectedWeekProvider.notifier).state = DateTimeRange(
-                start: selectedWeek.start.add(const Duration(days: 7)),
-                end: selectedWeek.end.add(const Duration(days: 7)),
-              );
-            },
-            onCalendarTap: () => pickDate(context, ref),
+          Column(
+            children: [
+              WeekViewCalendar(
+                selectedWeek: selectedWeek,
+                onCalendarTap: () => pickDate(context, ref),
+                onPreviousWeek: () {
+                  ref
+                      .read(selectedWeekProvider.notifier)
+                      .selectedWeek = DateTimeRange(
+                    start: selectedWeek.start.subtract(const Duration(days: 7)),
+                    end: selectedWeek.end.subtract(const Duration(days: 7)),
+                  );
+                },
+                onNextWeek: () {
+                  ref
+                      .read(selectedWeekProvider.notifier)
+                      .selectedWeek = DateTimeRange(
+                    start: selectedWeek.start.add(const Duration(days: 7)),
+                    end: selectedWeek.end.add(const Duration(days: 7)),
+                  );
+                },
+              ),
+              Consumer(
+                builder: (context, ref, child) {
+                  final mealListStore = ref.watch(mealListStoreProvider);
+                  return mealListStore.when(
+                    data: (data) {
+                      if (data.initialList.isEmpty && !data.creationMode) {
+                        return NoMealPlanExists(
+                          onCreateMealPlan:
+                              () =>
+                                  ref
+                                      .read(mealListStoreProvider.notifier)
+                                      .setCreationMode(),
+                        );
+                      }
+                      if (data.creationMode) {
+                        return const CreateMealPlan();
+                      }
+                      return SevenDayMealList(
+                        initialList: data.initialList,
+                        adjustedList: data.adjustedList,
+                      );
+                    },
+                    error: (error, stackTrace) {
+                      return Text('Error: $error');
+                    },
+                    loading: () {
+                      return const Center(
+                        child: Center(child: ThemedCircularSpinner()),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
-          Expanded(child: SevenDayMealList(weekRange: selectedWeek)),
+          Consumer(
+            builder: (context, ref, child) {
+              final mealListCreateProgress = ref.watch(
+                createMealListStoreProvider.select((state) => state.progress),
+              );
+              if (mealListCreateProgress != 1) {
+                return const SizedBox();
+              }
+              return Positioned(
+                bottom: 5,
+                right: 5,
+                child: FloatingActionButton(
+                  heroTag: 'saveMealListPlan',
+                  shape: const CircleBorder(),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  onPressed:
+                      () =>
+                          ref
+                              .read(createMealListStoreProvider.notifier)
+                              .saveMealListPlan(),
+                  child: Icon(
+                    Icons.save_alt_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 30,
+                  ),
+                ),
+              );
+            },
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              final adjustedList = ref.watch(
+                mealListStoreProvider.select(
+                  (state) => state.valueOrNull?.adjustedList ?? [],
+                ),
+              );
+              if (adjustedList.isEmpty) {
+                return const SizedBox();
+              }
+              return Positioned(
+                bottom: 5,
+                right: 5,
+                child: FloatingActionButton(
+                  heroTag: 'saveMealListPlan',
+                  shape: const CircleBorder(),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  onPressed:
+                      () =>
+                          ref
+                              .read(mealListStoreProvider.notifier)
+                              .updateMealListPlan(),
+                  child: Icon(
+                    Icons.save_alt_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 30,
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(
