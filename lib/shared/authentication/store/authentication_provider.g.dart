@@ -28,7 +28,7 @@ final authenticationFormStateProvider = AutoDisposeNotifierProvider<
 typedef _$AuthenticationFormState =
     AutoDisposeNotifier<AuthenticationFormInput>;
 String _$authenticationStoreHash() =>
-    r'9e50f4858a178539f19a7c65bf86c3d49d2e25af';
+    r'8ae19dc27327a67db63793ca0363c3267fe3e383';
 
 /// See also [AuthenticationStore].
 @ProviderFor(AuthenticationStore)

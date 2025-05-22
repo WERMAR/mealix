@@ -5,10 +5,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../modules/authentication/pages/authentication_page.dart';
 import '../../modules/home/pages/home_page.dart';
 import '../../modules/recipes/pages/recipes_page.dart';
-import '../../modules/recipes/pages/recipes_details_page.dart';
+import '../../shared/model/recipe_model.dart';
 import '../../modules/shopping_list/pages/shopping_list_page.dart';
 import '../authentication/store/authentication_provider.dart';
 import '../../modules/home/pages/household_manager_page.dart';
+import '../../modules/recipes/pages/recipes_details_page.dart';
 
 
 
@@ -71,11 +72,22 @@ GoRouter router(Ref ref) {
                 const ShoppingListPage(), // Use meaningful names
       ),
 
+
       GoRoute(
         path: HouseholdManagerPage.routeLocation,
         name: HouseholdManagerPage.routeName,
         builder: (context, state) => const HouseholdManagerPage(),
       ),
+
+      GoRoute(
+        path: '/recipe-details',
+        name: 'recipe-details',
+        builder: (context, state) {
+          final recipe = state.extra as RecipeModel;
+          return RecipesDetailsPage(recipe: recipe);
+        },
+      ),
+
 
     ],
     redirect: (context, state) {

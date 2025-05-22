@@ -6,7 +6,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '/modules/home/store/household_provider.dart';
 import '../../../helper/date_helper.dart';
-import '../../../shared/authentication/store/authentication_provider.dart';
 import '../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../shared/widgets/menu_widget.dart';
 import '../../../shared/widgets/themed_circular_spinner.dart';

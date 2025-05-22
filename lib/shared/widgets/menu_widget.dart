@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-
+import '../../shared/model/recipe_model.dart';
+import '../../shared/model/cooking_step_model.dart';
+import '../../shared/model/ingredient_model.dart';
 import '../../modules/home/pages/household_manager_page.dart';
 import '../../shared/authentication/store/authentication_provider.dart';
 
@@ -68,6 +70,36 @@ class MenuWidget extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.fastfood),
+            title: const Text('Test Recipe Page'),
+            onTap: () {
+              Navigator.of(context).pop();
+
+//temp recipe
+              final recipe = RecipeModel(
+                id: 'test-recipe-123',
+                title: 'Test1',
+                description: 'Test2',
+                imageUrl: 'https://www.google.com',
+                onlineLink: 'https://www.google.com',
+                isTwoDayMeal: true,
+                createdAt: DateTime.parse('2025-05-22T15:06:40Z'),
+                updatedAt: DateTime.parse('2025-05-22T15:06:40Z'),
+                ingredients: [
+
+                ],
+                cookingSteps: [
+                  CookingStep(
+                    id: 'db2c3d56-99b8-42c1-83ad-6c3ecc71481c',
+                    description: '22',
+                    duration: 44,
+                  ),
+                ],
+              );
+              context.go('/recipe-details', extra: recipe);
+            },
           ),
           const Divider(),
           ListTile(
