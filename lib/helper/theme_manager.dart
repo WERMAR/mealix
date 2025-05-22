@@ -13,9 +13,7 @@ class ThemeManager {
     ),
     iconTheme: const IconThemeData(color: Color(0xFFDAFF08)),
     textTheme: GoogleFonts.interTextTheme(
-
       const TextTheme(
-
         displayLarge: TextStyle(
           fontSize: 57,
           fontWeight: FontWeight.w400,
@@ -94,29 +92,23 @@ class ThemeManager {
       ),
     ),
     datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFF161C29),
+      backgroundColor: const Color(0xFF161C29),
       headerForegroundColor: Colors.white,
-      dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+      dayForegroundColor: WidgetStateColor.resolveWith(
+        (states) => Colors.white,
+      ),
 
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFFDAFF08),
+        ),
       ),
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFFDAFF08),
+        ),
       ),
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Color(0xFF1E2233),
-      hintStyle: TextStyle(color: Colors.white70),
-      labelStyle: TextStyle(color: Colors.white),
-      prefixIconColor: Colors.white70,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-    ),
-
   );
 
   static final ThemeData lightTheme = ThemeData(
@@ -126,7 +118,7 @@ class ThemeManager {
     colorScheme: const ColorScheme.light(
       primary: Color(0xFFE0E0E0),
       secondary: Color(0xFF4C0082),
-      surface: Color(0xFF000000),
+      surface: Color(0xFFF5F5F5),
     ),
     iconTheme: const IconThemeData(color: Color(0xFF4C0082)),
     textTheme: GoogleFonts.interTextTheme(
@@ -206,37 +198,25 @@ class ThemeManager {
           fontWeight: FontWeight.w500,
           color: Colors.black87,
         ),
-
-
       ),
-
     ),
 
-
-  datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFFE9EBEF),
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: const Color.fromARGB(255, 150, 150, 150),
       headerForegroundColor: Colors.white,
-      dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+      dayForegroundColor: WidgetStateColor.resolveWith(
+        (states) => Colors.white,
+      ),
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFF050505)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFF050505),
+        ),
       ),
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFF1D1D1B)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFF1D1D1B),
+        ),
       ),
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: Color(0xFFF4F4F4),
-      hintStyle: TextStyle(color: Colors.black54),
-      labelStyle: TextStyle(color: Colors.black87),
-      prefixIconColor: Colors.black54,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
-      ),
-    ),
-
-
   );
-
 }
