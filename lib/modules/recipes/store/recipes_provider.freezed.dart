@@ -13,6 +13,142 @@ part of 'recipes_provider.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
+mixin _$RecipeSearchState {
+
+ String get query; List<RecipeModel> get recipes;
+/// Create a copy of RecipeSearchState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RecipeSearchStateCopyWith<RecipeSearchState> get copyWith => _$RecipeSearchStateCopyWithImpl<RecipeSearchState>(this as RecipeSearchState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecipeSearchState&&(identical(other.query, query) || other.query == query)&&const DeepCollectionEquality().equals(other.recipes, recipes));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,query,const DeepCollectionEquality().hash(recipes));
+
+@override
+String toString() {
+  return 'RecipeSearchState(query: $query, recipes: $recipes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RecipeSearchStateCopyWith<$Res>  {
+  factory $RecipeSearchStateCopyWith(RecipeSearchState value, $Res Function(RecipeSearchState) _then) = _$RecipeSearchStateCopyWithImpl;
+@useResult
+$Res call({
+ String query, List<RecipeModel> recipes
+});
+
+
+
+
+}
+/// @nodoc
+class _$RecipeSearchStateCopyWithImpl<$Res>
+    implements $RecipeSearchStateCopyWith<$Res> {
+  _$RecipeSearchStateCopyWithImpl(this._self, this._then);
+
+  final RecipeSearchState _self;
+  final $Res Function(RecipeSearchState) _then;
+
+/// Create a copy of RecipeSearchState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? query = null,Object? recipes = null,}) {
+  return _then(_self.copyWith(
+query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as String,recipes: null == recipes ? _self.recipes : recipes // ignore: cast_nullable_to_non_nullable
+as List<RecipeModel>,
+  ));
+}
+
+}
+
+
+/// @nodoc
+
+
+class _RecipeSearchState implements RecipeSearchState {
+  const _RecipeSearchState({required this.query, required final  List<RecipeModel> recipes}): _recipes = recipes;
+  
+
+@override final  String query;
+ final  List<RecipeModel> _recipes;
+@override List<RecipeModel> get recipes {
+  if (_recipes is EqualUnmodifiableListView) return _recipes;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_recipes);
+}
+
+
+/// Create a copy of RecipeSearchState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$RecipeSearchStateCopyWith<_RecipeSearchState> get copyWith => __$RecipeSearchStateCopyWithImpl<_RecipeSearchState>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecipeSearchState&&(identical(other.query, query) || other.query == query)&&const DeepCollectionEquality().equals(other._recipes, _recipes));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,query,const DeepCollectionEquality().hash(_recipes));
+
+@override
+String toString() {
+  return 'RecipeSearchState(query: $query, recipes: $recipes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$RecipeSearchStateCopyWith<$Res> implements $RecipeSearchStateCopyWith<$Res> {
+  factory _$RecipeSearchStateCopyWith(_RecipeSearchState value, $Res Function(_RecipeSearchState) _then) = __$RecipeSearchStateCopyWithImpl;
+@override @useResult
+$Res call({
+ String query, List<RecipeModel> recipes
+});
+
+
+
+
+}
+/// @nodoc
+class __$RecipeSearchStateCopyWithImpl<$Res>
+    implements _$RecipeSearchStateCopyWith<$Res> {
+  __$RecipeSearchStateCopyWithImpl(this._self, this._then);
+
+  final _RecipeSearchState _self;
+  final $Res Function(_RecipeSearchState) _then;
+
+/// Create a copy of RecipeSearchState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? query = null,Object? recipes = null,}) {
+  return _then(_RecipeSearchState(
+query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as String,recipes: null == recipes ? _self._recipes : recipes // ignore: cast_nullable_to_non_nullable
+as List<RecipeModel>,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$CreateRecipeState {
 
  String get title; String get onlineLink; String get description; String get imageUrl; bool get isTwoDayMeal; List<CookingStep> get cookingSteps; List<Ingredient> get ingredients;

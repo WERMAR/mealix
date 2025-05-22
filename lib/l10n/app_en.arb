@@ -48,5 +48,8 @@
   "imageURL": "Image URL",
   "imageURLValidationError": "Please enter a link for the title image",
   "cookingSteps": "Cooking steps",
-  "ingredientForPortion": "Ingredients per Portion"
+  "ingredientForPortion": "Ingredients per Portion",
+  "noMealPlanExisting": "There exists no meal plan at the moment",
+  "createMealPlan": "Create meal plan",
+  "recipe": "Recipe"
 }

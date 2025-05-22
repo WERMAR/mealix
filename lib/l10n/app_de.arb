@@ -40,5 +40,8 @@
   "imageURL": "Anzeigebild URL",
   "imageURLValidationError": "Geben Sie einen Link für das Anzeigebild an",
   "cookingSteps": "Zubereitungsschritte",
-  "ingredientForPortion": "Zutaten für eine Portion"
+  "ingredientForPortion": "Zutaten für eine Portion",
+  "noMealPlanExisting": "Aktuell wurde noch kein Wochenplan erstellt",
+  "createMealPlan": "Erstelle einen Wochenplan",
+  "recipe": "Rezept"
 }

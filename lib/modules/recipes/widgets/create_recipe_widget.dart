@@ -184,9 +184,7 @@ class CreateRecipe extends StatelessWidget {
                               icon: Icon(
                                 Icons.add,
                                 color: ThemeColors.themedWhite(context),
-                                //color: Colors.white,
                               ),
-                              //onPressed: _addPreparationStep,
                               onPressed: () {
                                 ref
                                     .read(createRecipeStoreProvider.notifier)
