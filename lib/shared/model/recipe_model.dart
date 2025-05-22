@@ -49,7 +49,6 @@ sealed class RecipeModel with _$RecipeModel {
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    print(data);
     return RecipeModel(
       id: data?['id'] as String,
       title: data?['title'] as String,

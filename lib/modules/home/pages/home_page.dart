@@ -122,7 +122,10 @@ class HomePage extends ConsumerWidget {
                       if (data.creationMode) {
                         return const CreateMealPlan();
                       }
-                      return SevenDayMealList(meals: data.initialList);
+                      return SevenDayMealList(
+                        initialList: data.initialList,
+                        adjustedList: data.adjustedList,
+                      );
                     },
                     error: (error, stackTrace) {
                       return Text('Error: $error');
@@ -157,6 +160,37 @@ class HomePage extends ConsumerWidget {
                           ref
                               .read(createMealListStoreProvider.notifier)
                               .saveMealListPlan(),
+                  child: Icon(
+                    Icons.save_alt_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 30,
+                  ),
+                ),
+              );
+            },
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              final adjustedList = ref.watch(
+                mealListStoreProvider.select(
+                  (state) => state.valueOrNull?.adjustedList ?? [],
+                ),
+              );
+              if (adjustedList.isEmpty) {
+                return const SizedBox();
+              }
+              return Positioned(
+                bottom: 5,
+                right: 5,
+                child: FloatingActionButton(
+                  heroTag: 'saveMealListPlan',
+                  shape: const CircleBorder(),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  onPressed:
+                      () =>
+                          ref
+                              .read(mealListStoreProvider.notifier)
+                              .updateMealListPlan(),
                   child: Icon(
                     Icons.save_alt_rounded,
                     color: Theme.of(context).colorScheme.primary,

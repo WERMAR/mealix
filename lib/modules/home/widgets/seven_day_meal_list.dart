@@ -1,13 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../store/meal_list_provider.dart';
 import '../store/model/meal_model.dart';
 import 'day_meal_card.dart';
 
 class SevenDayMealList extends StatelessWidget {
-  const SevenDayMealList({super.key, required this.meals});
+  const SevenDayMealList({
+    super.key,
+    required this.initialList,
+    required this.adjustedList,
+  });
 
-  final List<Meal> meals;
+  final List<Meal> initialList;
+  final List<Meal> adjustedList;
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +46,27 @@ class SevenDayMealList extends StatelessWidget {
     }
 
     return Expanded(
-      child: ReorderableListView(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        children: [
-          for (int i = 0; i < meals.length; i++)
-            DayMealCard(
-              key: ValueKey('$i'),
-              date: meals[i].date,
-              mealName: meals[i].recipe.title,
-              isTwoDayMeal: false, // Is that what the mockup says, 2 meal day?
-            ),
-        ],
-        onReorder: (int oldIndex, int newIndex) {
-          if (newIndex > oldIndex) {
-            newIndex--;
-          }
-          //final movedItem = days.removeAt(oldIndex);
-          //days.insert(newIndex, movedItem);
+      child: Consumer(
+        builder: (context, ref, child) {
+          final mealList = adjustedList.isNotEmpty ? adjustedList : initialList;
+          return ReorderableListView(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            children: [
+              for (int i = 0; i < initialList.length; i++)
+                DayMealCard(
+                  key: ValueKey('$i'),
+                  date: mealList[i].date,
+                  mealName: mealList[i].recipe.title,
+                  isTwoDayMeal:
+                      false, // Is that what the mockup says, 2 meal day?
+                ),
+            ],
+            onReorder: (oldIndex, newIndex) {
+              ref
+                  .read(mealListStoreProvider.notifier)
+                  .reorderList(oldIndex, newIndex);
+            },
+          );
         },
       ),
     );

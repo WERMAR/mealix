@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Meal {
 
- RecipeModel get recipe; DateTime get date; bool get changeable; DateTime? get createdAt; DateTime? get updatedAt;
+ String get id; RecipeModel get recipe; DateTime get date; bool get changeable; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of Meal
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $MealCopyWith<Meal> get copyWith => _$MealCopyWithImpl<Meal>(this as Meal, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Meal&&(identical(other.recipe, recipe) || other.recipe == recipe)&&(identical(other.date, date) || other.date == date)&&(identical(other.changeable, changeable) || other.changeable == changeable)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Meal&&(identical(other.id, id) || other.id == id)&&(identical(other.recipe, recipe) || other.recipe == recipe)&&(identical(other.date, date) || other.date == date)&&(identical(other.changeable, changeable) || other.changeable == changeable)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,recipe,date,changeable,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,recipe,date,changeable,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Meal(recipe: $recipe, date: $date, changeable: $changeable, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Meal(id: $id, recipe: $recipe, date: $date, changeable: $changeable, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $MealCopyWith<$Res>  {
   factory $MealCopyWith(Meal value, $Res Function(Meal) _then) = _$MealCopyWithImpl;
 @useResult
 $Res call({
- RecipeModel recipe, DateTime date, bool changeable, DateTime? createdAt, DateTime? updatedAt
+ String id, RecipeModel recipe, DateTime date, bool changeable, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -63,9 +63,10 @@ class _$MealCopyWithImpl<$Res>
 
 /// Create a copy of Meal
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? recipe = null,Object? date = null,Object? changeable = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? recipe = null,Object? date = null,Object? changeable = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
-recipe: null == recipe ? _self.recipe : recipe // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,recipe: null == recipe ? _self.recipe : recipe // ignore: cast_nullable_to_non_nullable
 as RecipeModel,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,changeable: null == changeable ? _self.changeable : changeable // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -90,9 +91,10 @@ $RecipeModelCopyWith<$Res> get recipe {
 
 
 class _Meal implements Meal {
-  const _Meal({required this.recipe, required this.date, required this.changeable, this.createdAt, this.updatedAt});
+  const _Meal({required this.id, required this.recipe, required this.date, required this.changeable, this.createdAt, this.updatedAt});
   
 
+@override final  String id;
 @override final  RecipeModel recipe;
 @override final  DateTime date;
 @override final  bool changeable;
@@ -109,16 +111,16 @@ _$MealCopyWith<_Meal> get copyWith => __$MealCopyWithImpl<_Meal>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Meal&&(identical(other.recipe, recipe) || other.recipe == recipe)&&(identical(other.date, date) || other.date == date)&&(identical(other.changeable, changeable) || other.changeable == changeable)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Meal&&(identical(other.id, id) || other.id == id)&&(identical(other.recipe, recipe) || other.recipe == recipe)&&(identical(other.date, date) || other.date == date)&&(identical(other.changeable, changeable) || other.changeable == changeable)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,recipe,date,changeable,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,recipe,date,changeable,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Meal(recipe: $recipe, date: $date, changeable: $changeable, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Meal(id: $id, recipe: $recipe, date: $date, changeable: $changeable, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -129,7 +131,7 @@ abstract mixin class _$MealCopyWith<$Res> implements $MealCopyWith<$Res> {
   factory _$MealCopyWith(_Meal value, $Res Function(_Meal) _then) = __$MealCopyWithImpl;
 @override @useResult
 $Res call({
- RecipeModel recipe, DateTime date, bool changeable, DateTime? createdAt, DateTime? updatedAt
+ String id, RecipeModel recipe, DateTime date, bool changeable, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -146,9 +148,10 @@ class __$MealCopyWithImpl<$Res>
 
 /// Create a copy of Meal
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? recipe = null,Object? date = null,Object? changeable = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? recipe = null,Object? date = null,Object? changeable = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_Meal(
-recipe: null == recipe ? _self.recipe : recipe // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,recipe: null == recipe ? _self.recipe : recipe // ignore: cast_nullable_to_non_nullable
 as RecipeModel,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,changeable: null == changeable ? _self.changeable : changeable // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable

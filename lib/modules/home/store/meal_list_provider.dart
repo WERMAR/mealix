@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/v4.dart';
 
 import '../../../helper/date_helper.dart';
 import '../../../shared/model/recipe_model.dart';
@@ -80,6 +81,55 @@ class MealListStore extends _$MealListStore {
 
     return MealListState(initialList: meals, adjustedList: []);
   }
+
+  void reorderList(int oldIndex, int newIndex) {
+    if (state.hasValue) {
+      final currState = state.value!;
+      state = AsyncData(currState.copyWith(initialList: []));
+      final duration = ref.watch(selectedWeekProvider);
+      var newIndexCopy = newIndex;
+      if (newIndex > oldIndex) {
+        newIndexCopy--;
+      }
+
+      final toAdjustingList = List.of(
+        currState.adjustedList.isEmpty
+            ? currState.initialList
+            : currState.adjustedList,
+      );
+      final meal = toAdjustingList.removeAt(oldIndex);
+      toAdjustingList.insert(newIndexCopy, meal);
+      for (var i = 0; i < toAdjustingList.length; i++) {
+        toAdjustingList[i] = toAdjustingList[i].copyWith(
+          date: DateHelper.createDateFromDurationAndIndex(duration, i),
+        );
+      }
+      state = AsyncData(currState.copyWith(adjustedList: toAdjustingList));
+    }
+  }
+
+  Future<void> updateMealListPlan() async {
+    if (state.hasValue) {
+      final currState = state.value!;
+      final mappedMealPlan =
+          currState.adjustedList.map((e) => e.toFirestore()).toList();
+
+      final batchRef = FirebaseFirestore.instance.batch();
+      for (final meal in mappedMealPlan) {
+        final docRef = FirebaseFirestore.instance
+            .collection('mealPlan')
+            .doc(meal['id'] as String);
+        batchRef.set(docRef, meal);
+      }
+      await batchRef.commit();
+      state = AsyncData(
+        currState.copyWith(
+          initialList: currState.adjustedList,
+          adjustedList: [],
+        ),
+      );
+    }
+  }
 }
 
 @freezed
@@ -121,7 +171,7 @@ class CreateMealListStore extends _$CreateMealListStore {
     createdList.insert(newIndexCopy, meal);
     for (var i = 0; i < createdList.length; i++) {
       createdList[i] = createdList[i].copyWith(
-        date: _createDateFromDurationAndIndex(duration, i),
+        date: DateHelper.createDateFromDurationAndIndex(duration, i),
       );
     }
     state = state.copyWith(createMealList: createdList);
@@ -136,7 +186,8 @@ class CreateMealListStore extends _$CreateMealListStore {
     final size = createdList.length;
     createdList.add(
       Meal(
-        date: _createDateFromDurationAndIndex(duration, size),
+        id: const UuidV4().generate(),
+        date: DateHelper.createDateFromDurationAndIndex(duration, size),
         recipe: recipe,
         changeable: false,
       ),
@@ -159,22 +210,13 @@ class CreateMealListStore extends _$CreateMealListStore {
   Future<void> saveMealListPlan() async {
     final mappedMealPlan =
         state.createMealList.map((e) => e.toFirestore()).toList();
-    mappedMealPlan.forEach((meal) {
-      print(meal['date']);
-    });
     final batchRef = FirebaseFirestore.instance.batch();
     for (final meal in mappedMealPlan) {
-      final docRef = FirebaseFirestore.instance.collection('mealPlan').doc();
+      final docRef = FirebaseFirestore.instance
+          .collection('mealPlan')
+          .doc(meal['id'] as String);
       batchRef.set(docRef, meal);
     }
     await batchRef.commit();
-  }
-
-  DateTime _createDateFromDurationAndIndex(DateTimeRange range, int index) {
-    return DateTime(
-      range.start.year,
-      range.start.month,
-      range.start.day + index,
-    );
   }
 }

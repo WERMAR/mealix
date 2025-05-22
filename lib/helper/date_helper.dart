@@ -17,4 +17,15 @@ class DateHelper {
     final local = AppLocalizations.of(context)!;
     return DateFormat(format, local.localeName).format(date);
   }
+
+  static DateTime createDateFromDurationAndIndex(
+    DateTimeRange range,
+    int index,
+  ) {
+    return DateTime(
+      range.start.year,
+      range.start.month,
+      range.start.day + index,
+    );
+  }
 }
