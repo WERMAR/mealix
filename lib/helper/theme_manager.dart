@@ -10,6 +10,7 @@ class ThemeManager {
       primary: Color(0xFF242F49),
       secondary: Color(0xFFDAFF08),
       surface: Color(0xFF161C29),
+      error: Color(0xFFE11A1F),
     ),
     iconTheme: const IconThemeData(color: Color(0xFFDAFF08)),
     textTheme: GoogleFonts.interTextTheme(
@@ -127,6 +128,7 @@ class ThemeManager {
       primary: Color(0xFFFFFBF0),
       secondary: Color(0xFF4C0082),
       surface: Color(0xFFFFFBF0),
+      error: Color(0xFFE11A1F),
     ),
     iconTheme: const IconThemeData(color: Color(0xFF4C0082)),
     textTheme: GoogleFonts.interTextTheme(

@@ -122,7 +122,7 @@ class HouseholdManagerPage extends ConsumerWidget {
                               icon: const Icon(Icons.logout, color: Colors.white),
                               label: const Text('Leave Household', style: TextStyle(color: Colors.white)),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
+                                backgroundColor: Theme.of(context).colorScheme.error,
                                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               ),
