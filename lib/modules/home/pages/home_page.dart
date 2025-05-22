@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '/modules/home/store/household_provider.dart';
 import '../../../helper/date_helper.dart';
+import '../../../shared/authentication/store/authentication_provider.dart';
 import '../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../shared/widgets/menu_widget.dart';
 import '../../../shared/widgets/themed_circular_spinner.dart';
@@ -35,12 +37,10 @@ class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   static String get routeLocation => '/home';
-
   static String get routeName => 'home';
 
   Future<void> pickDate(BuildContext context, WidgetRef ref) async {
     final selectedWeek = ref.read(selectedWeekProvider);
-
     final picked = await showDatePicker(
       context: context,
       initialDate: selectedWeek.start,
@@ -75,19 +75,30 @@ class HomePage extends ConsumerWidget {
       ),
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
-        title: Text(
-          AppLocalizations.of(context)!.homeTitle,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        actions: const [ProfileBadge(initials: 'MW')],
+        title: ref
+            .watch(householdNameProvider)
+            .maybeWhen(
+              data:
+                  (name) => Text(
+                    name ?? AppLocalizations.of(context)!.homeTitle,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+              orElse:
+                  () => Text(
+                    AppLocalizations.of(context)!.homeTitle,
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+            ),
+        actions: const [ProfileBadge()],
       ),
-      endDrawer: MenuWidget(),
+      endDrawer: const MenuWidget(),
       body: Stack(
         children: [
           Column(
             children: [
               WeekViewCalendar(
                 selectedWeek: selectedWeek,
+                onCalendarTap: () => pickDate(context, ref),
                 onPreviousWeek: () {
                   ref
                       .read(selectedWeekProvider.notifier)

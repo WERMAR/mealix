@@ -13,7 +13,6 @@ class ThemeManager {
     ),
     iconTheme: const IconThemeData(color: Color(0xFFDAFF08)),
     textTheme: GoogleFonts.interTextTheme(
-
       const TextTheme(
         displayLarge: TextStyle(
           fontSize: 57,
@@ -93,23 +92,28 @@ class ThemeManager {
       ),
     ),
     datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFF161C29),
+      backgroundColor: const Color(0xFF161C29),
       headerForegroundColor: Colors.white,
-      dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+      dayForegroundColor: WidgetStateColor.resolveWith(
+        (states) => Colors.white,
+      ),
 
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFFDAFF08),
+        ),
       ),
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFFDAFF08)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFFDAFF08),
+        ),
       ),
     ),
-
   );
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    scaffoldBackgroundColor: const Color(0xFFE38989),
     primaryColor: const Color(0xFFE0E0E0),
     colorScheme: const ColorScheme.light(
       primary: Color(0xFFE0E0E0),
@@ -184,34 +188,35 @@ class ThemeManager {
           fontWeight: FontWeight.w500,
           color: Colors.black,
         ),
-        labelMedium: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: Colors.black87,
-        ),
         labelSmall: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w500,
           color: Colors.black54,
         ),
+        labelMedium: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: Colors.black87,
+        ),
       ),
-
     ),
 
-
-  datePickerTheme: DatePickerThemeData(
-      backgroundColor: Color(0xFFE9EBEF), // optional: dialog background
-      headerForegroundColor: Colors.white, // optional: title color
-      dayForegroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
-      // This is what you're looking for:
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: const Color.fromARGB(255, 150, 150, 150),
+      headerForegroundColor: Colors.white,
+      dayForegroundColor: WidgetStateColor.resolveWith(
+        (states) => Colors.white,
+      ),
       cancelButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFF050505)), // or theme color
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFF050505),
+        ),
       ),
       confirmButtonStyle: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Color(0xFF1D1D1B)),
+        foregroundColor: WidgetStateColor.resolveWith(
+          (state) => const Color(0xFF1D1D1B),
+        ),
       ),
     ),
-
   );
-
 }

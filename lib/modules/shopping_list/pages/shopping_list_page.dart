@@ -32,7 +32,7 @@ class ShoppingListPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text('Mein Zuhause (My House?)'),
-        actions: const [ProfileBadge(initials: 'MW')],
+        actions: const [ProfileBadge()],
       ),
       endDrawer: MenuWidget(),
       body: const Text('test'),

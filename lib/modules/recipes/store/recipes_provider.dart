@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart'; // Ensure this is imported
 
 import '../../../helper/input_validation.dart';
 import '../../../shared/model/cooking_step_model.dart';
 import '../../../shared/model/ingredient_model.dart';
-import '../../../shared/model/recipe_model.dart';
+import '../../../shared/model/recipe_model.dart'; // Make sure RecipeModel is correctly imported
 import 'model/spoonacular_recipe_models.dart';
 
 part 'recipes_provider.freezed.dart';
@@ -26,16 +26,35 @@ Future<List<RecipeModel>> firebaseRecipes(Ref ref) async {
   );
 
   final snapshot =
-      await FirebaseFirestore.instance
-          .collection('recipes')
-          .orderBy('createdAt', descending: true)
-          .limit(10)
-          .get();
+  await FirebaseFirestore.instance
+      .collection('recipes')
+      .orderBy('createdAt', descending: true)
+      .limit(10)
+      .get();
 
   final recipes =
-      snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc, null)).toList();
+  snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc, null)).toList();
   return recipes;
 }
+
+// NEW PROVIDER: To fetch a single recipe by its ID
+@riverpod
+Future<RecipeModel?> recipeDetails(Ref ref, String id) async {
+  final docSnapshot = await FirebaseFirestore.instance
+      .collection('recipes')
+      .doc(id) // Directly fetches the document by its ID
+      .get();
+
+  if (docSnapshot.exists) {
+    return RecipeModel.fromFirestore(docSnapshot, null);
+  }
+
+  // If the recipe is not found in Firebase, you could add logic here
+  // to fetch it from Spoonacular's detail API if needed for other recipe types.
+  // For now, based on your current setup, it primarily serves Firebase recipes.
+  return null; // Return null if recipe is not found
+}
+
 
 @riverpod
 Future<SpoonRecipeListDto> spoonacularRecipes(Ref ref) async {
@@ -48,71 +67,71 @@ Future<SpoonRecipeListDto> spoonacularRecipes(Ref ref) async {
   await Future.delayed(const Duration(seconds: 2));
   const response = '''
 {
-	"results": [
-		{
-			"id": 651994,
-			"title": "Miniature Fruit Tarts",
-			"image": "https://img.spoonacular.com/recipes/651994-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 665767,
-			"title": "Zucchini Pineapple Muffins",
-			"image": "https://img.spoonacular.com/recipes/665767-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 653886,
-			"title": "Orange Honey Madeleines",
-			"image": "https://img.spoonacular.com/recipes/653886-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 636177,
-			"title": "Broccoli Cheddar Soup",
-			"image": "https://img.spoonacular.com/recipes/636177-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 642264,
-			"title": "Eggless Ginger & Mango Bread",
-			"image": "https://img.spoonacular.com/recipes/642264-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 650744,
-			"title": "Mango & Goat Cheese Quesadillas",
-			"image": "https://img.spoonacular.com/recipes/650744-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 644627,
-			"title": "Ginger Sesame Dressing",
-			"image": "https://img.spoonacular.com/recipes/644627-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 660108,
-			"title": "Simple Kale Salad",
-			"image": "https://img.spoonacular.com/recipes/660108-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 648715,
-			"title": "Kale Bruschetta",
-			"image": "https://img.spoonacular.com/recipes/648715-312x231.jpg",
-			"imageType": "jpg"
-		},
-		{
-			"id": 658522,
-			"title": "Roasted Butternut Squash Bisque",
-			"image": "https://img.spoonacular.com/recipes/658522-312x231.jpg",
-			"imageType": "jpg"
-		}
-	],
-	"offset": 0,
-	"number": 10,
-	"totalResults": 2186
+  "results": [
+   {
+    "id": 651994,
+    "title": "Miniature Fruit Tarts",
+    "image": "https://img.spoonacular.com/recipes/651994-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 665767,
+    "title": "Zucchini Pineapple Muffins",
+    "image": "https://img.spoonacular.com/recipes/665767-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 653886,
+    "title": "Orange Honey Madeleines",
+    "image": "https://img.spoonacular.com/recipes/653886-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 636177,
+    "title": "Broccoli Cheddar Soup",
+    "image": "https://img.spoonacular.com/recipes/636177-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 642264,
+    "title": "Eggless Ginger & Mango Bread",
+    "image": "https://img.spoonacular.com/recipes/642264-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 650744,
+    "title": "Mango & Goat Cheese Quesadillas",
+    "image": "https://img.spoonacular.com/recipes/650744-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 644627,
+    "title": "Ginger Sesame Dressing",
+    "image": "https://img.spoonacular.com/recipes/644627-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 660108,
+    "title": "Simple Kale Salad",
+    "image": "https://img.spoonacular.com/recipes/660108-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 648715,
+    "title": "Kale Bruschetta",
+    "image": "https://img.spoonacular.com/recipes/648715-312x231.jpg",
+    "imageType": "jpg"
+   },
+   {
+    "id": 658522,
+    "title": "Roasted Butternut Squash Bisque",
+    "image": "https://img.spoonacular.com/recipes/658522-312x231.jpg",
+    "imageType": "jpg"
+   }
+  ],
+  "offset": 0,
+  "number": 10,
+  "totalResults": 2186
 }''';
 
   //  if (response.statusCode == 200) {
@@ -308,9 +327,9 @@ class CreateRecipeStore extends _$CreateRecipeStore {
         .collection('recipes')
         .doc(state.title)
         .withConverter(
-          fromFirestore: RecipeModel.fromFirestore,
-          toFirestore: (recipe, options) => recipe.toFirestore(),
-        )
+      fromFirestore: RecipeModel.fromFirestore,
+      toFirestore: (recipe, options) => recipe.toFirestore(),
+    )
         .set(RecipeModel.fromState(state))
         .onError((e, _) => print('Error writing document: $e'));
   }
@@ -377,9 +396,9 @@ sealed class FieldValidationResult with _$FieldValidationResult {
   }
 
   factory FieldValidationResult.fromString(
-    String fieldName,
-    String? validationResult,
-  ) {
+      String fieldName,
+      String? validationResult,
+      ) {
     return validationResult == null
         ? FieldValidationResult.valid(fieldName)
         : FieldValidationResult.invalid(fieldName, validationResult);

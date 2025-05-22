@@ -49,7 +49,21 @@
   "imageURLValidationError": "Please enter a link for the title image",
   "cookingSteps": "Cooking steps",
   "ingredientForPortion": "Ingredients per Portion",
+  "homeTitle": "Home",
+  "recipesTitle": "Recipes",
+  "shoppingListTitle": "Shopping List",
+  "loadingText": "Loading...",
+  "errorText": "An error occurred",
+  "recipeNotFound": "Recipe not found.",
+  "preparationTime": "Preparation Time",
+  "preparationDescription": "Preparation Description",
+  "ingredientsList": "Ingredients List",
+  "close": "Close",
+  "cancelButton": "Close",
+  "cancelButtonText": "Cancel",
+  "householdTitle": "Your household",
   "noMealPlanExisting": "There exists no meal plan at the moment",
   "createMealPlan": "Create meal plan",
   "recipe": "Recipe"
+
 }

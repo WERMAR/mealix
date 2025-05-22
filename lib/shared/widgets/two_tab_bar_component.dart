@@ -24,7 +24,6 @@ class TwoTabBar extends StatefulWidget {
   @override
   State<TwoTabBar> createState() => _TwoTabBarState();
 }
-
 class _TwoTabBarState extends State<TwoTabBar> {
   _TwoTabBarState();
 
@@ -42,14 +41,14 @@ class _TwoTabBarState extends State<TwoTabBar> {
       children: [
         Row(
           children: [
+            // Tab 1
             Expanded(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 9,
-                  backgroundColor:
-                      _mode == TabMode.tab1
-                          ? Theme.of(context).colorScheme.secondary
-                          : Theme.of(context).colorScheme.surface,
+                  backgroundColor: _mode == TabMode.tab1
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.surface,
                   padding: const EdgeInsets.symmetric(vertical: 3),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4),
@@ -63,32 +62,31 @@ class _TwoTabBarState extends State<TwoTabBar> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color:
-                        _mode == TabMode.tab1
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context).colorScheme.surface,
+                    color: _mode == TabMode.tab1
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     widget.tab1Title,
-                    style: TextStyle(
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
               ),
             ),
+
+            // Tab 2
             Expanded(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 9,
-                  backgroundColor:
-                      _mode == TabMode.tab2
-                          ? Theme.of(context).colorScheme.secondary
-                          : Theme.of(context).colorScheme.surface,
+                  backgroundColor: _mode == TabMode.tab2
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.surface,
                   foregroundColor: Theme.of(context).colorScheme.primary,
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   shape: RoundedRectangleBorder(
@@ -103,11 +101,10 @@ class _TwoTabBarState extends State<TwoTabBar> {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color:
-                        _mode == TabMode.tab2
-                            ? Theme.of(context).colorScheme.secondary
-                            : Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(0),
+                    color: _mode == TabMode.tab2
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(4),
                   ),
                   alignment: Alignment.center,
                   child: Text(
@@ -122,9 +119,9 @@ class _TwoTabBarState extends State<TwoTabBar> {
             ),
           ],
         ),
+        const SizedBox(height: 12),
         switch (_mode) {
           TabMode.tab1 => widget.tab1Content,
-
           TabMode.tab2 => widget.tab2Content,
         },
       ],

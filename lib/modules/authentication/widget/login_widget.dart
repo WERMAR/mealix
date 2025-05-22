@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../home/store/household_provider.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../shared/authentication/store/authentication_provider.dart';
+
 
 class LoginWidget extends ConsumerWidget {
   const LoginWidget({super.key});
@@ -42,7 +45,6 @@ class LoginWidget extends ConsumerWidget {
       }
     });
 
-    // Dispose the controllers to prevent memory leaks
     return AutofillGroup(
       child: Column(
         children: [
@@ -119,38 +121,39 @@ class LoginWidget extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed:
-                authenticationFormState.isValid(
-                      authenticationFormState.activeMode,
-                    )
-                    ? () {
-                      // FIXME: This finishAutofillContext is not working on iOS caused by missing domain configuration see: https://github.com/flutter/flutter/issues/69111#issuecomment-722711868
-                      TextInput.finishAutofillContext(); // <-- this
-                      authenticationNotifier.logInWithEmailAndPassword(
-                        authenticationFormState.email!,
-                        authenticationFormState.password!,
-                      );
-                    }
-                    : null,
-            style: ElevatedButton.styleFrom(
-              textStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 20,
-              ),
-              shadowColor: Colors.black,
-              elevation: 9,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              foregroundColor: Theme.of(context).colorScheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-            ),
-            child: Text(AppLocalizations.of(context)!.loginTitle),
+      ElevatedButton(
+        onPressed: authenticationFormState.isValid(authenticationFormState.activeMode)
+            ? () async {
+          TextInput.finishAutofillContext();
+
+          await authenticationNotifier.logInWithEmailAndPassword(
+            authenticationFormState.email!,
+            authenticationFormState.password!,
+          );
+
+          if (context.mounted) {
+            context.go('/home');
+          }
+        }
+            : null,
+        style: ElevatedButton.styleFrom(
+          textStyle: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontSize: 20,
           ),
-        ],
+          shadowColor: Colors.black,
+          elevation: 9,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+        ),
+        child: Text(AppLocalizations.of(context)!.loginTitle),
       ),
+    ],
+    ),
     );
   }
 }

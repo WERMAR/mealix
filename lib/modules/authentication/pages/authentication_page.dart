@@ -24,7 +24,6 @@ class AuthenticationPage extends ConsumerWidget {
       body: SizedBox.expand(
         child: Stack(
           children: [
-            // Wave-shaped green background
             ClipPath(
               clipper: WaveClipper(),
               child: Container(

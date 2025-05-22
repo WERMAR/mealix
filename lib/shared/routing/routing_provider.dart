@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../modules/authentication/pages/authentication_page.dart';
 import '../../modules/home/pages/home_page.dart';
 import '../../modules/recipes/pages/recipes_page.dart';
+import '../../modules/recipes/pages/recipes_details_page.dart';
 import '../../modules/shopping_list/pages/shopping_list_page.dart';
 import '../authentication/store/authentication_provider.dart';
 import '../../modules/recipes/pages/recipes_details_page.dart';
@@ -71,15 +72,10 @@ GoRouter router(Ref ref) {
             (context, state) =>
                 const ShoppingListPage(), // Use meaningful names
       ),
-  GoRoute(
-  path: '/recipes-details/:id',
-  name: 'recipes-details',
-  builder: (context, state) {
-  final id = state.pathParameters['id'];
-  if (id == null) return Center(child: Text('No ID provided'));
-  return RecipesDetailsPage(id: id);
-  },
-  ),
+
+
+
+
       GoRoute(
         path: HouseholdManagerPage.routeLocation,
         name: HouseholdManagerPage.routeName,

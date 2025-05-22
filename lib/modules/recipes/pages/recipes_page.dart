@@ -41,7 +41,7 @@ class RecipesPage extends StatelessWidget {
           AppLocalizations.of(context)!.recipesTitle,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
-        actions: const [ProfileBadge(initials: 'MW')],
+        actions: const [ProfileBadge()],
       ),
       endDrawer: MenuWidget(),
       body: Padding(

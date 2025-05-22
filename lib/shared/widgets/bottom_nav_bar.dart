@@ -16,7 +16,7 @@ class CustomBottomNavBar extends StatelessWidget {
     const leftTabURI = '/recipes';
     const rightTabURI = '/shopping-list';
     final activeURI =
-        GoRouter.of(context).routeInformationProvider.value.uri.toString();
+    GoRouter.of(context).routeInformationProvider.value.uri.toString();
 
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
@@ -28,9 +28,9 @@ class CustomBottomNavBar extends StatelessWidget {
           Expanded(
             child: Material(
               color:
-                  isActiveURI(leftTabURI, activeURI)
-                      ? Theme.of(context).colorScheme.secondary
-                      : Colors.transparent,
+              isActiveURI(leftTabURI, activeURI)
+                  ? Theme.of(context).colorScheme.secondary
+                  : Colors.transparent,
               child: InkWell(
                 onTap: onLeftTabPressed,
                 child: SizedBox(
@@ -38,9 +38,9 @@ class CustomBottomNavBar extends StatelessWidget {
                     child: Icon(
                       Icons.web_stories,
                       color:
-                          isActiveURI(leftTabURI, activeURI)
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.secondary,
+                      isActiveURI(leftTabURI, activeURI)
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                       size: 35,
                     ),
                   ),
@@ -51,9 +51,9 @@ class CustomBottomNavBar extends StatelessWidget {
           Expanded(
             child: Material(
               color:
-                  isActiveURI(rightTabURI, activeURI)
-                      ? Theme.of(context).colorScheme.secondary
-                      : Colors.transparent,
+              isActiveURI(rightTabURI, activeURI)
+                  ? Theme.of(context).colorScheme.secondary
+                  : Colors.transparent,
               child: InkWell(
                 onTap: onRightTabPressed,
                 child: SizedBox(
@@ -61,9 +61,9 @@ class CustomBottomNavBar extends StatelessWidget {
                     child: Icon(
                       Icons.shopping_cart,
                       color:
-                          isActiveURI(rightTabURI, activeURI)
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.secondary,
+                      isActiveURI(rightTabURI, activeURI)
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.secondary,
                       size: 35,
                     ),
                   ),
