@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:uuid/v4.dart';
 
 import '../../modules/recipes/store/recipes_provider.dart';
 import 'cooking_step_model.dart';
@@ -11,6 +14,7 @@ part 'recipe_model.g.dart';
 @freezed
 sealed class RecipeModel with _$RecipeModel {
   const factory RecipeModel({
+    required String id,
     required String title,
     required String onlineLink,
     required String description,
@@ -24,6 +28,7 @@ sealed class RecipeModel with _$RecipeModel {
 
   factory RecipeModel.fromState(CreateRecipeState state) {
     return RecipeModel(
+      id: const UuidV4().generate(),
       title: state.title,
       onlineLink: state.onlineLink,
       description: state.description,
@@ -46,6 +51,7 @@ sealed class RecipeModel with _$RecipeModel {
     final data = snapshot.data();
     print(data);
     return RecipeModel(
+      id: data?['id'] as String,
       title: data?['title'] as String,
       onlineLink: data?['onlineLink'] as String,
       description: data?['description'] as String,
@@ -59,8 +65,8 @@ sealed class RecipeModel with _$RecipeModel {
           (data?['ingredients'] as List<dynamic>)
               .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
               .toList(),
-      createdAt: DateTime.parse(data?['createdAt'] as String),
-      updatedAt: DateTime.parse(data?['updatedAt'] as String),
+      createdAt: (data?['createdAt'] as Timestamp).toDate(),
+      updatedAt: (data?['updatedAt'] as Timestamp).toDate(),
     );
   }
 }
@@ -68,6 +74,7 @@ sealed class RecipeModel with _$RecipeModel {
 extension RecipeModelX on RecipeModel {
   Map<String, dynamic> toFirestore() {
     return {
+      'id': id,
       'title': title,
       'onlineLink': onlineLink,
       'description': description,

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RecipeModel {
 
- String get title; String get onlineLink; String get description; String get imageUrl; bool get isTwoDayMeal; List<CookingStep> get cookingSteps; List<Ingredient> get ingredients; DateTime get createdAt; DateTime get updatedAt;
+ String get id; String get title; String get onlineLink; String get description; String get imageUrl; bool get isTwoDayMeal; List<CookingStep> get cookingSteps; List<Ingredient> get ingredients; DateTime get createdAt; DateTime get updatedAt;
 /// Create a copy of RecipeModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $RecipeModelCopyWith<RecipeModel> get copyWith => _$RecipeModelCopyWithImpl<Reci
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecipeModel&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isTwoDayMeal, isTwoDayMeal) || other.isTwoDayMeal == isTwoDayMeal)&&const DeepCollectionEquality().equals(other.cookingSteps, cookingSteps)&&const DeepCollectionEquality().equals(other.ingredients, ingredients)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecipeModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isTwoDayMeal, isTwoDayMeal) || other.isTwoDayMeal == isTwoDayMeal)&&const DeepCollectionEquality().equals(other.cookingSteps, cookingSteps)&&const DeepCollectionEquality().equals(other.ingredients, ingredients)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,onlineLink,description,imageUrl,isTwoDayMeal,const DeepCollectionEquality().hash(cookingSteps),const DeepCollectionEquality().hash(ingredients),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,title,onlineLink,description,imageUrl,isTwoDayMeal,const DeepCollectionEquality().hash(cookingSteps),const DeepCollectionEquality().hash(ingredients),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'RecipeModel(title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isTwoDayMeal: $isTwoDayMeal, cookingSteps: $cookingSteps, ingredients: $ingredients, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'RecipeModel(id: $id, title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isTwoDayMeal: $isTwoDayMeal, cookingSteps: $cookingSteps, ingredients: $ingredients, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $RecipeModelCopyWith<$Res>  {
   factory $RecipeModelCopyWith(RecipeModel value, $Res Function(RecipeModel) _then) = _$RecipeModelCopyWithImpl;
 @useResult
 $Res call({
- String title, String onlineLink, String description, String imageUrl, bool isTwoDayMeal, List<CookingStep> cookingSteps, List<Ingredient> ingredients, DateTime createdAt, DateTime updatedAt
+ String id, String title, String onlineLink, String description, String imageUrl, bool isTwoDayMeal, List<CookingStep> cookingSteps, List<Ingredient> ingredients, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -66,9 +66,10 @@ class _$RecipeModelCopyWithImpl<$Res>
 
 /// Create a copy of RecipeModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isTwoDayMeal = null,Object? cookingSteps = null,Object? ingredients = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isTwoDayMeal = null,Object? cookingSteps = null,Object? ingredients = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
-title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,onlineLink: null == onlineLink ? _self.onlineLink : onlineLink // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -88,9 +89,10 @@ as DateTime,
 @JsonSerializable()
 
 class _RecipeModel implements RecipeModel {
-  const _RecipeModel({required this.title, required this.onlineLink, required this.description, required this.imageUrl, required this.isTwoDayMeal, required final  List<CookingStep> cookingSteps, required final  List<Ingredient> ingredients, required this.createdAt, required this.updatedAt}): _cookingSteps = cookingSteps,_ingredients = ingredients;
+  const _RecipeModel({required this.id, required this.title, required this.onlineLink, required this.description, required this.imageUrl, required this.isTwoDayMeal, required final  List<CookingStep> cookingSteps, required final  List<Ingredient> ingredients, required this.createdAt, required this.updatedAt}): _cookingSteps = cookingSteps,_ingredients = ingredients;
   factory _RecipeModel.fromJson(Map<String, dynamic> json) => _$RecipeModelFromJson(json);
 
+@override final  String id;
 @override final  String title;
 @override final  String onlineLink;
 @override final  String description;
@@ -126,16 +128,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecipeModel&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isTwoDayMeal, isTwoDayMeal) || other.isTwoDayMeal == isTwoDayMeal)&&const DeepCollectionEquality().equals(other._cookingSteps, _cookingSteps)&&const DeepCollectionEquality().equals(other._ingredients, _ingredients)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecipeModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.onlineLink, onlineLink) || other.onlineLink == onlineLink)&&(identical(other.description, description) || other.description == description)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.isTwoDayMeal, isTwoDayMeal) || other.isTwoDayMeal == isTwoDayMeal)&&const DeepCollectionEquality().equals(other._cookingSteps, _cookingSteps)&&const DeepCollectionEquality().equals(other._ingredients, _ingredients)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,onlineLink,description,imageUrl,isTwoDayMeal,const DeepCollectionEquality().hash(_cookingSteps),const DeepCollectionEquality().hash(_ingredients),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,title,onlineLink,description,imageUrl,isTwoDayMeal,const DeepCollectionEquality().hash(_cookingSteps),const DeepCollectionEquality().hash(_ingredients),createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'RecipeModel(title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isTwoDayMeal: $isTwoDayMeal, cookingSteps: $cookingSteps, ingredients: $ingredients, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'RecipeModel(id: $id, title: $title, onlineLink: $onlineLink, description: $description, imageUrl: $imageUrl, isTwoDayMeal: $isTwoDayMeal, cookingSteps: $cookingSteps, ingredients: $ingredients, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -146,7 +148,7 @@ abstract mixin class _$RecipeModelCopyWith<$Res> implements $RecipeModelCopyWith
   factory _$RecipeModelCopyWith(_RecipeModel value, $Res Function(_RecipeModel) _then) = __$RecipeModelCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String onlineLink, String description, String imageUrl, bool isTwoDayMeal, List<CookingStep> cookingSteps, List<Ingredient> ingredients, DateTime createdAt, DateTime updatedAt
+ String id, String title, String onlineLink, String description, String imageUrl, bool isTwoDayMeal, List<CookingStep> cookingSteps, List<Ingredient> ingredients, DateTime createdAt, DateTime updatedAt
 });
 
 
@@ -163,9 +165,10 @@ class __$RecipeModelCopyWithImpl<$Res>
 
 /// Create a copy of RecipeModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isTwoDayMeal = null,Object? cookingSteps = null,Object? ingredients = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? onlineLink = null,Object? description = null,Object? imageUrl = null,Object? isTwoDayMeal = null,Object? cookingSteps = null,Object? ingredients = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_RecipeModel(
-title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,onlineLink: null == onlineLink ? _self.onlineLink : onlineLink // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable

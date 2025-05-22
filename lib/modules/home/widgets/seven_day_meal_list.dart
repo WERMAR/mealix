@@ -1,33 +1,61 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import '../store/model/meal_model.dart';
 import 'day_meal_card.dart';
 
 class SevenDayMealList extends StatelessWidget {
-  final DateTimeRange weekRange;
+  const SevenDayMealList({super.key, required this.meals});
 
-  const SevenDayMealList({super.key, required this.weekRange});
+  final List<Meal> meals;
 
   @override
   Widget build(BuildContext context) {
-    final days = List.generate(
-      7,
-      (i) => weekRange.start.add(Duration(days: i)),
-    );
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    final Color oddItemColor = colorScheme.secondary.withAlpha(5);
+    final Color evenItemColor = colorScheme.secondary.withAlpha(15);
+    final Color draggableItemColor = colorScheme.secondary;
+
+    Widget proxyDecorator(
+      Widget child,
+      int index,
+      Animation<double> animation,
+    ) {
+      return AnimatedBuilder(
+        animation: animation,
+        builder: (BuildContext context, Widget? child) {
+          final double animValue = Curves.easeInOut.transform(animation.value);
+          final double elevation = lerpDouble(0, 6, animValue)!;
+          return Material(
+            elevation: elevation,
+            color: draggableItemColor,
+            shadowColor: draggableItemColor,
+            child: child,
+          );
+        },
+        child: child,
+      );
+    }
 
     return Expanded(
-      child: ListView.builder(
-        padding: const EdgeInsets.symmetric( horizontal: 12),
-        itemCount: days.length,
-        itemBuilder: (context, index) {
-          final date = days[index];
-
-          // placeholder for meal – replace with API call or state later
-          final meal = 'Placeholder Meal ${index + 1}';
-
-          return DayMealCard(
-            date: date,
-            mealName: meal,
-            isTwoDayMeal: false, // Is that what the mockup says, 2 meal day?
-          );
+      child: ReorderableListView(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        children: [
+          for (int i = 0; i < meals.length; i++)
+            DayMealCard(
+              key: ValueKey('$i'),
+              date: meals[i].date,
+              mealName: meals[i].recipe.title,
+              isTwoDayMeal: false, // Is that what the mockup says, 2 meal day?
+            ),
+        ],
+        onReorder: (int oldIndex, int newIndex) {
+          if (newIndex > oldIndex) {
+            newIndex--;
+          }
+          //final movedItem = days.removeAt(oldIndex);
+          //days.insert(newIndex, movedItem);
         },
       ),
     );
