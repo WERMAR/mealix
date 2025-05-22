@@ -115,9 +115,9 @@ class HouseholdManagerPage extends ConsumerWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Household name: $householdName',
-                                style: theme.textTheme.titleLarge),
+                            Text('Household name: $householdName', style: theme.textTheme.titleLarge),
                             const SizedBox(height: 16),
+
                             ElevatedButton.icon(
                               icon: const Icon(Icons.logout, color: Colors.white),
                               label: const Text('Leave Household', style: TextStyle(color: Colors.white)),
@@ -141,8 +141,20 @@ class HouseholdManagerPage extends ConsumerWidget {
                                 }
                               },
                             ),
+
+                            const SizedBox(height: 12),
+
+                            // 👇 Back button
+                            TextButton.icon(
+                              icon: const Icon(Icons.arrow_back),
+                              label: const Text('Back to Home'),
+                              onPressed: () => context.go('/home'),
+                              style: TextButton.styleFrom(
+                                foregroundColor: theme.colorScheme.primary,
+                              ),
+                            ),
                           ],
-                        ),
+                        )
                       );
                     }
 
