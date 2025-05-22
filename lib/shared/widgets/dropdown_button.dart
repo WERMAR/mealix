@@ -17,6 +17,7 @@ class CustomDropdownButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: value,
+      isExpanded: true,
       icon: const Icon(Icons.arrow_drop_down),
       style: Theme.of(context).textTheme.bodyMedium,
       underline: Container(
@@ -26,7 +27,10 @@ class CustomDropdownButton extends StatelessWidget {
       onChanged: onChanged,
       items:
           data.map<DropdownMenuItem<String>>((value) {
-            return DropdownMenuItem<String>(value: value, child: Text(value));
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, overflow: TextOverflow.ellipsis),
+            );
           }).toList(),
     );
   }

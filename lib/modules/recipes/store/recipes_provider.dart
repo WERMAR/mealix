@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart'; // Ensure this is imported
@@ -10,6 +11,7 @@ import '../../../helper/input_validation.dart';
 import '../../../shared/model/cooking_step_model.dart';
 import '../../../shared/model/ingredient_model.dart';
 import '../../../shared/model/recipe_model.dart'; // Make sure RecipeModel is correctly imported
+import '../../shopping_list/store/model/shopping_list_model.dart';
 import 'model/spoonacular_recipe_models.dart';
 
 part 'recipes_provider.freezed.dart';
@@ -26,24 +28,25 @@ Future<List<RecipeModel>> firebaseRecipes(Ref ref) async {
   );
 
   final snapshot =
-  await FirebaseFirestore.instance
-      .collection('recipes')
-      .orderBy('createdAt', descending: true)
-      .limit(10)
-      .get();
+      await FirebaseFirestore.instance
+          .collection('recipes')
+          .orderBy('createdAt', descending: true)
+          .limit(10)
+          .get();
 
   final recipes =
-  snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc, null)).toList();
+      snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc, null)).toList();
   return recipes;
 }
 
 // NEW PROVIDER: To fetch a single recipe by its ID
 @riverpod
 Future<RecipeModel?> recipeDetails(Ref ref, String id) async {
-  final docSnapshot = await FirebaseFirestore.instance
-      .collection('recipes')
-      .doc(id) // Directly fetches the document by its ID
-      .get();
+  final docSnapshot =
+      await FirebaseFirestore.instance
+          .collection('recipes')
+          .doc(id) // Directly fetches the document by its ID
+          .get();
 
   if (docSnapshot.exists) {
     return RecipeModel.fromFirestore(docSnapshot, null);
@@ -54,7 +57,6 @@ Future<RecipeModel?> recipeDetails(Ref ref, String id) async {
   // For now, based on your current setup, it primarily serves Firebase recipes.
   return null; // Return null if recipe is not found
 }
-
 
 @riverpod
 Future<SpoonRecipeListDto> spoonacularRecipes(Ref ref) async {
@@ -321,15 +323,30 @@ class CreateRecipeStore extends _$CreateRecipeStore {
     state = state.copyWith(ingredients: updatedList);
   }
 
-  createRecipe() async {
+  void updateIngredientAmount(int index, String newValue) {
+    final updated = state.ingredients[index].copyWith(
+      quantity: int.tryParse(newValue) ?? 0,
+    );
+    final updatedList = List.of(state.ingredients)..[index] = updated;
+
+    state = state.copyWith(ingredients: updatedList);
+  }
+
+  void updateUnit(int index, Unit newValue) {
+    final updated = state.ingredients[index].copyWith(unit: newValue);
+    final updatedList = List.of(state.ingredients)..[index] = updated;
+    state = state.copyWith(ingredients: updatedList);
+  }
+
+  Future<void> createRecipe() async {
     final db = FirebaseFirestore.instance;
     await db
         .collection('recipes')
         .doc(state.title)
         .withConverter(
-      fromFirestore: RecipeModel.fromFirestore,
-      toFirestore: (recipe, options) => recipe.toFirestore(),
-    )
+          fromFirestore: RecipeModel.fromFirestore,
+          toFirestore: (recipe, options) => recipe.toFirestore(),
+        )
         .set(RecipeModel.fromState(state))
         .onError((e, _) => print('Error writing document: $e'));
   }
@@ -396,9 +413,9 @@ sealed class FieldValidationResult with _$FieldValidationResult {
   }
 
   factory FieldValidationResult.fromString(
-      String fieldName,
-      String? validationResult,
-      ) {
+    String fieldName,
+    String? validationResult,
+  ) {
     return validationResult == null
         ? FieldValidationResult.valid(fieldName)
         : FieldValidationResult.invalid(fieldName, validationResult);

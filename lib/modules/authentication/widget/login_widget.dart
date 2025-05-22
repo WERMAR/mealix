@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../shared/authentication/store/authentication_provider.dart';
 
-
 class LoginWidget extends ConsumerWidget {
   const LoginWidget({super.key});
 
@@ -56,19 +55,24 @@ class LoginWidget extends ConsumerWidget {
             shadowColor: Colors.black,
             child: TextFormField(
               controller: emailController,
-              keyboardType:
-                  TextInputType.emailAddress,
+              keyboardType: TextInputType.emailAddress,
               focusNode: _emailFocusNode,
               textInputAction: TextInputAction.next,
               autofillHints: const [AutofillHints.email],
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.email,
                 hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color:
+                      Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.primary,
                 ),
                 prefixIcon: Icon(
                   Icons.email_outlined,
-                  color: Theme.of(context).colorScheme.primary,
+                  color:
+                      Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.primary,
                 ),
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.surface,
@@ -105,11 +109,17 @@ class LoginWidget extends ConsumerWidget {
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.password,
                 hintStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  color:
+                      Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.primary,
                 ),
                 prefixIcon: Icon(
                   Icons.key_outlined,
-                  color: Theme.of(context).colorScheme.primary,
+                  color:
+                      Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey
+                          : Theme.of(context).colorScheme.primary,
                 ),
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.surface,
@@ -121,39 +131,42 @@ class LoginWidget extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 24),
-      ElevatedButton(
-        onPressed: authenticationFormState.isValid(authenticationFormState.activeMode)
-            ? () async {
-          TextInput.finishAutofillContext();
+          ElevatedButton(
+            onPressed:
+                authenticationFormState.isValid(
+                      authenticationFormState.activeMode,
+                    )
+                    ? () async {
+                      TextInput.finishAutofillContext();
 
-          await authenticationNotifier.logInWithEmailAndPassword(
-            authenticationFormState.email!,
-            authenticationFormState.password!,
-          );
+                      await authenticationNotifier.logInWithEmailAndPassword(
+                        authenticationFormState.email!,
+                        authenticationFormState.password!,
+                      );
 
-          if (context.mounted) {
-            context.go('/home');
-          }
-        }
-            : null,
-        style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontSize: 20,
+                      if (context.mounted) {
+                        context.go('/home');
+                      }
+                    }
+                    : null,
+            style: ElevatedButton.styleFrom(
+              textStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 20,
+              ),
+              shadowColor: Colors.black,
+              elevation: 9,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).colorScheme.primary,
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+            ),
+            child: Text(AppLocalizations.of(context)!.loginTitle),
           ),
-          shadowColor: Colors.black,
-          elevation: 9,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          foregroundColor: Theme.of(context).colorScheme.primary,
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-        ),
-        child: Text(AppLocalizations.of(context)!.loginTitle),
+        ],
       ),
-    ],
-    ),
     );
   }
 }

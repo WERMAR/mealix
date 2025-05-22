@@ -226,7 +226,7 @@ final searchQueryProvider =
     );
 
 typedef _$SearchQuery = AutoDisposeAsyncNotifier<RecipeSearchState>;
-String _$createRecipeStoreHash() => r'a2473f06ba30615a82f319b6a18671b75982cd4a';
+String _$createRecipeStoreHash() => r'8e186a70cd1b5f91b67e997f85bc24a88856298e';
 
 /// See also [CreateRecipeStore].
 @ProviderFor(CreateRecipeStore)

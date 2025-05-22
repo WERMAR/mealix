@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Ingredient {
 
- String get id; String get name; GroceryListGroup get groceryListGroup;
+ String get id; String get name; GroceryListGroup get groceryListGroup; int get quantity; Unit get unit;
 /// Create a copy of Ingredient
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $IngredientCopyWith<Ingredient> get copyWith => _$IngredientCopyWithImpl<Ingredi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Ingredient&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.groceryListGroup, groceryListGroup) || other.groceryListGroup == groceryListGroup));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Ingredient&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.groceryListGroup, groceryListGroup) || other.groceryListGroup == groceryListGroup)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unit, unit) || other.unit == unit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,groceryListGroup);
+int get hashCode => Object.hash(runtimeType,id,name,groceryListGroup,quantity,unit);
 
 @override
 String toString() {
-  return 'Ingredient(id: $id, name: $name, groceryListGroup: $groceryListGroup)';
+  return 'Ingredient(id: $id, name: $name, groceryListGroup: $groceryListGroup, quantity: $quantity, unit: $unit)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $IngredientCopyWith<$Res>  {
   factory $IngredientCopyWith(Ingredient value, $Res Function(Ingredient) _then) = _$IngredientCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, GroceryListGroup groceryListGroup
+ String id, String name, GroceryListGroup groceryListGroup, int quantity, Unit unit
 });
 
 
@@ -66,12 +66,14 @@ class _$IngredientCopyWithImpl<$Res>
 
 /// Create a copy of Ingredient
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? groceryListGroup = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? groceryListGroup = null,Object? quantity = null,Object? unit = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,groceryListGroup: null == groceryListGroup ? _self.groceryListGroup : groceryListGroup // ignore: cast_nullable_to_non_nullable
-as GroceryListGroup,
+as GroceryListGroup,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int,unit: null == unit ? _self.unit : unit // ignore: cast_nullable_to_non_nullable
+as Unit,
   ));
 }
 
@@ -82,12 +84,14 @@ as GroceryListGroup,
 @JsonSerializable()
 
 class _Ingredient implements Ingredient {
-  const _Ingredient({required this.id, required this.name, required this.groceryListGroup});
+  const _Ingredient({required this.id, required this.name, required this.groceryListGroup, required this.quantity, required this.unit});
   factory _Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
 
 @override final  String id;
 @override final  String name;
 @override final  GroceryListGroup groceryListGroup;
+@override final  int quantity;
+@override final  Unit unit;
 
 /// Create a copy of Ingredient
 /// with the given fields replaced by the non-null parameter values.
@@ -102,16 +106,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ingredient&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.groceryListGroup, groceryListGroup) || other.groceryListGroup == groceryListGroup));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Ingredient&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.groceryListGroup, groceryListGroup) || other.groceryListGroup == groceryListGroup)&&(identical(other.quantity, quantity) || other.quantity == quantity)&&(identical(other.unit, unit) || other.unit == unit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,groceryListGroup);
+int get hashCode => Object.hash(runtimeType,id,name,groceryListGroup,quantity,unit);
 
 @override
 String toString() {
-  return 'Ingredient(id: $id, name: $name, groceryListGroup: $groceryListGroup)';
+  return 'Ingredient(id: $id, name: $name, groceryListGroup: $groceryListGroup, quantity: $quantity, unit: $unit)';
 }
 
 
@@ -122,7 +126,7 @@ abstract mixin class _$IngredientCopyWith<$Res> implements $IngredientCopyWith<$
   factory _$IngredientCopyWith(_Ingredient value, $Res Function(_Ingredient) _then) = __$IngredientCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, GroceryListGroup groceryListGroup
+ String id, String name, GroceryListGroup groceryListGroup, int quantity, Unit unit
 });
 
 
@@ -139,12 +143,14 @@ class __$IngredientCopyWithImpl<$Res>
 
 /// Create a copy of Ingredient
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? groceryListGroup = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? groceryListGroup = null,Object? quantity = null,Object? unit = null,}) {
   return _then(_Ingredient(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,groceryListGroup: null == groceryListGroup ? _self.groceryListGroup : groceryListGroup // ignore: cast_nullable_to_non_nullable
-as GroceryListGroup,
+as GroceryListGroup,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
+as int,unit: null == unit ? _self.unit : unit // ignore: cast_nullable_to_non_nullable
+as Unit,
   ));
 }
 
