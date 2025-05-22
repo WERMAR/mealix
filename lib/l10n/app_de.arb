@@ -55,5 +55,8 @@
   "householdTitle": "Dein Zuhause",
   "noMealPlanExisting": "Aktuell wurde noch kein Wochenplan erstellt",
   "createMealPlan": "Erstelle einen Wochenplan",
-  "recipe": "Rezept"
+  "recipe": "Rezept",
+  "quantity": "Menge",
+  "noShoppingList": "Es ist keine Einkaufsliste erstellt für diese Woche",
+  "goToWeeklyPlan": "Zurück zum Wochenplan"
 }

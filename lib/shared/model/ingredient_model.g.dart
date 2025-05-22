@@ -13,6 +13,8 @@ _Ingredient _$IngredientFromJson(Map<String, dynamic> json) => _Ingredient(
     _$GroceryListGroupEnumMap,
     json['groceryListGroup'],
   ),
+  quantity: (json['quantity'] as num).toInt(),
+  unit: $enumDecode(_$UnitEnumMap, json['unit']),
 );
 
 Map<String, dynamic> _$IngredientToJson(_Ingredient instance) =>
@@ -20,6 +22,8 @@ Map<String, dynamic> _$IngredientToJson(_Ingredient instance) =>
       'id': instance.id,
       'name': instance.name,
       'groceryListGroup': _$GroceryListGroupEnumMap[instance.groceryListGroup]!,
+      'quantity': instance.quantity,
+      'unit': _$UnitEnumMap[instance.unit]!,
     };
 
 const _$GroceryListGroupEnumMap = {
@@ -30,4 +34,12 @@ const _$GroceryListGroupEnumMap = {
   GroceryListGroup.grainProductsAndBakedGoods: 'grainProductsAndBakedGoods',
   GroceryListGroup.household: 'household',
   GroceryListGroup.hygieneItems: 'hygieneItems',
+};
+
+const _$UnitEnumMap = {
+  Unit.g: 'g',
+  Unit.kg: 'kg',
+  Unit.l: 'l',
+  Unit.ml: 'ml',
+  Unit.piece: 'piece',
 };

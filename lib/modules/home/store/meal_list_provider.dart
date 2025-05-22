@@ -6,6 +6,7 @@ import 'package:uuid/v4.dart';
 
 import '../../../helper/date_helper.dart';
 import '../../../shared/model/recipe_model.dart';
+import '../../shopping_list/store/shopping_list_provider.dart';
 import '../pages/home_page.dart';
 import 'model/meal_model.dart';
 
@@ -40,12 +41,12 @@ class MealListStore extends _$MealListStore {
     return _fetchRecipes(range);
   }
 
-  void setCreationMode() {
+  void setCreationMode(bool value) {
     final currState = state.valueOrNull;
     if (currState == null) {
       return;
     }
-    state = AsyncData(currState.copyWith(creationMode: true));
+    state = AsyncData(currState.copyWith(creationMode: value));
   }
 
   Future<MealListState> _fetchRecipes(DateTimeRange range) async {
@@ -128,7 +129,17 @@ class MealListStore extends _$MealListStore {
           adjustedList: [],
         ),
       );
+      await ref
+          .read(shoppingListStoreProvider.notifier)
+          .createShoppingListFromMealPlan(state.value!.initialList);
     }
+  }
+
+  Future<void> updateMealListView() async {
+    final range = ref.watch(selectedWeekProvider);
+    state = const AsyncLoading();
+    final newState = await _fetchRecipes(range);
+    state = AsyncData(newState);
   }
 }
 
@@ -218,5 +229,12 @@ class CreateMealListStore extends _$CreateMealListStore {
       batchRef.set(docRef, meal);
     }
     await batchRef.commit();
+
+    ref.read(mealListStoreProvider.notifier).setCreationMode(false);
+    await ref.read(mealListStoreProvider.notifier).updateMealListView();
+    await ref
+        .read(shoppingListStoreProvider.notifier)
+        .createShoppingListFromMealPlan(state.createMealList);
+    state = state.copyWith(createMealList: [], progress: 0);
   }
 }

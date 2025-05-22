@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../helper/colors_darktheme_option.dart';
 import '../../../shared/model/ingredient_model.dart';
 import '../../../shared/widgets/dropdown_button.dart';
+import '../../shopping_list/store/model/shopping_list_model.dart';
 import '../store/recipes_provider.dart';
 
 class CreateRecipe extends StatelessWidget {
@@ -317,7 +318,6 @@ class CreateRecipe extends StatelessWidget {
                                 Icons.add,
                                 color: ThemeColors.themedWhite(context),
                               ),
-                              //onPressed: _addIngredient,
                               onPressed:
                                   () =>
                                       ref
@@ -331,7 +331,7 @@ class CreateRecipe extends StatelessWidget {
                         const SizedBox(height: 10),
                         // Ingredients List
                         SizedBox(
-                          height: 100,
+                          height: 150,
                           child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: createRecipeForm.ingredients.length,
@@ -344,6 +344,7 @@ class CreateRecipe extends StatelessWidget {
                                   vertical: 8,
                                 ),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Expanded(
                                       child: TextFormField(
@@ -374,50 +375,140 @@ class CreateRecipe extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 10),
                                     SizedBox(
-                                      width: 240,
-                                      child: CustomDropdownButton(
-                                        data:
-                                            GroceryListGroup.values
-                                                .map<String>(
-                                                  (elem) => elem.name,
-                                                )
-                                                .toList(),
-                                        value:
-                                            createRecipeForm
-                                                .ingredients[index]
-                                                .groceryListGroup
-                                                .name,
-                                        onChanged:
-                                            (value) => ref
-                                                .read(
-                                                  createRecipeStoreProvider
-                                                      .notifier,
-                                                )
-                                                .updateGroceryListGroup(
-                                                  index,
-                                                  GroceryListGroup.values
-                                                      .firstWhere(
-                                                        (element) =>
-                                                            element.name ==
-                                                            value,
-                                                      ),
+                                      width: 150,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 150,
+                                                child: CustomDropdownButton(
+                                                  data:
+                                                      GroceryListGroup.values
+                                                          .map((e) => e.name)
+                                                          .toList(),
+                                                  value:
+                                                      createRecipeForm
+                                                          .ingredients[index]
+                                                          .groceryListGroup
+                                                          .name,
+                                                  onChanged:
+                                                      (value) => ref
+                                                          .read(
+                                                            createRecipeStoreProvider
+                                                                .notifier,
+                                                          )
+                                                          .updateGroceryListGroup(
+                                                            index,
+                                                            GroceryListGroup
+                                                                .values
+                                                                .firstWhere(
+                                                                  (e) =>
+                                                                      e.name ==
+                                                                      value,
+                                                                ),
+                                                          ),
                                                 ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Expanded(
+                                                child: TextFormField(
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  inputFormatters: [
+                                                    FilteringTextInputFormatter
+                                                        .digitsOnly,
+                                                  ],
+                                                  initialValue:
+                                                      createRecipeForm
+                                                          .ingredients[index]
+                                                          .quantity
+                                                          .toString(),
+                                                  decoration: InputDecoration(
+                                                    labelText:
+                                                        AppLocalizations.of(
+                                                          context,
+                                                        )!.quantity,
+                                                  ),
+                                                  onChanged:
+                                                      (newValue) => ref
+                                                          .read(
+                                                            createRecipeStoreProvider
+                                                                .notifier,
+                                                          )
+                                                          .updateIngredientAmount(
+                                                            index,
+                                                            newValue,
+                                                          ),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      return 'Please enter ingredient ${index + 1}';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ),
+                                              const SizedBox(width: 10),
+                                              SizedBox(
+                                                width: 50,
+                                                child: CustomDropdownButton(
+                                                  data:
+                                                      Unit.values
+                                                          .map((e) => e.name)
+                                                          .toList(),
+                                                  value:
+                                                      createRecipeForm
+                                                          .ingredients[index]
+                                                          .unit
+                                                          .name,
+                                                  onChanged:
+                                                      (value) => ref
+                                                          .read(
+                                                            createRecipeStoreProvider
+                                                                .notifier,
+                                                          )
+                                                          .updateUnit(
+                                                            index,
+                                                            Unit.values
+                                                                .firstWhere(
+                                                                  (e) =>
+                                                                      e.name ==
+                                                                      value,
+                                                                ),
+                                                          ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed:
-                                          () => ref
-                                              .read(
-                                                createRecipeStoreProvider
-                                                    .notifier,
-                                              )
-                                              .removeIngredientsPerPortion(
-                                                index,
-                                              ),
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                          onPressed:
+                                              () => ref
+                                                  .read(
+                                                    createRecipeStoreProvider
+                                                        .notifier,
+                                                  )
+                                                  .removeIngredientsPerPortion(
+                                                    index,
+                                                  ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

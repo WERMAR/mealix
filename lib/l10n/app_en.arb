@@ -64,6 +64,8 @@
   "householdTitle": "Your household",
   "noMealPlanExisting": "There exists no meal plan at the moment",
   "createMealPlan": "Create meal plan",
-  "recipe": "Recipe"
-
+  "recipe": "Recipe",
+  "quantity": "quantity",
+  "noShoppingList": "There is no shopping list created for that week",
+  "goToWeeklyPlan": "Go Back to Home"
 }

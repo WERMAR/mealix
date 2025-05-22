@@ -6,7 +6,7 @@ part of 'meal_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$mealListStoreHash() => r'6889ce295d95b57727b34b8dea48f0cc099c479d';
+String _$mealListStoreHash() => r'f77dc8312f0aedaf4bb08e27b6e4007584600c6a';
 
 /// See also [MealListStore].
 @ProviderFor(MealListStore)
@@ -24,7 +24,7 @@ final mealListStoreProvider =
 
 typedef _$MealListStore = AutoDisposeAsyncNotifier<MealListState>;
 String _$createMealListStoreHash() =>
-    r'ac96a4c9e2996605fc905f5b949cff73950725c9';
+    r'a03d7de49b540833b6c74471f4f3087f9e90de3b';
 
 /// See also [CreateMealListStore].
 @ProviderFor(CreateMealListStore)

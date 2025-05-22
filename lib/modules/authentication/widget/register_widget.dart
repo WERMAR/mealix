@@ -68,11 +68,17 @@ class RegisterWidget extends ConsumerWidget {
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.fullName,
               hintStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+                color:
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.primary,
               ),
               prefixIcon: Icon(
                 Icons.person_2_outlined,
-                color: Theme.of(context).colorScheme.primary,
+                color:
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.primary,
               ),
               filled: true,
               fillColor: Theme.of(context).colorScheme.surface,
@@ -98,11 +104,17 @@ class RegisterWidget extends ConsumerWidget {
             decoration: InputDecoration(
               hintText: AppLocalizations.of(context)!.email,
               hintStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+                color:
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.primary,
               ),
               prefixIcon: Icon(
                 Icons.email_outlined,
-                color: Theme.of(context).colorScheme.primary,
+                color:
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.primary,
               ),
               filled: true,
               fillColor: Theme.of(context).colorScheme.surface,
@@ -130,10 +142,16 @@ class RegisterWidget extends ConsumerWidget {
               hintText: AppLocalizations.of(context)!.password,
               prefixIcon: Icon(
                 Icons.key_outlined,
-                color: Theme.of(context).colorScheme.primary,
+                color:
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.primary,
               ),
               hintStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
+                color:
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey
+                        : Theme.of(context).colorScheme.primary,
               ),
               filled: true,
               fillColor: Theme.of(context).colorScheme.surface,

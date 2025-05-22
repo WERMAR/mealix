@@ -124,10 +124,9 @@ class HomePage extends ConsumerWidget {
                       if (data.initialList.isEmpty && !data.creationMode) {
                         return NoMealPlanExists(
                           onCreateMealPlan:
-                              () =>
-                                  ref
-                                      .read(mealListStoreProvider.notifier)
-                                      .setCreationMode(),
+                              () => ref
+                                  .read(mealListStoreProvider.notifier)
+                                  .setCreationMode(true),
                         );
                       }
                       if (data.creationMode) {
