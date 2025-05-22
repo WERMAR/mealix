@@ -28,7 +28,7 @@ class DayMealCard extends StatelessWidget {
     );
 
     return Card(
-      color: theme.colorScheme.surface,
+      color: theme.colorScheme.primary,
       elevation: 3,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

@@ -34,16 +34,12 @@ class ShoppingListPage extends ConsumerWidget {
         shape: const CircleBorder(),
         elevation: 10,
         onPressed: () => context.go(HomePage.routeLocation),
-        child: Icon(
-          Icons.calendar_month,
-          color: colorScheme.primary,
-          size: 45,
-        ),
+        child: Icon(Icons.calendar_month, color: colorScheme.primary, size: 45),
       ),
       appBar: AppBar(
-        backgroundColor: colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(local.shoppingListTitle),
-        actions: const [ProfileBadge(initials: 'MW')],
+        actions: const [ProfileBadge()],
       ),
       endDrawer: const MenuWidget(),
       bottomNavigationBar: CustomBottomNavBar(
@@ -52,27 +48,31 @@ class ShoppingListPage extends ConsumerWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(12),
-        children: grouped.entries.map((entry) {
-          final category = entry.key;
-          final items = entry.value;
+        children:
+            grouped.entries.map((entry) {
+              final category = entry.key;
+              final items = entry.value;
 
-          return ExpansionTile(
-            initiallyExpanded: true,
-            title: Text(
-              category,
-              style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            children: items.map((ingredient) {
-              return CheckboxListTile(
-                title: Text(ingredient.name),
-                value: false, // TODO: make this reactive
-                onChanged: (val) {
-                  // TODO: implement checkbox state management
-                },
+              return ExpansionTile(
+                initiallyExpanded: true,
+                title: Text(
+                  category,
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                children:
+                    items.map((ingredient) {
+                      return CheckboxListTile(
+                        title: Text(ingredient.name),
+                        value: false, // TODO: make this reactive
+                        onChanged: (val) {
+                          // TODO: implement checkbox state management
+                        },
+                      );
+                    }).toList(),
               );
             }).toList(),
-          );
-        }).toList(),
       ),
     );
   }

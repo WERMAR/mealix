@@ -17,42 +17,57 @@ class MenuWidget extends ConsumerWidget {
 
     return Drawer(
       backgroundColor: colorScheme.surface,
-      child: ListView(
+      child: Column(
         children: [
-          ListTile(
-            leading: Icon(Icons.home, color: Theme.of(context).colorScheme.onSurface),
-            title: Text(local.menuHouseholdManager),
-            onTap: () {
-              Navigator.of(context).pop();
-              context.push(HouseholdManagerPage.routeLocation);
-            },
-          ),
+          Expanded(
+            child: ListView(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.home,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  title: Text(local.menuHouseholdManager),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    context.push(HouseholdManagerPage.routeLocation);
+                  },
+                ),
 
-          ListTile(
-            leading: Icon(Icons.settings, color: Theme.of(context).colorScheme.onSurface),
-            title: Text(
-              local.menuSettings,
-              style: theme.textTheme.bodyLarge,
+                ListTile(
+                  leading: Icon(
+                    Icons.settings,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  title: Text(
+                    local.menuSettings,
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Settings pressed')),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.info_outline,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  title: Text(
+                    local.menuAbout,
+                    style: theme.textTheme.bodyLarge,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('About pressed')),
+                    );
+                  },
+                ),
+              ],
             ),
-            onTap: () {
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Settings pressed')),
-              );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.info_outline, color: Theme.of(context).colorScheme.onSurface),
-            title: Text(
-              local.menuAbout,
-              style: theme.textTheme.bodyLarge,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('About pressed')),
-              );
-            },
           ),
           const Divider(),
           ListTile(
@@ -66,6 +81,7 @@ class MenuWidget extends ConsumerWidget {
               }
             },
           ),
+          const SizedBox(height: 20),
         ],
       ),
     );

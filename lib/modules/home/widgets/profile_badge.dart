@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../shared/authentication/store/authentication_provider.dart';
 
 class ProfileBadge extends StatelessWidget {
-  final String initials;
-
-  const ProfileBadge({super.key, required this.initials});
+  const ProfileBadge({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +20,7 @@ class ProfileBadge extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              colorScheme.surface,
-              colorScheme.secondary,
-            ],
+            colors: [colorScheme.surface, colorScheme.secondary],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),
@@ -36,12 +34,21 @@ class ProfileBadge extends StatelessWidget {
           ],
           shape: BoxShape.circle,
         ),
-        child: Text(
-          initials,
-          style: theme.textTheme.labelLarge?.copyWith(
-            color: colorScheme.onSecondary,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Consumer(
+          builder: (context, ref, child) {
+            final username = ref.watch(
+              authenticationStoreProvider.select(
+                (state) => state.valueOrNull?.user?.name ?? 'X X',
+              ),
+            );
+            return Text(
+              '${username.split(' ')[0].substring(0, 1).toUpperCase()}${username.split(' ')[1].substring(0, 1).toUpperCase()}',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          },
         ),
       ),
     );
